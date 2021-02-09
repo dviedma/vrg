@@ -5,7 +5,7 @@ const User = (props) => {
 
   return (
     <div>
-      <h2>{props.userName}</h2>
+      <h2>Hello {props.userName}</h2>
       <p>
         {props.password}
       </p>
@@ -18,13 +18,17 @@ const User = (props) => {
 
 export const getServerSideProps = async ({ query }) => {
   const content = {}
+
+  console.log("query",query);
+
   await fire.firestore()
-    .collection('users')
-    .doc(query.id)
+    .collection('users').where("userName", "==", query.userName)
     .get()
-    .then(result => {
-      content['userName'] = result.data().userName;
-      content['password'] = result.data().password;
+    .then(querySnapshot => {
+      querySnapshot.forEach((doc) => {
+        content['userName'] = doc.data().userName;
+        content['password'] = doc.data().password;
+    });
     });
 
   return {

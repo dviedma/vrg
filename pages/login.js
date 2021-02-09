@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import fire from '../../config/fire-config';
+import fire from '../config/fire-config';
 import { useRouter } from 'next/router'
 
 const Login = () => {
@@ -20,7 +20,7 @@ const Login = () => {
 
         setTimeout(() => {
           setNotification('')
-        }, 2000)
+        }, 2000) 
       })
 
     setUsername('')

@@ -52,10 +52,10 @@ const Home = () => {
       {!loggedIn 
       ?
         <div>
-          <Link href="/users/register">
+          <Link href="/register">
             <a>Register</a>
           </Link> | 
-          <Link href="/users/login">
+          <Link href="/login">
             <a> Login</a>
           </Link>
         </div>
@@ -65,8 +65,8 @@ const Home = () => {
 
       <ul>
         {users.map(user =>
-          <li key={user.id}>
-            <Link href="/users/[id]" as={'/users/' + user.id }>
+          <li key={user.userName}>
+            <Link href="/user/[userName]" as={'/user/' + user.userName }>
               <a itemProp="hello">{user.userName}</a>
             </Link>
           </li>
