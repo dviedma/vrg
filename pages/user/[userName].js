@@ -19,8 +19,6 @@ const User = (props) => {
 export const getServerSideProps = async ({ query }) => {
   const content = {}
 
-  console.log("query",query);
-
   await fire.firestore()
     .collection('users').where("userName", "==", query.userName)
     .get()
