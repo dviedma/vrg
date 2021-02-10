@@ -5,12 +5,9 @@ const User = (props) => {
 
   return (
     <div>
-      <h2>Hello {props.userName}</h2>
-      <p>
-        {props.password}
-      </p>
+      <h2>{props.userName}'s channel</h2>
       <Link href="/">
-        <a>Back</a>
+        <a>Home</a>
       </Link>
     </div>
   )

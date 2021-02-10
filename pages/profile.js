@@ -1,6 +1,7 @@
 import fire from '../config/fire-config';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router'
+import Link from 'next/link'
 
 const Profile = (props) => {
 
@@ -20,7 +21,14 @@ const Profile = (props) => {
       })
     });
 
-  return (<span>HOLA {currentUser.displayName}</span>)
+  return (
+    <div>
+      <h1>Hi, {currentUser.displayName}</h1>
+      <Link href="/">
+        <a>Home</a>
+      </Link>
+    </div>
+    )
 }
 
 export default Profile;

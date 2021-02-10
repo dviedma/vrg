@@ -53,7 +53,8 @@ const Home = () => {
         <title>VRG</title>
       </Head>
       
-      <h1>Channels</h1>
+      <h1>VRG</h1>
+      <h2>Channels</h2>
 
       <ul>
         {users.map(user =>
