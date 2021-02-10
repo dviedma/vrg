@@ -13,6 +13,11 @@ const Login = () => {
 
     fire.auth()
       .signInWithEmailAndPassword(username, password)
+      .then((result) => {
+        setUsername('')
+        setPassword('')
+        router.push("/profile")
+      })
       .catch((err) => {
 
         console.log(err.code, err.message)
@@ -23,9 +28,7 @@ const Login = () => {
         }, 2000) 
       })
 
-    setUsername('')
-    setPassword('')
-    router.push("/profile")
+
   }
 
   return (
