@@ -5,20 +5,28 @@ import CreatePost from '../components/CreatePost';
 import Link from 'next/link';
 
 const Home = () => {
+  const [currentUser, setCurrentUser] = useState({});
   const [users, setUsers] = useState([]);
   const [notification, setNotification] = useState('');
   const [loggedIn, setLoggedIn] = useState(false);
 
-  fire.auth()
-    .onAuthStateChanged((user) => {
-      if (user) {
-        setLoggedIn(true)
-      } else {
-        setLoggedIn(false)
-      }
-    })
-
   useEffect(() => {
+
+    // Get logged in state
+    fire.auth()
+      .onAuthStateChanged((user) => {
+        if (user) {
+          setLoggedIn(true);
+          setCurrentUser(user);
+          console.log("currentUser", currentUser);
+        } else {
+          setLoggedIn(false);
+          setCurrentUser({});
+          console.log("currentUser", currentUser);
+        }
+      })
+
+    // Get list of users
     fire.firestore()
       .collection('users')
       .onSnapshot(snap => {
@@ -44,11 +52,25 @@ const Home = () => {
   return (
     <div>
       <Head>
-        <title>Blog App</title>
+        <title>VRG</title>
       </Head>
       
-      <h1>Users</h1>
+      <h1>Channels</h1>
+
       {notification}
+
+      <ul>
+        {users.map(user =>
+          <li key={user.userName}>
+            <Link href="/user/[userName]" as={'/user/' + user.userName }>
+              <a itemProp="hello">{user.userName}</a>
+            </Link>
+          </li>
+        )}
+      </ul>
+
+      {/*{loggedIn && <CreatePost />}*/}
+
       {!loggedIn 
       ?
         <div>
@@ -60,19 +82,11 @@ const Home = () => {
           </Link>
         </div>
       :
-        <button onClick={handleLogout}>Logout</button>
+        <div>
+          <button onClick={handleLogout}>Logout</button>
+          Hello, {!!currentUser && currentUser.displayName}
+        </div>
       }
-
-      <ul>
-        {users.map(user =>
-          <li key={user.userName}>
-            <Link href="/user/[userName]" as={'/user/' + user.userName }>
-              <a itemProp="hello">{user.userName}</a>
-            </Link>
-          </li>
-        )}
-      </ul>
-      {loggedIn && <CreatePost />}
     </div>
   )
 }

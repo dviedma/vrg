@@ -35,6 +35,11 @@ const Register = () => {
       .then((userCredential) => {
         // Signed in
 
+        // Update user's displayName
+        userCredential.user.updateProfile({
+          displayName: userName
+        });
+
         // Create Wowza channel
         wowza.baseChannelConfig.live_stream.name = "MyWebRTCStream_" + name;
         fetch('https://api.cloud.wowza.com/api/beta/live_streams', {
