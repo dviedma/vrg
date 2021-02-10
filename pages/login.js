@@ -25,7 +25,7 @@ const Login = () => {
 
     setUsername('')
     setPassword('')
-    router.push("/")
+    router.push("/profile")
   }
 
   return (

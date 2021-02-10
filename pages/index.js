@@ -18,11 +18,9 @@ const Home = () => {
         if (user) {
           setLoggedIn(true);
           setCurrentUser(user);
-          console.log("currentUser", currentUser);
         } else {
           setLoggedIn(false);
           setCurrentUser({});
-          console.log("currentUser", currentUser);
         }
       })
 
@@ -57,8 +55,6 @@ const Home = () => {
       
       <h1>Channels</h1>
 
-      {notification}
-
       <ul>
         {users.map(user =>
           <li key={user.userName}>
@@ -84,7 +80,7 @@ const Home = () => {
       :
         <div>
           <button onClick={handleLogout}>Logout</button>
-          Hello, {!!currentUser && currentUser.displayName}
+          Hello, <a href="/profile">{!!currentUser && currentUser.displayName}</a>
         </div>
       }
     </div>
