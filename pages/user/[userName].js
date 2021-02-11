@@ -1,11 +1,19 @@
 import fire from '../../config/fire-config';
 import Link from 'next/link'
+import Iframe from 'react-iframe'
 
 const User = (props) => {
   return (
     <div>
       <h2>{props.userName}'s channel</h2>
-      
+      <Iframe url="http://www.youtube.com/embed/xDMP3i36naA"
+        width="400px"
+        height="300px"
+        id="myId"
+        className="myClassname"
+        display="initial"
+        position="relative"/>
+      <br/>
       <Link href="/">
         <a>Home</a>
       </Link>
