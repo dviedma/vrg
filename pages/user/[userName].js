@@ -2,10 +2,10 @@ import fire from '../../config/fire-config';
 import Link from 'next/link'
 
 const User = (props) => {
-
   return (
     <div>
       <h2>{props.userName}'s channel</h2>
+      
       <Link href="/">
         <a>Home</a>
       </Link>
@@ -23,13 +23,15 @@ export const getServerSideProps = async ({ query }) => {
       querySnapshot.forEach((doc) => {
         content['userName'] = doc.data().userName;
         content['password'] = doc.data().password;
-    });
+        content['channelId'] = doc.data().wowza.channelId;
+      });
     });
 
   return {
     props: {
       userName: content.userName,
       password: content.password,
+      channelId: content.channelId
     }
   }
 }

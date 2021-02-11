@@ -44,7 +44,7 @@ const Register = () => {
         })
 
         // Create Wowza channel
-        wowza.baseChannelConfig.live_stream.name = "MyWebRTCStream_" + name;
+        wowza.baseChannelConfig.live_stream.name = "webRTC_" + userName;
         fetch('https://api.cloud.wowza.com/api/beta/live_streams', {
           method: 'POST',
           headers: {
