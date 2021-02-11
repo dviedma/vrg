@@ -11,11 +11,14 @@ const Register = () => {
   const [userName, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [passConf, setPassConf] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const [notify, setNotification] = useState('');
 
   const handleLogin = (e) => {
     e.preventDefault();
+
+    setIsLoading(true);
 
     if (password !== passConf) {
       setNotification('Password and password confirmation does not match')
@@ -38,7 +41,7 @@ const Register = () => {
         // Update user's displayName
         userCredential.user.updateProfile({
           displayName: userName
-        });
+        })
 
         // Create Wowza channel
         wowza.baseChannelConfig.live_stream.name = "MyWebRTCStream_" + name;
@@ -57,18 +60,24 @@ const Register = () => {
 
           // Add user to Users collection 
           fire.firestore()
-          .collection('users')
-          .add({
-            userName: userName,
-            email: email,
-            password: password,
-            wowza: {
-              channelId: data.live_stream.id,
-              applicationName: data.live_stream.source_connection_information.application_name,
-              sdpUrl: data.live_stream.source_connection_information.sdp_url,
-              streamName: data.live_stream.source_connection_information.stream_name
-            }
-          });
+            .collection('users')
+            .add({
+              userName: userName,
+              email: email,
+              password: password,
+              wowza: {
+                channelId: data.live_stream.id,
+                applicationName: data.live_stream.source_connection_information.application_name,
+                sdpUrl: data.live_stream.source_connection_information.sdp_url,
+                streamName: data.live_stream.source_connection_information.stream_name
+              }
+            })
+            .then(function() {
+              // Update successful
+              setIsLoading(false);
+              router.push("/");
+            });
+
           })
         .catch((error) => {
           console.error('Error:', error);
@@ -77,10 +86,6 @@ const Register = () => {
       .catch((err) => {
         console.log(err.code, err.message)
       });
-
-
-
-    router.push("/")
   }
 
   return (
@@ -97,7 +102,8 @@ const Register = () => {
         <br />
         Password conf: <input type="password" value={passConf} onChange={({target}) => setPassConf(target.value)} /> 
         <br />
-        <button type="submit">Login</button>
+        <button type="submit">Register</button>
+        {isLoading && <img src="/loader.gif" width="100px" style={{display:"block"}}/>}
       </form>
     </div>
   )
