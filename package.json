@@ -11,6 +11,33 @@
     "firebase": "^8.2.4",
     "next": "9.4.4",
     "react": "16.13.1",
-    "react-dom": "16.13.1"
+    "react-dom": "16.13.1",
+    "bootstrap": "^4.5.0",
+    "cross-env": "^7.0.2",
+    "js-cookie": "^2.2.1",
+    "query-string": "^6.13.1",
+    "react-scripts": "3.4.1",
+    "webrtc-adapter": "^7.6.3"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "react-redux": "^7.2.0",
+    "react-router-dom": "^5.2.0",
+    "redux": "^4.0.5",
+    "redux-devtools-extension": "^2.13.8"
   }
 }
