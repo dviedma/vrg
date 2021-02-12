@@ -7,6 +7,9 @@ import Link from 'next/link'
 import Publish from '../components/publish/Publish';
 import * as PublishSettingsActions from '../actions/publishSettingsActions';
 
+import CompositorUserMedia from '../components/media/CompositorUserMedia';
+import Devices from '../components/media/Devices';
+
 const Profile = (props) => {
 
   const [currentUser, setCurrentUser] = useState({});
@@ -40,6 +43,8 @@ const Profile = (props) => {
 
   return (
     <div>
+      <CompositorUserMedia />
+      <Devices />
       <h1>Hi, {currentUser.displayName}</h1>
       <Publish />
       <Link href="/">
