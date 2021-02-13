@@ -23,12 +23,14 @@ const Player = () => {
 
     if (playSettings.playStart && !playSettings.playStarting && !connected)
     {
+      
       dispatch({type:PlaySettingsActions.SET_PLAY_FLAGS, playStart:false, playStarting:true});
       startPlay(playSettings,websocket,{
         onError: (error) => {
           dispatch({type:ErrorsActions.SET_ERROR_MESSAGE,message:error.message});
         },
         onConnectionStateChange: (result) => {
+          console.log("result", result);
           dispatch({type:WebRTCPlayActions.SET_WEBRTC_PLAY_CONNECTED,connected:result.connected});
         },
         onSetPeerConnection: (result) => {

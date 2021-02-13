@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import * as PublishSettingsActions from '../../actions/publishSettingsActions';
@@ -11,11 +11,36 @@ import wowza from '../../config/wowza-config';
 const PublishSettingsForm = () => {
 
   const dispatch = useDispatch();
+  const [startingLiveStream, setStartingLiveStream] = useState(false);
   const publishSettings = useSelector ((state) => state.publishSettings);
   const webrtcPublish = useSelector ((state) => state.webrtcPublish);
+  let timer;
+
+  const getLiveStreamState = (channelId, callback) => {
+    console.log(">>> fetch getLiveStreamState")
+    fetch('https://api.cloud.wowza.com/api/beta/live_streams/' + channelId + '/state', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'wsc-api-key': wowza.apiKey,
+        'wsc-access-key': wowza.accessKey
+      }
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log(">>> DATA getLiveStreamState", data)
+      if(data.live_stream.state == "started") {
+        console.log(">>> STARTED!!");
+        clearInterval(timer);
+        setStartingLiveStream(false);
+        dispatch(PublishSettingsActions.startPublish())
+      }    
+    })
+  }
 
   return (
     <div className="col-md-4 col-sm-12" id="publish-settings">
+      {startingLiveStream && <img src="/loader.gif" width="100px" style={{display:"block"}}/>}
       <form id="publish-settings-form">
         <div className="row">
           <div className="col-12">
@@ -155,6 +180,8 @@ const PublishSettingsForm = () => {
                 disabled={publishSettings.publishStarting }
                 onClick={(e)=>{
                   
+                  setStartingLiveStream(true);
+
                   fetch('https://api.cloud.wowza.com/api/beta/live_streams/' + publishSettings.channelId + '/start', {
                     method: 'PUT',
                     headers: {
@@ -166,7 +193,11 @@ const PublishSettingsForm = () => {
                   .then(response => response.json())
                   .then(data => {
                     console.log("DATA", data)
-                    dispatch(PublishSettingsActions.startPublish())
+
+                    timer = setInterval(()=> {
+                      getLiveStreamState(publishSettings.channelId);
+                    }, 1000);
+
                   })
 
                 }}
@@ -174,7 +205,17 @@ const PublishSettingsForm = () => {
             }
             { webrtcPublish.connected &&
               <button id="publish-toggle" type="button" className="btn"
-                onClick={(e)=>dispatch(PublishSettingsActions.stopPublish())}
+                onClick={(e)=>{
+                  dispatch(PublishSettingsActions.stopPublish());
+                  fetch('https://api.cloud.wowza.com/api/beta/live_streams/' + publishSettings.channelId + '/stop', {
+                    method: 'PUT',
+                    headers: {
+                      'Content-Type': 'application/json',
+                      'wsc-api-key': wowza.apiKey,
+                      'wsc-access-key': wowza.accessKey
+                    }
+                  })
+                }}
               >Stop</button>
             }
           </div>
