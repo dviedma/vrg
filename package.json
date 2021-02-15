@@ -8,14 +8,15 @@
     "start": "next start"
   },
   "dependencies": {
-    "firebase": "^8.2.4",
-    "next": "9.4.4",
-    "react": "16.13.1",
-    "react-dom": "16.13.1",
     "bootstrap": "^4.5.0",
     "cross-env": "^7.0.2",
+    "firebase": "^8.2.4",
     "js-cookie": "^2.2.1",
+    "next": "9.4.4",
     "query-string": "^6.13.1",
+    "react": "16.13.1",
+    "react-dom": "16.13.1",
+    "react-iframe": "^1.8.0",
     "react-scripts": "3.4.1",
     "webrtc-adapter": "^7.6.3"
   },

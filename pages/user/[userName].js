@@ -1,6 +1,7 @@
 import fire from '../../config/fire-config';
 import Link from 'next/link'
 import { useDispatch } from 'react-redux';
+import Iframe from 'react-iframe'
 
 import Play from '../../components/play/Play';
 import * as PlaySettingsActions from '../../actions/playSettingsActions';
@@ -16,6 +17,7 @@ const User = (props) => {
     <div>
       <h2>{props.userName}'s channel</h2>
       <Play/>
+
       <Link href="/">
         <a>Home</a>
       </Link>

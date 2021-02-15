@@ -176,7 +176,7 @@ const PublishSettingsForm = () => {
         <div className="row">
           <div className="col-10">
             { !webrtcPublish.connected &&
-              <button id="publish-toggle" type="button" className="btn"
+              <button id="publish-toggle" type="button" style={{border:'1px solid',fontWeight:'bold'}} className="btn"
                 disabled={publishSettings.publishStarting }
                 onClick={(e)=>{
                   
@@ -204,7 +204,7 @@ const PublishSettingsForm = () => {
               >Publish ChannelID#{publishSettings.channelId}#</button>
             }
             { webrtcPublish.connected &&
-              <button id="publish-toggle" type="button" className="btn"
+              <button id="publish-toggle" type="button" style={{border:'1px solid',fontWeight:'bold'}} className="btn"
                 onClick={(e)=>{
                   dispatch(PublishSettingsActions.stopPublish());
                   fetch('https://api.cloud.wowza.com/api/beta/live_streams/' + publishSettings.channelId + '/stop', {
