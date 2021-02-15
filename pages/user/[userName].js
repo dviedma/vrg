@@ -17,7 +17,13 @@ const User = (props) => {
     <div>
       <h2>{props.userName}'s channel</h2>
       <Play/>
-
+      <Iframe url="https://executivevisions.com/files/test.html"
+        width="300px"
+        height="200px"
+        id="myId"
+        className="myClassname"
+        display="initial"
+        position="relative"/>
       <Link href="/">
         <a>Home</a>
       </Link>
