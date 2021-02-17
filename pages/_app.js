@@ -1,9 +1,12 @@
 import { Provider as StoreProvider } from "react-redux";
 import Head from 'next/head'
-
 import store from '../store'
 
+import styles from '../styles/main.scss'
+
 export default function App({ Component, pageProps }) {
+
+  console.log(styles);
 
   return (
     <div>

@@ -12,11 +12,12 @@
 
 <body>
     <!-- Set up a container element for the button -->
-    $<input type="number" />
+    $<input type="number" id="dollarAmount"/>
+
     <div id="paypal-button-container"></div>
 
     <!-- Include the PayPal JavaScript SDK -->
-    <script src="https://www.paypal.com/sdk/js?client-id=AXS3AfceAxeZzmSDiOS_NfLcG5ioqXDZUtSyJtl7ctXqLfBxyRr_jPuiNzpIaIIyZHqHbXjjp1T7qxSw&currency=USD"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=AXS3AfceAxeZzmSDiOS_NfLcG5ioqXDZUtSyJtl7ctXqLfBxyRr_jPuiNzpIaIIyZHqHbXjjp1T7qxSw&currency=USD&merchant-id=6VQF5USW5N7BA"></script>
 
     <script>
         // Render the PayPal button into #paypal-button-container
@@ -27,7 +28,7 @@
                 return actions.order.create({
                     purchase_units: [{
                         amount: {
-                            value: '88.50'
+                            value: document.getElementById("dollarAmount").value
                         }
                     }]
                 });

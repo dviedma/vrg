@@ -10,6 +10,8 @@ import * as PublishSettingsActions from '../actions/publishSettingsActions';
 import CompositorUserMedia from '../components/media/CompositorUserMedia';
 import Devices from '../components/media/Devices';
 
+import styles from '../styles/profile.module.scss'
+
 const Profile = (props) => {
 
   const [currentUser, setCurrentUser] = useState({});
@@ -17,6 +19,8 @@ const Profile = (props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    console.log(styles)
+    
     // Get logged in state
     fire.auth()
       .onAuthStateChanged((user) => {
@@ -45,7 +49,7 @@ const Profile = (props) => {
     <div>
       <CompositorUserMedia />
       <Devices />
-      <h1>Hi, {currentUser.displayName}</h1>
+      <h1 className={styles["myTitle"]}>Hi, {currentUser.displayName}</h1>
       <Publish />
       <Link href="/">
         <a>Home</a>
