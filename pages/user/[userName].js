@@ -17,13 +17,17 @@ const User = (props) => {
     <div>
       <h2>{props.userName}'s channel</h2>
       <Play/>
-      <Iframe url="https://executivevisions.com/files/test.html"
+      Send Money to {props.userName}
+      <br/>
+      <Iframe url="/paypal-button.html"
         width="300px"
         height="200px"
         id="myId"
         className="myClassname"
         display="initial"
+        style={{border:'none'}}
         position="relative"/>
+      <br/>  
       <Link href="/">
         <a>Home</a>
       </Link>
