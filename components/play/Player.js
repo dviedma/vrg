@@ -108,7 +108,7 @@ const Player = () => {
     return null;
 
   return (
-    <video id="player-video" ref={videoElement} autoPlay playsInline muted controls></video>
+    <video id="player-video" ref={videoElement} autoPlay playsInline controls></video>
   );
 }
 
