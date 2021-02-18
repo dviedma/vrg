@@ -17,18 +17,18 @@ const User = (props) => {
     <div>
       <h2>{props.userName}'s channel</h2>
       <Play/>
-      Send Money to {props.userName}
-      <br/>
-      {/*
-      <Iframe url="/paypal-button.html"
-        width="300px"
-        height="200px"
-        id="myId"
-        className="myClassname"
-        display="initial"
-        style={{border:'none'}}
-        position="relative"/>
-        */
+      {props.paypalMerchantId? 
+      <div>
+        Send Money to {props.userName}<br/>
+        <Iframe url={'/paypal-button.html?paypalMerchantId=' + props.paypalMerchantId}
+          width="300px"
+          height="200px"
+          id="myId"
+          className="myClassname"
+          display="initial"
+          style={{border:'none'}}
+          position="relative"/>
+      </div> : ""
       }
       <br/>  
       <Link href="/">
@@ -49,13 +49,15 @@ export const getServerSideProps = async ({ query }) => {
       querySnapshot.forEach((doc) => {
         content['userName'] = doc.data().userName;  //TODO use user's displayName
         content['wowza'] = doc.data().wowza;
+        content['paypalMerchantId'] = doc.data().paypalMerchantId;
       });
     });
 
   return {
     props: {
       userName: content.userName,
-      wowza: content.wowza
+      wowza: content.wowza,
+      paypalMerchantId: content.paypalMerchantId
     }
   }
 }

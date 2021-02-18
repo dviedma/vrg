@@ -16,34 +16,41 @@
 
     <div id="paypal-button-container"></div>
 
-    <!-- Include the PayPal JavaScript SDK -->
-    <script src="https://www.paypal.com/sdk/js?client-id=AXS3AfceAxeZzmSDiOS_NfLcG5ioqXDZUtSyJtl7ctXqLfBxyRr_jPuiNzpIaIIyZHqHbXjjp1T7qxSw&currency=USD&merchant-id=6VQF5USW5N7BA"></script>
-
     <script>
-        // Render the PayPal button into #paypal-button-container
-        paypal.Buttons({
+        const paypalMerchanId = window.location.href.split("paypalMerchantId=")[1];
 
-            // Set up the transaction
-            createOrder: function(data, actions) {
-                return actions.order.create({
-                    purchase_units: [{
-                        amount: {
-                            value: document.getElementById("dollarAmount").value
-                        }
-                    }]
-                });
-            },
+        // Include the PayPal JavaScript SDK
+        const script = document.createElement('script');
+        script.src = "https://www.paypal.com/sdk/js?" +
+          "client-id=AXS3AfceAxeZzmSDiOS_NfLcG5ioqXDZUtSyJtl7ctXqLfBxyRr_jPuiNzpIaIIyZHqHbXjjp1T7qxSw" +
+          "&currency=USD" +
+          "&merchant-id=" + paypalMerchanId;
+        script.addEventListener('load', function() {
+          
+          // Render the PayPal button into #paypal-button-container
+          paypal.Buttons({
+              // Set up the transaction
+              createOrder: function(data, actions) {
+                  return actions.order.create({
+                      purchase_units: [{
+                          amount: {
+                              value: document.getElementById("dollarAmount").value
+                          }
+                      }]
+                  });
+              },
+              // Finalize the transaction
+              onApprove: function(data, actions) {
+                  return actions.order.capture().then(function(details) {
+                      // Show a success message to the buyer
+                      alert('Transaction completed by ' + details.payer.name.given_name + '!');
+                  });
+              }
+          }).render('#paypal-button-container');
 
-            // Finalize the transaction
-            onApprove: function(data, actions) {
-                return actions.order.capture().then(function(details) {
-                    // Show a success message to the buyer
-                    alert('Transaction completed by ' + details.payer.name.given_name + '!');
-                });
-            }
-
-
-        }).render('#paypal-button-container');
+        });
+        document.head.appendChild(script);
+      
     </script>
 </body>
 </html>
