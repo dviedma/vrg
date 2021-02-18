@@ -1,0 +1,15 @@
+@font-face {
+  font-family: 'Firestorm';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/just_in_the_firestorm.ttf') format('woff2');
+}
+
+h1 {
+  font-family: 'Firestorm';
+}
+
+body {
+  padding: 20px;
+}

@@ -19,6 +19,7 @@ const User = (props) => {
       <Play/>
       Send Money to {props.userName}
       <br/>
+      {/*
       <Iframe url="/paypal-button.html"
         width="300px"
         height="200px"
@@ -27,6 +28,8 @@ const User = (props) => {
         display="initial"
         style={{border:'none'}}
         position="relative"/>
+        */
+      }
       <br/>  
       <Link href="/">
         <a>Home</a>
