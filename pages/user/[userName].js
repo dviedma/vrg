@@ -3,7 +3,9 @@ import Link from 'next/link'
 import { useDispatch } from 'react-redux';
 import Iframe from 'react-iframe'
 
-import Play from '../../components/play/Play';
+import Player from '../../components/play/Player';
+import Chat from '../../components/chat/Chat';
+import PlaySettingsForm from '../../components/play/PlaySettingsForm';
 import * as PlaySettingsActions from '../../actions/playSettingsActions';
 
 const User = (props) => {
@@ -14,23 +16,37 @@ const User = (props) => {
   dispatch({type:PlaySettingsActions.SET_PLAY_STREAM_NAME,streamName: props.wowza.streamName});
 
   return (
-    <div className="container-fluid mt-3">
-      <Play/>
-      <h1>{props.userName}</h1>
-      <p style={{fontWeight:'bold'}}>Lorem ipsum dolor amet | NBA | NFL In for the fun 🏈 🏀 🏏</p>
-      {props.paypalMerchantId? 
-      <div>
-        Send Money to {props.userName}<br/>
-        <Iframe url={'/paypal-button.html?paypalMerchantId=' + props.paypalMerchantId}
-          width="300px"
-          height="200px"
-          id="myId"
-          className="myClassname"
-          display="initial"
-          style={{border:'none'}}
-          position="relative"/>
-      </div> : ""
-      }
+    <div className="container-fluid mt-3" id="play-content">
+      <div className="row">
+        <div className="col-md-8 col-sm-12 pr-0">
+          <div id="play-video-container" style={{height: 0,width: "100%",paddingBottom: "56%",backgroundColor: "rgba(102, 102, 102, 1)",borderRadius: "0.75em"}}>
+            {/*          <div id="play-video-container" 
+            style={{height: 0,width: "100%",paddingBottom: "57%",background: "url(https://media3.giphy.com/media/etUdXnsEMrBng0vOvY/200.gif) no-repeat",
+            borderRadius: "0.75em",backgroundSize:"110%",backgroundPosition:"-10px" }}> */}
+            <Player />   
+            <PlaySettingsForm />                 
+          </div>
+          <h1>{props.userName}</h1>
+            <p style={{fontWeight:'bold'}}>Lorem ipsum dolor amet | NBA | NFL In for the fun 🏈 🏀 🏏</p>
+            {props.paypalMerchantId? 
+            <div>
+              Send Money to {props.userName}<br/>
+              <Iframe url={'/paypal-button.html?paypalMerchantId=' + props.paypalMerchantId}
+                width="300px"
+                height="200px"
+                id="myId"
+                className="myClassname"
+                display="initial"
+                style={{border:'none'}}
+                position="relative"/>
+            </div> : ""
+            }              
+        </div>
+        <div className="col-md-4 col-sm-12">
+          <Chat/>
+          
+        </div>        
+      </div>
     </div>
   )
 }

@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 
 import Player from './Player';
+import Chat from '../chat/Chat';
 import PlaySettingsForm from './PlaySettingsForm';
 
 const Play = (props) => {
@@ -16,7 +17,10 @@ const Play = (props) => {
             <Player />
           </div>
         </div>
-        <PlaySettingsForm />
+        <div className="col-md-4 col-sm-12">
+          <Chat/>
+          <PlaySettingsForm />
+        </div>        
       </div>
     </div>
   );

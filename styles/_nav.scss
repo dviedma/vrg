@@ -1,5 +1,9 @@
 nav {
   background-color: $accent2;
+  border-bottom: 2px solid;
+  border-image-slice: 1;
+  border-width: 2px;
+  border-image-source: linear-gradient(to left, $base2, $accent3);
 }
 
 .nav-item__user {

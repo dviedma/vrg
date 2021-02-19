@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import QueryString from 'query-string';
 import Cookies from 'js-cookie';
@@ -69,74 +69,19 @@ const PlaySettingsForm = () => {
     return null;
 
   return (
-    <div className="col-md-4 col-sm-12" id="play-settings">
-      <form id="play-settings-form">
-        <div className="row">
-          <div className="col-12">
-            <div className="form-group">
-              <label htmlFor="playSdpURL">Signaling URL</label>
-              <input type="text" 
-                className="form-control" 
-                id="playSignalingURL" 
-                name="playSignalingURL" 
-                maxLength="1024" 
-                placeholder="wss://[ssl-certificate-domain-name]/webrtc-session.json" 
-                value={playSettings.signalingURL}
-                onChange={(e)=>dispatch({type:PlaySettingsActions.SET_PLAY_SIGNALING_URL,signalingURL:e.target.value})}
-            />
-            </div>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-6">
-            <div className="form-group">
-              <label htmlFor="playApplicationName">Application Name</label>
-              <input type="text" 
-                className="form-control" 
-                id="playApplicationName" 
-                name="playApplicationName" 
-                maxLength="256" 
-                value={playSettings.applicationName}
-                onChange={(e)=>dispatch({type:PlaySettingsActions.SET_PLAY_APPLICATION_NAME,applicationName:e.target.value})}
-              />
-            </div>
-          </div>
-          <div className="col-6">
-            <div className="form-group">
-              <label htmlFor="playStreamName">Stream Name</label>
-              <input type="text" 
-                className="form-control" 
-                id="playStreamName" 
-                name="playStreamName" 
-                maxLength="256" 
-                value={playSettings.streamName}
-                onChange={(e)=>dispatch({type:PlaySettingsActions.SET_PLAY_STREAM_NAME,streamName:e.target.value})}
-              />
-            </div>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-10">
-            { !webrtcPlay.connected && 
-              <button id="play-toggle" type="button" className="btn"
-                disabled={playSettings.playStarting }
-                onClick={(e)=>dispatch(PlaySettingsActions.startPlay())}
-              >Play</button>
-            }
-            { webrtcPlay.connected &&
-              <button id="play-toggle" type="button" className="btn"
-                onClick={(e)=>dispatch(PlaySettingsActions.stopPlay())}
-              >Stop</button>
-            }
-          </div>
-          {/* <div className="col-2">
-            <button id="play-share-link" type="button" className="control-button mt-0">
-              <img alt="" className="noll" id="mute-off" src={fileCopy} />
-            </button>
-          </div> */}
-        </div>
-      </form>
-    </div>
+    <Fragment>
+      { !webrtcPlay.connected && 
+        <button id="play-toggle" type="button" className="btn"
+          disabled={playSettings.playStarting }
+          onClick={(e)=>dispatch(PlaySettingsActions.startPlay())}
+        >Play</button>
+      }
+      { webrtcPlay.connected &&
+        <button id="play-toggle" type="button" className="btn"
+          onClick={(e)=>dispatch(PlaySettingsActions.stopPlay())}
+        >Stop</button>
+      }
+    </Fragment>
   );
 }
 
