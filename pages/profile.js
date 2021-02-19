@@ -51,9 +51,6 @@ const Profile = (props) => {
       <Devices />
       <h1 className={styles["myTitle"]}>Hi, {currentUser.displayName}</h1>
       <Publish />
-      <Link href="/">
-        <a>Home</a>
-      </Link>
     </div>
     )
 }

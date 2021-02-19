@@ -168,6 +168,10 @@ const startPlay = (playSettings, websocket, callbacks) =>
 
       websocket.binaryType = 'arraybuffer';
 
+      console.log("> playSettings", playSettings);
+      console.log("> websocket", websocket);
+      console.log("> callbacks", callbacks);
+
       websocket.addEventListener ("open", () => { websocketOnOpen(playSettings, websocket, callbacks); });
       websocket.addEventListener ("error", (error) => { websocketOnError(error, callbacks); });
 

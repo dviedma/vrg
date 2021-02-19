@@ -30,26 +30,32 @@ const User = (props) => {
           position="relative"/>
       </div> : ""
       }
-      <br/>  
-      <Link href="/">
-        <a>Home</a>
-      </Link>
     </div>
   )
 }
 
+/*
+export async function getStaticPaths() {
+  return {
+    paths: [
+      { params: { userName: 'elviajeropolar' } }
+    ],
+    fallback: false
+  };
+}
+*/
 
-export const getServerSideProps = async ({ query }) => {
+export const getServerSideProps = async ({ params }) => {
   const content = {}
   
   await fire.firestore()
-    .collection('users').where("userName", "==", query.userName)
+    .collection('users').where("userName", "==", params.userName)
     .get()
     .then(querySnapshot => {
       querySnapshot.forEach((doc) => {
         content['userName'] = doc.data().userName;  //TODO use user's displayName
         content['wowza'] = doc.data().wowza;
-        content['paypalMerchantId'] = doc.data().paypalMerchantId;
+        content['paypalMerchantId'] = doc.data().paypalMerchantId? doc.data().paypalMerchantId : "";
       });
     });
 

@@ -1,8 +1,12 @@
 import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+
+import Link from 'next/link';
 import Head from 'next/head';
+
 import fire from '../config/fire-config';
 import CreatePost from '../components/CreatePost';
-import Link from 'next/link';
+
 
 const Home = () => {
   const [currentUser, setCurrentUser] = useState({});
@@ -10,20 +14,9 @@ const Home = () => {
   const [notification, setNotification] = useState('');
   const [loggedIn, setLoggedIn] = useState(false);
 
+  const user = useSelector ((state) => state.user);
+
   useEffect(() => {
-
-    // Get logged in state
-    fire.auth()
-      .onAuthStateChanged((user) => {
-        if (user) {
-          setLoggedIn(true);
-          setCurrentUser(user);
-        } else {
-          setLoggedIn(false);
-          setCurrentUser({});
-        }
-      })
-
     // Get list of users
     fire.firestore()
       .collection('users')
@@ -36,24 +29,12 @@ const Home = () => {
       });
   }, []);
 
-  const handleLogout = () => {
-    fire.auth()
-      .signOut()
-      .then(() => {
-        setNotification('Logged out')
-        setTimeout(() => {
-          setNotification('')
-        }, 2000)
-      });
-  }
-
   return (
-    <div>
+    <div className="container-fluid mt-3">
       <Head>
-        <title>VRG</title>
+        <title>VRG 2</title>
       </Head>
       
-      <h1 className="mySuperTitle">VRG</h1>
       <h2>Channels</h2>
 
       <ul>
@@ -65,25 +46,6 @@ const Home = () => {
           </li>
         )}
       </ul>
-
-      {/*{loggedIn && <CreatePost />}*/}
-
-      {!loggedIn 
-      ?
-        <div>
-          <Link href="/register">
-            <a>Register</a>
-          </Link> | 
-          <Link href="/login">
-            <a> Login</a>
-          </Link>
-        </div>
-      :
-        <div>
-          <button onClick={handleLogout}>Logout</button>
-          Hello, <a href="/profile">{!!currentUser && currentUser.displayName}</a>
-        </div>
-      }
     </div>
   )
 }

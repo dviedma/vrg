@@ -1,45 +1,54 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import wowzaLogo from '../../images/wowza-logo.svg'
+import React, { Fragment } from 'react';
+import { useSelector } from 'react-redux';
+
+import Link from 'next/link';
+//import wowzaLogo from '../../images/wowza-logo.svg'
+
+import fire from '../../config/fire-config';
 
 const Nav = () => {
 
+  const user = useSelector ((state) => state.user);
+
+  const handleLogout = () => {
+    fire.auth()
+      .signOut()
+      .then(() => {
+        // logged out
+      });
+    }
+      
+
   return (
-    <nav className="navbar navbar-expand-sm navbar-light bg-light pb-3 pb-md-2" id="top-nav">
-      <a className="navbar-brand" href="https://www.wowza.com"><img className="noll"  src={wowzaLogo} alt="Wowza Media Systems" /></a>
-      <ul className="navbar-nav mr-auto-lg">
-        <li className="nav-item page">
-          <a href="https://www.wowza.com/developer/webrtc/dev-view-publish">
-            Publish
-          </a>
-          <span></span>
-        </li>
-        <li className="nav-item page">
-          <a href="https://www.wowza.com/developer/webrtc/dev-view-play">
-            Play
-          </a>
-          <span></span>
-        </li>
-        <li className="nav-item page">
-          <Link to="/composite">
-            Composite
-          </Link>
-          <span></span>
-        </li>
-        <li className="nav-item page">
-          <Link to="/meeting">
-            Meeting
-          </Link>
-          <span></span>
-        </li>
-      </ul>
+    <nav className="navbar navbar-expand-sm navbar-light pb-3 pb-md-2" id="top-nav">
+      {/*<a className="navbar-brand" href="https://www.wowza.com"><img className="noll"  src={wowzaLogo}} alt="Wowza Media Systems" /></a>*/}
+      <Link href="/">
+        <a><h1 className="mySuperTitle">VRG</h1></a>
+      </Link>
       <ul className="navbar-nav ml-auto d-none d-md-flex">
-        <li className="nav-item mr-3">
-          <a href="https://www.wowza.com/docs/wowza-streaming-engine-product-articles">Docs</a>
-        </li>
-        <li className="nav-item mr-3">
-          <a href="https://www.wowza.com/developer">Developer Portal</a>
-        </li>
+        {!user.loggedIn?
+          <Fragment>
+            <li className="nav-item ml-3">
+              <Link href="/register">
+                <a>Register</a>
+              </Link>
+            </li>
+            <li className="nav-item ml-3"> 
+              <Link href="/login">
+                <a> Login</a>
+              </Link>
+            </li>
+          </Fragment>
+        :
+          <Fragment>
+            <li className="nav-item ml-3">
+              <button onClick={handleLogout} className="btn">Logout</button>
+            </li>
+            <li className="nav-item ml-3">
+              Hello, <a href="/profile">{user.currentUser.displayName}</a>
+            </li>
+          </Fragment>
+        }
       </ul>
     </nav>
   );
