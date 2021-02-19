@@ -46,7 +46,7 @@ const Profile = (props) => {
     });
 
   return (
-    <div>
+    <div className="container-fluid mt-3">
       <CompositorUserMedia />
       <Devices />
       <h1 className={styles["myTitle"]}>Hi, {currentUser.displayName}</h1>

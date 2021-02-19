@@ -1,0 +1,12 @@
+.btn {
+  border-radius: 0;
+  background-color: $accent3;
+  font-family: 'Teko', sans-serif;
+  text-transform: uppercase;
+  font-weight: 500;
+  padding-top: 8px;
+  padding-bottom: 4px;
+  &:hover {
+    opacity: 0.8;
+  }
+}

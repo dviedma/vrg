@@ -6,6 +6,23 @@
   src: url('/fonts/just_in_the_firestorm.ttf') format('woff2');
 }
 
-h1 {
+@import url('https://fonts.googleapis.com/css2?family=Teko:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Hind:wght@400;700&display=swap');
+
+.logo {
   font-family: 'Firestorm';
+  color: white;
+  &:hover {
+    opacity: 0.8;
+    text-decoration: none;
+  }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Teko', sans-serif;
+}
+
+body {
+  font-family: 'Hind', sans-serif;
+  font-size: 14px;
 }

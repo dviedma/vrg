@@ -14,9 +14,10 @@ const User = (props) => {
   dispatch({type:PlaySettingsActions.SET_PLAY_STREAM_NAME,streamName: props.wowza.streamName});
 
   return (
-    <div>
-      <h2>{props.userName}'s channel</h2>
+    <div className="container-fluid mt-3">
       <Play/>
+      <h1>{props.userName}</h1>
+      <p style={{fontWeight:'bold'}}>Lorem ipsum dolor amet | NBA | NFL In for the fun 🏈 🏀 🏏</p>
       {props.paypalMerchantId? 
       <div>
         Send Money to {props.userName}<br/>

@@ -1,10 +1,7 @@
 @import "./vars";
 @import "./typography";
 
-h1 {
-  color: $accent1;
-}
+@import "./buttons";
 
-.mySuperTitle {
-  color: $accent2;
-}
+@import "./nav";
+
