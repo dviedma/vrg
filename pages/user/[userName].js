@@ -20,9 +20,9 @@ const User = (props) => {
       <div className="row">
         <div className="col-md-8 col-sm-12 pr-0">
           <div id="play-video-container" style={{height: 0,width: "100%",paddingBottom: "56%",backgroundColor: "rgba(102, 102, 102, 1)",borderRadius: "0.75em"}}>
-            {/*          <div id="play-video-container" 
-            style={{height: 0,width: "100%",paddingBottom: "57%",background: "url(https://media3.giphy.com/media/etUdXnsEMrBng0vOvY/200.gif) no-repeat",
-            borderRadius: "0.75em",backgroundSize:"110%",backgroundPosition:"-10px" }}> */}
+          {/*<div id="play-video-container" 
+            style={{height: 0,width: "100%",paddingBottom: "57%",background: "url(https://media1.giphy.com/media/l1J9EdzfOSgfyueLm/giphy.gif) no-repeat",
+  borderRadius: "0.75em",backgroundSize:"110%",backgroundPosition:"-10px" }}>*/}
             <Player />   
             <PlaySettingsForm />                 
           </div>
