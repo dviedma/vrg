@@ -1,7 +1,8 @@
-import fire from '../../config/fire-config';
-import Link from 'next/link'
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import Iframe from 'react-iframe'
+
+import fire from '../../config/fire-config';
 
 import Player from '../../components/play/Player';
 import Chat from '../../components/chat/Chat';
@@ -15,6 +16,22 @@ const User = (props) => {
   dispatch({type:PlaySettingsActions.SET_PLAY_APPLICATION_NAME,applicationName: props.wowza.applicationName});
   dispatch({type:PlaySettingsActions.SET_PLAY_STREAM_NAME,streamName: props.wowza.streamName});
 
+  useEffect(() => {
+    window.addEventListener('message', function(e) {
+      const data = JSON.parse(e.data);
+      if(data.message == "PAYMENT SENT") {
+        console.log("Payment Sent");
+        confetti.start();
+        var audio = new Audio('/sounds/applause.wav');
+        audio.play();
+        setTimeout(()=> {
+          confetti.stop();
+        }, 2000);
+      }
+    });
+  });
+ 
+
   return (
     <div className="container-fluid mt-3" id="play-content">
       <div className="row">
@@ -26,21 +43,26 @@ const User = (props) => {
             <Player />   
             <PlaySettingsForm />                 
           </div>
-          <h1>{props.userName}</h1>
-            <p style={{fontWeight:'bold'}}>Lorem ipsum dolor amet | NBA | NFL In for the fun 🏈 🏀 🏏</p>
-            {props.paypalMerchantId? 
-            <div>
-              Send Money to {props.userName}<br/>
-              <Iframe url={'/paypal-button.html?paypalMerchantId=' + props.paypalMerchantId}
-                width="300px"
-                height="200px"
-                id="myId"
-                className="myClassname"
-                display="initial"
-                style={{border:'none'}}
-                position="relative"/>
-            </div> : ""
-            }              
+          <div className="row mt-3">
+            <div className="user-info col-sm-7">
+              <h1>{props.userName}</h1>
+              <p>Lorem ipsum dolor amet | NBA | NFL In for the fun 🏈 🏀 🏏</p>
+            </div>
+            <div className="user-payment col-sm-5">
+              <p style={{fontWeight:'bold'}} className="mt-2 mb-0">Pay {props.userName}</p>
+              {props.paypalMerchantId? 
+                  <Iframe url={'/paypal-button.html?paypalMerchantId=' + props.paypalMerchantId}
+                    width="100%"
+                    height="400px"
+                    id="myId"
+                    className="myClassname"
+                    display="initial"
+                    style={{border:'none'}}
+                    position="relative"/>
+              : ""
+              }   
+            </div>   
+          </div>        
         </div>
         <div className="col-md-4 col-sm-12">
           <Chat/>

@@ -8,15 +8,66 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title> PayPal Smart Payment Buttons Integration | Client Demo </title>
+
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Hind:wght@400;700&display=swap');
+
+      body {
+        font-family: 'Hind', sans-serif;
+        font-size: 14px;
+        margin: 0;
+      }
+
+      .paypal {
+        text-align: center;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        width: 100%;
+      }
+
+      .paypal-amount-minus,
+      .paypal-amount-plus {
+        font-size: 30px;
+        padding: 0 10px;
+        cursor: pointer;
+      }
+
+      .paypal-amount-wrapper {
+
+      }
+
+      #paypal-amount {
+        font-size: 30px;
+        transform: translateY(1px);
+        width: 100px;
+      }
+
+      .paypal > div {
+        display: inline-block;
+      }
+
+      .paypal .paypal-dollar-sign {
+        font-size: 20px;
+      }
+
+      iframe {
+        border: none;
+      }
+    </style>
 </head>
 
 <body>
-    <!-- Set up a container element for the button -->
-    $<input type="number" id="dollarAmount"/>
+    
+    <div class="paypal">
+      <div class="paypal-amount-wrapper"><div class="paypal-amount-minus">-</div></div>
+      <div class="paypal-dollar-sign">$</div><input type="text" value="10" id="paypal-amount"/>
+      <div class="paypal-amount-wrapper"><div class="paypal-amount-plus">+</div></div>
+    </div>
 
     <div id="paypal-button-container"></div>
 
     <script>
+
         const paypalMerchanId = window.location.href.split("paypalMerchantId=")[1];
 
         // Include the PayPal JavaScript SDK
@@ -26,7 +77,6 @@
           "&currency=USD" +
           "&merchant-id=" + paypalMerchanId;
         script.addEventListener('load', function() {
-          
           // Render the PayPal button into #paypal-button-container
           paypal.Buttons({
               // Set up the transaction
@@ -34,7 +84,7 @@
                   return actions.order.create({
                       purchase_units: [{
                           amount: {
-                              value: document.getElementById("dollarAmount").value
+                              value: document.getElementById("paypal-amount").value
                           }
                       }]
                   });
@@ -43,7 +93,11 @@
               onApprove: function(data, actions) {
                   return actions.order.capture().then(function(details) {
                       // Show a success message to the buyer
-                      alert('Transaction completed by ' + details.payer.name.given_name + '!');
+                      const message = JSON.stringify({
+                        message: 'PAYMENT SENT',
+                        date: Date.now(),
+                      });
+                      window.parent.postMessage(message, '*');
                   });
               }
           }).render('#paypal-button-container');
