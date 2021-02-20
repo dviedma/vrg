@@ -1,7 +1,6 @@
-import { Provider, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Fragment, useEffect } from 'react';
 import Head from 'next/head'
-import store from '../store'
 import Nav from '../components/shell/Nav';
 import Errors from '../components/shell/Errors';
 import fire from '../config/fire-config';
@@ -32,7 +31,7 @@ export default function Layout({ Component, pageProps }) {
       </Head>
       <Nav />
       <Errors />
-      <Component {...pageProps} />
+      {Component && <Component {...pageProps} />}
     </Fragment>
   )
 }
