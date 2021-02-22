@@ -95,7 +95,7 @@ const Register = () => {
   return (
     <div className="login container-fluid mt-5">
       <div className="row justify-content-sm-center">
-        <div class="col col-sm-5 input-group">
+        <div className="col col-sm-5 input-group">
           <h1>Join the family!</h1>
           <form onSubmit={handleLogin}>
             <label className="form-label">Username</label>
