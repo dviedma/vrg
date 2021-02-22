@@ -42,50 +42,8 @@ const PublishSettingsForm = () => {
     <div className="col-md-4 col-sm-12" id="publish-settings">
       {startingLiveStream && <img src="/loader.gif" width="100px" style={{display:"block"}}/>}
       <form id="publish-settings-form">
-        <div className="row">
-          <div className="col-12">
-            <div className="form-group">
-              <label htmlFor="sdpURL">Signaling URL</label>
-              <input type="text"
-                className="form-control"
-                id="signalingURL"
-                name="signalingURL"
-                maxLength="1024"
-                placeholder="wss://[ssl-certificate-domain-name]/webrtc-session.json"
-                value={publishSettings.signalingURL}
-                onChange={(e)=>dispatch({type:PublishSettingsActions.SET_PUBLISH_SIGNALING_URL,signalingURL:e.target.value})}
-              />
-            </div>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-lg-6 col-sm-12">
-            <div className="form-group">
-              <label htmlFor="applicationName">Application Name</label>
-              <input type="text"
-                className="form-control"
-                id="applicationName"
-                name="applicationName"
-                maxLength="256"
-                value={publishSettings.applicationName}
-                onChange={(e)=>dispatch({type:PublishSettingsActions.SET_PUBLISH_APPLICATION_NAME,applicationName:e.target.value})}
-              />
-            </div>
-          </div>
-          <div className="col-lg-6 col-sm-12">
-            <div className="form-group">
-              <label htmlFor="streamName">Stream Name</label>
-              <input type="text"
-                className="form-control"
-                id="streamName"
-                name="streamName"
-                maxLength="256"
-                value={publishSettings.streamName}
-                onChange={(e)=>dispatch({type:PublishSettingsActions.SET_PUBLISH_STREAM_NAME,streamName:e.target.value})}
-              />
-            </div>
-          </div>
-        </div>
+        
+        {/*
         <div className="row">
           <div className="col-lg-6 col-sm-12">
             <div className="form-group">
@@ -151,32 +109,22 @@ const PublishSettingsForm = () => {
             </div>
           </div>
         </div>
+        */}
+
         <div className="row">
           <div className="col-10">
             <PublishVideoDropdown />
-          </div>
-          <div className="col-2">
-            <button id="camera-toggle" className="control-button">
-              <img alt="" className="noll" id="video-off" src="/images/videocam-32px.svg" />
-              <img alt="" className="noll" id="video-on" src="/images/videocam-off-32px.svg" />
-            </button>
           </div>
         </div>
         <div className="row">
           <div className="col-10">
             <PublishAudioDropdown />
           </div>
-          <div className="col-2">
-            <button id="mute-toggle" className="control-button">
-              <img alt="" className="noll" id="mute-off" src="/images/mic-32px.svg" />
-              <img alt="" className="noll" id="mute-on" src="/images/mic-off-32px.svg" />
-            </button>
-          </div>
         </div>
         <div className="row">
           <div className="col-10">
             { !webrtcPublish.connected &&
-              <button id="publish-toggle" type="button" style={{border:'1px solid',fontWeight:'bold'}} className="btn"
+              <button id="publish-toggle" type="button" className="btn"
                 disabled={publishSettings.publishStarting }
                 onClick={(e)=>{
                   
@@ -201,10 +149,10 @@ const PublishSettingsForm = () => {
                   })
 
                 }}
-              >Publish ChannelID#{publishSettings.channelId}#</button>
+              >Start Streaming</button>
             }
             { webrtcPublish.connected &&
-              <button id="publish-toggle" type="button" style={{border:'1px solid',fontWeight:'bold'}} className="btn"
+              <button id="publish-toggle" type="button" className="btn"
                 onClick={(e)=>{
                   dispatch(PublishSettingsActions.stopPublish());
                   fetch('https://api.cloud.wowza.com/api/beta/live_streams/' + publishSettings.channelId + '/stop', {
@@ -218,11 +166,6 @@ const PublishSettingsForm = () => {
                 }}
               >Stop</button>
             }
-          </div>
-          <div className="col-2">
-            <button id="publish-share-link" type="button" className="control-button mt-0">
-              <img alt="" className="noll" id="mute-off" src="/images/file_copy-24px.svg" />
-            </button>
           </div>
         </div>
       </form>

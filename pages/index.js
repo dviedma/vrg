@@ -30,7 +30,7 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="container-fluid mt-3">
+    <div className="index container-fluid mt-3">
       <Head>
         <title>VRG 2</title>
       </Head>

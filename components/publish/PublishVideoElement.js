@@ -20,7 +20,7 @@ const PublishVideoElement = () => {
   },[stream, videoElement]);
 
   return (
-    <video ref={videoElement} id="publisher-video" autoPlay playsInline muted controls style={{width:'90%'}}></video>
+    <video ref={videoElement} id="publisher-video" autoPlay playsInline muted controls style={{width:'100%'}}></video>
   );
 }
 

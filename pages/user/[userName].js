@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { Fragment, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import Iframe from 'react-iframe'
 
@@ -49,8 +49,9 @@ const User = (props) => {
               <p>Lorem ipsum dolor amet | NBA | NFL In for the fun 🏈 🏀 🏏</p>
             </div>
             <div className="user-payment col-sm-5">
-              <p style={{fontWeight:'bold'}} className="mt-2 mb-0">Pay {props.userName}</p>
               {props.paypalMerchantId? 
+                <Fragment>
+                  <p style={{fontWeight:'bold'}} className="mt-2 mb-0">Pay {props.userName}</p>
                   <Iframe url={'/paypal-button.html?paypalMerchantId=' + props.paypalMerchantId}
                     width="100%"
                     height="400px"
@@ -58,7 +59,7 @@ const User = (props) => {
                     className="myClassname"
                     display="initial"
                     style={{border:'none'}}
-                    position="relative"/>
+                    position="relative"/></Fragment>
               : ""
               }   
             </div>   

@@ -20,12 +20,12 @@ const Nav = () => {
       
 
   return (
-    <nav className="navbar navbar-expand-sm navbar-light pb-3 pb-md-2" id="top-nav">
+    <nav className="navbar navbar-expand navbar-light pb-2" id="top-nav">
       {/*<a className="navbar-brand" href="https://www.wowza.com"><img className="noll"  src={wowzaLogo}} alt="Wowza Media Systems" /></a>*/}
       <Link href="/">
         <a style={{textDecoration:'none'}}><h2 className="logo" style={{paddingTop:'3px',fontSize:'1.5rem',marginBottom:'0'}}>VRG</h2></a>
       </Link>
-      <ul className="navbar-nav ml-auto d-none d-md-flex">
+      <ul className="navbar-nav ml-auto d-sm-flex">
         {!user.loggedIn?
           <Fragment>
             <li className="nav-item ml-3">
@@ -41,11 +41,11 @@ const Nav = () => {
           </Fragment>
         :
           <Fragment>
-            <li className="nav-item ml-3">
-              <button onClick={handleLogout} className="btn">Logout</button>
-            </li>
             <li className="nav-item ml-3 nav-item__user">
               Hello, <a href="/profile">{user.currentUser.displayName}</a>
+            </li>
+            <li className="nav-item ml-3">
+              <button onClick={handleLogout} className="btn">Logout</button>
             </li>
           </Fragment>
         }

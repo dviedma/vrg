@@ -18,20 +18,19 @@ const Register = () => {
   const handleLogin = (e) => {
     e.preventDefault();
 
-    setIsLoading(true);
-
     if (password !== passConf) {
       setNotification('Password and password confirmation does not match')
 
       setTimeout(() => {
         setNotification('')
-      }, 2000)
+      }, 3000)
 
       setPassword('');
       setPassConf('');
       return null;
-
     }
+
+    setIsLoading(true);
 
     fire.auth()
       .createUserWithEmailAndPassword(email, password)
@@ -84,27 +83,35 @@ const Register = () => {
         });
       })
       .catch((err) => {
-        console.log(err.code, err.message)
+        setNotification(err.message);
+        setIsLoading(false);
+
+        setTimeout(() => {
+          setNotification('')
+        }, 3000)
       });
   }
 
   return (
-    <div>
-      <h1>Create new user</h1>
-
-      {notify}
-      <form onSubmit={handleLogin}>
-        Username: <input type="text" value={userName} onChange={({target}) => setUsername(target.value)} />
-        <br />
-        Email: <input type="text" value={email} onChange={({target}) => setEmail(target.value)} /> 
-        <br />
-        Password: <input type="password" value={password} onChange={({target}) => setPassword(target.value)} /> 
-        <br />
-        Password conf: <input type="password" value={passConf} onChange={({target}) => setPassConf(target.value)} /> 
-        <br />
-        <button type="submit">Register</button>
-        {isLoading && <img src="/loader.gif" width="100px" style={{display:"block"}}/>}
-      </form>
+    <div className="login container-fluid mt-5">
+      <div className="row justify-content-sm-center">
+        <div class="col col-sm-5 input-group">
+          <h1>Join the family!</h1>
+          <form onSubmit={handleLogin}>
+            <label className="form-label">Username</label>
+            <input className="form-control" type="text" value={userName} onChange={({target}) => setUsername(target.value)} />
+            <label className="form-label mt-3">Email</label>
+            <input className="form-control" type="text" value={email} onChange={({target}) => setEmail(target.value)} /> 
+            <label className="form-label mt-3">Password</label>
+            <input className="form-control" type="password" value={password} onChange={({target}) => setPassword(target.value)} /> 
+            <label className="form-label mt-3">Password Confirmation</label>
+            <input className="form-control" type="password" value={passConf} onChange={({target}) => setPassConf(target.value)} /> 
+            <button className="btn mt-3" type="submit">Register</button>
+            {isLoading && <img src="/loader.gif" width="100px" style={{display:"block"}}/>}
+          </form>
+          <p className="login-message mt-3">{notify}</p>
+        </div>
+      </div>
     </div>
   )
 }

@@ -25,23 +25,27 @@ const Login = () => {
 
         setTimeout(() => {
           setNotification('')
-        }, 2000) 
+        }, 3000) 
       })
 
 
   }
 
   return (
-    <div>
-      <h1>Login</h1>
-      {notify}
-      <form onSubmit={handleLogin}>
-        Email<input type="text" value={username} onChange={({target}) => setUsername(target.value)} />
-        <br />
-        Password<input type="password" value={password} onChange={({target}) => setPassword(target.value)} />
-        <br />
-        <button type="submit">Login</button>
-      </form>
+    <div className="login container-fluid mt-5">
+      <div className="row justify-content-sm-center">
+        <div class="col col-sm-5 input-group">
+          <h1>Welcome back</h1>
+          <form onSubmit={handleLogin}>
+            <label class="form-label">Email</label>
+            <input className="form-control" type="text" value={username} onChange={({target}) => setUsername(target.value)} />
+            <label class="form-label mt-3">Password</label>
+            <input className="form-control" type="password" value={password} onChange={({target}) => setPassword(target.value)} />
+            <button type="submit" className="btn mt-3">Login</button>
+          </form>
+          <p className="login-message mt-3">{notify}</p>
+        </div>
+      </div>
     </div>
   )
 
