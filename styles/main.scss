@@ -12,3 +12,13 @@
 @import "./pages/login";
 @import "./pages/index";
 
+// Greg's experiments
+body {
+  background: url(/images/bg.gif);
+}
+nav {
+  background: none!important;
+}
+h1, p {
+  color: white!important
+}
