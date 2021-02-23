@@ -16,7 +16,7 @@ const Footer = () => {
         <div className="col-sm-3">
           <ul>
             <li><Link href="/terms"><a>Terms and Conditions</a></Link></li>
-            <li><Link href="/privacty"><a>Privacy</a></Link></li>
+            <li><Link href="/privacty"><a>Privacy Policy</a></Link></li>
           </ul>          
         </div>      
         <div className="col-sm-3">
