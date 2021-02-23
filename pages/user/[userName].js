@@ -35,8 +35,8 @@ const User = (props) => {
   return (
     <div className="container-fluid mt-3" id="play-content">
       <div className="row">
-        <div className="col-md-8 col-sm-12 pr-0">
-          <div id="play-video-container" style={{height: 0,width: "100%",paddingBottom: "56%",backgroundColor: "rgba(102, 102, 102, 1)",borderRadius: "0.75em"}}>
+        <div className="col-md-8 col-sm-12 play-video-container-wrapper">
+          <div id="play-video-container" style={{height: 0,width: "100%",paddingBottom: "56%",backgroundColor: "rgba(102, 102, 102, 1)"}}>
           {/*<div id="play-video-container" 
             style={{height: 0,width: "100%",paddingBottom: "57%",background: "url(https://media1.giphy.com/media/l1J9EdzfOSgfyueLm/giphy.gif) no-repeat",
   borderRadius: "0.75em",backgroundSize:"110%",backgroundPosition:"-10px" }}>*/}
@@ -65,7 +65,7 @@ const User = (props) => {
             </div>   
           </div>        
         </div>
-        <div className="col-md-4 col-sm-12">
+        <div className="col-md-4 col-sm-12 pl-0">
           <Chat/>
           
         </div>        

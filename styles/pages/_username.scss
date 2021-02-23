@@ -10,3 +10,18 @@
 iframe {
   border: none;
 }
+
+.play-video-container-wrapper {
+  @media (max-width: 767px) {
+    padding-right: 0;
+    padding-left: 0;
+  }
+}
+
+.user-payment,
+.user-info {
+  @media (max-width: 767px) {
+    padding-right: 2rem;
+    padding-left: 2rem;
+  }
+}
