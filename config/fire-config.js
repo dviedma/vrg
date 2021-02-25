@@ -1,13 +1,12 @@
 import firebase from 'firebase';
 
-const firebaseConfig = {
-  apiKey: "AIzaSyAAiDdYGqOGNeNtI1CAE7hxPITfWwBfFog",
-  authDomain: "vrg-2021.firebaseapp.com",
-  projectId: "vrg-2021",
-  storageBucket: "vrg-2021.appspot.com",
-  messagingSenderId: "1008057539735",
-  appId: "1:1008057539735:web:754bccb27e4334e46a9dd2",
-  measurementId: "G-BSYFN3QLCC"
+var firebaseConfig = {
+  apiKey: "AIzaSyAnRDHwtQ1djyuuipA9-mmMG8WU5n2eFo4",
+  authDomain: "blogapp-5d1b6.firebaseapp.com",
+  projectId: "blogapp-5d1b6",
+  storageBucket: "blogapp-5d1b6.appspot.com",
+  messagingSenderId: "99449019992",
+  appId: "1:99449019992:web:6b8d0e124d2b7f1ce4742d"
 };
 
 try {

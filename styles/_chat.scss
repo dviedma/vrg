@@ -6,7 +6,10 @@
 
 #chat-content {
   width: 100%;
-  height: calc(100% - 90px);
-  background-color: rgb(102, 102, 102);
-  border-radius: 0.75em;
+  background-color: white;
+
+  p {
+    color: black!important;
+  }
+  
 }

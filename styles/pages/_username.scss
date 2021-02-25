@@ -25,3 +25,12 @@ iframe {
     padding-left: 2rem;
   }
 }
+
+#play-content > .row {
+  height: calc(100vh - 70px);
+
+  & > div {
+    height: 100%;
+    overflow: auto;
+  }
+}
