@@ -14,6 +14,10 @@ const Chat = (props) => {
   useEffect(() => {
     let _chats;
 
+    if(!props.userName) {
+      return;
+    }
+
     fire.firestore()
       .collection('chats').doc(props.userName).collection(props.chatId)
       .onSnapshot(querySnapshot => {
@@ -59,7 +63,7 @@ const Chat = (props) => {
 
   return (
     <Fragment>
-<div id="chat-content">
+    <div id="chat-content">
       <div id="chat-area">
         {chats.map((chat, i) => {
           return <p key={i} className={"chat-bubble " + (user.currentUser.displayName === chat.userName ? "current-user" : "")}>
@@ -69,28 +73,29 @@ const Chat = (props) => {
           </p>
         })}
       </div>
+      <div id="chat-input">
+        {!user.loggedIn?
+          <Fragment>
+            <li className="nav-item ml-3">
+            <Link href="/register">
+                <a>Register</a>
+              </Link>
+            </li>
+            <li className="nav-item ml-3"> 
+              <Link href="/login">
+                <a> Login</a>
+              </Link>
+            </li>
+          </Fragment>
+        :
+          <form onSubmit={handleSubmit}>
+            <textarea className="form-control" value={content} onChange={({target}) => setContent(target.value)} />
+            <button type="submit" className="btn btn-submit px-5 mt-4">Send</button>
+          </form>
+        }
+      </div>        
     </div>
-    <div>
-      {!user.loggedIn?
-        <Fragment>
-          <li className="nav-item ml-3">
-          <Link href="/register">
-              <a>Register</a>
-            </Link>
-          </li>
-          <li className="nav-item ml-3"> 
-            <Link href="/login">
-              <a> Login</a>
-            </Link>
-          </li>
-        </Fragment>
-      :
-        <form onSubmit={handleSubmit}>
-          <textarea className="form-control" value={content} onChange={({target}) => setContent(target.value)} />
-          <button type="submit" className="btn btn-submit px-5 mt-4">Send</button>
-        </form>
-      }
-    </div>   
+     
     </Fragment>
      
   );

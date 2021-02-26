@@ -1,23 +1,13 @@
-#play-toggle {
-  float: right;
-}
 
-#player-video {
-  width: 100%;
-  border-radius: 0.75em;
-}
 
-iframe {
-  border: none;
-}
+// Layout
+#play-content > .row {
+  height: calc(100vh - 70px);
 
-.play-video-container-wrapper {
-  @media (max-width: 767px) {
-    padding-right: 0;
-    padding-left: 0;
+  & > div {
+    height: 100%;
   }
 }
-
 .user-payment,
 .user-info {
   @media (max-width: 767px) {
@@ -26,11 +16,65 @@ iframe {
   }
 }
 
-#play-content > .row {
-  height: calc(100vh - 70px);
+#chat-container {
+  &:before {
+    display: none;
 
-  & > div {
-    height: 100%;
-    overflow: auto;
+    @media (max-width: 767px) {
+      display: block;
+      content: "Chat";
+      position: absolute;
+      left: -45px;
+      top: 100px;
+      transform: rotate(270deg);
+      padding: 10px 15px 15px;
+      background: white;
+      border-radius: 10px;
+    }
   }
+
+  @media (max-width: 767px) {
+    position: absolute;
+    right: -66.6666%;
+  }
+}
+
+#paypal-container {
+  &:before {
+    display: none;
+
+    @media (max-width: 767px) {
+      display: block;
+      content: "PayPal";
+      position: absolute;
+      left: -45px;
+      top: 170px;
+      transform: rotate(270deg);
+      padding: 10px 15px 15px;
+      background: white;
+      border-radius: 10px;
+    }
+  }
+
+  @media (max-width: 767px) {
+    position: absolute;
+    right: -33.3333%;
+  }
+}
+
+// Player
+.play-video-container-wrapper {
+  #play-toggle {
+    float: right;
+  }
+
+  @media (max-width: 767px) {
+    padding-right: 0;
+    padding-left: 0;
+  }
+}
+
+// PayPal
+iframe {
+  border: none;
 }

@@ -36,11 +36,8 @@ const User = (props) => {
   return (
     <div className="container-fluid mt-3" id="play-content">
       <div className="row" style={{height:'calc(100vh - 70px)'}}>         
-        <div className="col-md-7 col-sm-12 play-video-container-wrapper">
+        <div className="col-md-7 play-video-container-wrapper">
           <div id="play-video-container" style={{height: 0,width: "100%",paddingBottom: "56%",backgroundColor: "rgba(102, 102, 102, 1)"}}>
-          {/*<div id="play-video-container" 
-            style={{height: 0,width: "100%",paddingBottom: "57%",background: "url(https://media1.giphy.com/media/l1J9EdzfOSgfyueLm/giphy.gif) no-repeat",
-  borderRadius: "0.75em",backgroundSize:"110%",backgroundPosition:"-10px" }}>*/}
             <Player />   
             <PlaySettingsForm />                 
           </div>
@@ -49,10 +46,10 @@ const User = (props) => {
             <p>Lorem ipsum dolor amet | NBA | NFL In for the fun 🏈 🏀 🏏</p>
           </div>     
         </div>
-        <div className="col-md-3 col-sm-12 pl-0">
+        <div className="col-md-3 col-8 pl-0" id="chat-container">
           {props.eventId? <Chat userName={props.userName} chatId={props.eventId}/> : ""}          
         </div> 
-        <div className="col-md-2 col-sm-12 pl-0">
+        <div className="col-md-2 col-4 pl-0" id="paypal-container">
           <div className="user-payment">
             {props.paypalMerchantId? 
               <Fragment>

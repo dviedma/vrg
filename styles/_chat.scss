@@ -7,6 +7,18 @@
 #chat-content {
   width: 100%;
   background-color: white;
+  height: calc(100% - 130px);
+  overflow: auto;
+
+  #chat-input {
+    position: absolute;
+  }
+
+  #chat-input {
+    position: absolute;
+    bottom: 0;
+    width: calc(100% - 1rem);
+  }
 
   p {
     color: black!important;

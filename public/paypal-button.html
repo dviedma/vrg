@@ -32,6 +32,13 @@
         cursor: pointer;
       }
 
+      @media (max-width: 1000px) {
+        .paypal-amount-minus,
+        .paypal-amount-plus {
+          display: none;
+        }
+      }
+
       .paypal-amount-wrapper {
 
       }
@@ -39,7 +46,7 @@
       #paypal-amount {
         font-size: 30px;
         transform: translateY(1px);
-        width: 100px;
+        width: 50px;
       }
 
       .paypal > div {
@@ -52,6 +59,10 @@
 
       iframe {
         border: none;
+      }
+
+      .paypal-buttons-context-iframe {
+        min-width: 100px!important;
       }
     </style>
 </head>
