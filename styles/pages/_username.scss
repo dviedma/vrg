@@ -17,19 +17,24 @@
 }
 
 #chat-container {
+  transition: right 0.5s;
+
   &:before {
     display: none;
 
     @media (max-width: 767px) {
+      background: url(/images/chat2.svg) no-repeat;
+      background-size: 30px 40px;
       display: block;
       content: "Chat";
+      color: transparent;
       position: absolute;
-      left: -45px;
-      top: 100px;
-      transform: rotate(270deg);
-      padding: 10px 15px 15px;
-      background: white;
+      left: -27px;
+      top: 57px;
+      padding: 10px 15px 4px;
+      background-color: white;
       border-radius: 10px;
+      cursor: pointer;
     }
   }
 
@@ -37,28 +42,48 @@
     position: absolute;
     right: -66.6666%;
   }
+
+  &.chat-active {
+    @media (max-width: 767px) {
+      right: -15px;
+    }
+  }
 }
 
 #paypal-container {
+  transition: right 0.5s;
+
   &:before {
     display: none;
+    font-family: 'Hind', sans-serif;
 
     @media (max-width: 767px) {
+      background: url(/images/money.svg) no-repeat;
+      background-size: 30px 31px;
+      background-position: 0px 5px;
       display: block;
-      content: "PayPal";
+      content: "Chat";
+      color: transparent;
       position: absolute;
-      left: -45px;
-      top: 170px;
-      transform: rotate(270deg);
-      padding: 10px 15px 15px;
-      background: white;
+      left: -27px;
+      top: 100px;
+      padding: 10px 15px 4px;
+      background-color: white;
       border-radius: 10px;
+      cursor: pointer;
     }
   }
 
   @media (max-width: 767px) {
     position: absolute;
     right: -33.3333%;
+  }
+
+  &.paypal-active {
+    @media (max-width: 767px) {
+      right: -15px;
+      //background-color: white;
+    }
   }
 }
 

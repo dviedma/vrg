@@ -10,8 +10,8 @@
   height: calc(100% - 130px);
   overflow: auto;
 
-  #chat-input {
-    position: absolute;
+  #chat-area {
+    padding: 1rem;
   }
 
   #chat-input {
@@ -22,6 +22,9 @@
 
   p {
     color: black!important;
-  }
-  
+
+    &.current-user {
+      text-align: right;
+    }
+  } 
 }

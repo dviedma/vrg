@@ -1,4 +1,4 @@
-import { Fragment, useEffect } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import Iframe from 'react-iframe'
 
@@ -12,9 +12,13 @@ import * as PlaySettingsActions from '../../actions/playSettingsActions';
 const User = (props) => {
   const dispatch = useDispatch();
 
+  const [isChatActive, setChatActive] = useState(false);
+  const [isPaypalActive, setPaypalActive] = useState(false);
+
   dispatch({type:PlaySettingsActions.SET_PLAY_SIGNALING_URL,signalingURL: props.wowza.sdpUrl});
   dispatch({type:PlaySettingsActions.SET_PLAY_APPLICATION_NAME,applicationName: props.wowza.applicationName});
   dispatch({type:PlaySettingsActions.SET_PLAY_STREAM_NAME,streamName: props.wowza.streamName});
+
 
   useEffect(() => {
     window.addEventListener('message', function(e) {
@@ -31,7 +35,7 @@ const User = (props) => {
       }
     });
   });
- 
+  
 
   return (
     <div className="container-fluid mt-3" id="play-content">
@@ -46,10 +50,10 @@ const User = (props) => {
             <p>Lorem ipsum dolor amet | NBA | NFL In for the fun 🏈 🏀 🏏</p>
           </div>     
         </div>
-        <div className="col-md-3 col-8 pl-0" id="chat-container">
+        <div className={`col-md-3 col-8 pl-0 ${isChatActive ? "chat-active" : ""}`} id="chat-container" onClick={() => setChatActive(!isChatActive)}>
           {props.eventId? <Chat userName={props.userName} chatId={props.eventId}/> : ""}          
         </div> 
-        <div className="col-md-2 col-4 pl-0" id="paypal-container">
+        <div className={`col-md-2 col-4 pl-0 ${isPaypalActive ? "paypal-active" : ""}`} id="paypal-container" onClick={() => setPaypalActive(!isPaypalActive)}>
           <div className="user-payment">
             {props.paypalMerchantId? 
               <Fragment>

@@ -67,9 +67,7 @@ const Chat = (props) => {
       <div id="chat-area">
         {chats.map((chat, i) => {
           return <p key={i} className={"chat-bubble " + (user.currentUser.displayName === chat.userName ? "current-user" : "")}>
-            {chat.content}
-            <br />
-            <span key={chat.timestamp} className="chat-time float-right">{formatTime(chat.timestamp)}</span>
+            <strong>{chat.userName}:</strong> {chat.content}
           </p>
         })}
       </div>
