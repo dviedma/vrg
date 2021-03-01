@@ -1,6 +1,10 @@
+import { useDispatch } from 'react-redux';
+
 import * as PlaySettingsActions from '../../actions/playSettingsActions';
 
 export default function handler(req, res) {
+  const dispatch = useDispatch();
+
   console.log(">>>> Incoming request", req.body);
   if (req.method === 'POST') {
     console.log(">>> POST:", req.body);
