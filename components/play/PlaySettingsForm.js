@@ -74,7 +74,7 @@ const PlaySettingsForm = () => {
         <button id="play-toggle" type="button" className="btn"
           disabled={playSettings.playStarting }
           onClick={(e)=>dispatch(PlaySettingsActions.startPlay())}
-        >Play</button>
+        >Play</button>//DV: we can remove this, player will start always automatically from Wowzak  
       }
       { webrtcPlay.connected &&
         <button id="play-toggle" type="button" className="btn"

@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import Iframe from 'react-iframe'
 
 import fire from '../../config/fire-config';
+import wowza from '../../config/wowza-config';
 
 import Player from '../../components/play/Player';
 import Chat from '../../components/chat/Chat';
@@ -19,10 +20,30 @@ const User = (props) => {
   dispatch({type:PlaySettingsActions.SET_PLAY_APPLICATION_NAME,applicationName: props.wowza.applicationName});
   dispatch({type:PlaySettingsActions.SET_PLAY_STREAM_NAME,streamName: props.wowza.streamName});
 
+  const getLiveStreamState = (channelId, callback) => {
+    console.log(">>> fetch getLiveStreamState")
+    fetch('https://api.cloud.wowza.com/api/beta/live_streams/' + channelId + '/state', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'wsc-api-key': wowza.apiKey,
+        'wsc-access-key': wowza.accessKey
+      }
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log(">>>>",data);
+      // DV: START IF NEEDED
+    })
+  }
+
 
   useEffect(() => {
-    window.addEventListener('message', function(e) {
+    // Get Live Stream State
+    getLiveStreamState(props.wowza.channelId);
 
+    // Listen for Payment Event
+    window.addEventListener('message', function(e) {
       const data = (typeof e.data === 'object')? e.data: JSON.parse(e.data);
       if(data.message == "PAYMENT SENT") {
         console.log("Payment Sent");
@@ -42,7 +63,7 @@ const User = (props) => {
       <div className="row" style={{height:'calc(100vh - 70px)'}}>         
         <div className="col-md-7 play-video-container-wrapper">
           <div id="play-video-container" style={{height: 0,width: "100%",paddingBottom: "56%",backgroundColor: "rgba(102, 102, 102, 1)"}}>
-            <Player />   
+            <Player channelId={props.wowza.channelId}/>   
             <PlaySettingsForm />                 
           </div>
           <div className="user-info ">

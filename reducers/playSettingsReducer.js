@@ -20,10 +20,19 @@ const playSettingsReducer = (state = initialState, action) => {
       return { ...state, streamName:action.streamName };
     case PlaySettingsActions.SET_PLAY_FLAGS:
       let playFlagsState = { ...state };
-      if (action.playStart != null) playFlagsState.playStart = action.playStart;
-      if (action.playStarting != null) playFlagsState.playStarting = action.playStarting;
-      if (action.playStop != null) playFlagsState.playStop = action.playStop;
-      if (action.playStopping != null) playFlagsState.playStopping = action.playStopping;
+      if (action.playStart != null) { 
+        playFlagsState.playStart = action.playStart;
+      }
+      if (action.playStarting != null) {
+        playFlagsState.playStarting = action.playStarting;
+      }
+      if (action.playStop != null) {
+        playFlagsState.playStop = action.playStop;
+      }
+      if (action.playStopping != null) {
+        playFlagsState.playStopping = action.playStopping;
+      }
+      playFlagsState.channelId = action.channelId;
       return playFlagsState;
     default:
       return state

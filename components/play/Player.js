@@ -8,7 +8,7 @@ import * as ErrorsActions from '../../actions/errorsActions';
 import startPlay from '../../webrtc/startPlay';
 import stopPlay from '../../webrtc/stopPlay';
 
-const Player = () => {
+const Player = (props) => {
 
   const videoElement = useRef(null);
 
@@ -21,7 +21,8 @@ const Player = () => {
 
   useEffect(() => {
 
-    if (playSettings.playStart && !playSettings.playStarting && !connected)
+    //DV: if(playSettings.playStart || playWowza && channelId == _channelId)
+    if (playSettings.playStart && !playSettings.playStarting && !connected && playSettings.channelId == props.channelId)
     {
       
       dispatch({type:PlaySettingsActions.SET_PLAY_FLAGS, playStart:false, playStarting:true});

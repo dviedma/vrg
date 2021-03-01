@@ -16,6 +16,7 @@ const PublishSettingsForm = () => {
   const webrtcPublish = useSelector ((state) => state.webrtcPublish);
   let timer;
 
+  //TODO: refactor in unified function
   const getLiveStreamState = (channelId, callback) => {
     console.log(">>> fetch getLiveStreamState")
     fetch('https://api.cloud.wowza.com/api/beta/live_streams/' + channelId + '/state', {
