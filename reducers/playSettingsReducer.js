@@ -32,7 +32,6 @@ const playSettingsReducer = (state = initialState, action) => {
       if (action.playStopping != null) {
         playFlagsState.playStopping = action.playStopping;
       }
-      playFlagsState.channelId = action.channelId;
       return playFlagsState;
     default:
       return state

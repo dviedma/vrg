@@ -22,7 +22,7 @@ const Player = (props) => {
   useEffect(() => {
 
     //DV: if(playSettings.playStart || playWowza && channelId == _channelId)
-    if (playSettings.playStart && !playSettings.playStarting && !connected && playSettings.channelId == props.channelId)
+    if (playSettings.playStart && !playSettings.playStarting && !connected)
     {
       
       dispatch({type:PlaySettingsActions.SET_PLAY_FLAGS, playStart:false, playStarting:true});
