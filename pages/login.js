@@ -37,9 +37,9 @@ const Login = () => {
         <div class="col col-sm-5 input-group">
           <h1>Welcome back</h1>
           <form onSubmit={handleLogin}>
-            <label class="form-label">Email</label>
+            <label className="form-label">Email</label>
             <input className="form-control" type="text" value={username} onChange={({target}) => setUsername(target.value)} />
-            <label class="form-label mt-3">Password</label>
+            <label className="form-label mt-3">Password</label>
             <input className="form-control" type="password" value={password} onChange={({target}) => setPassword(target.value)} />
             <button type="submit" className="btn mt-3">Login</button>
           </form>

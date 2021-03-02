@@ -1,14 +1,15 @@
 import fire from '../config/fire-config';
-import { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useState, useEffect, Fragment } from 'react';
+import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router'
-import Link from 'next/link'
 
 import Publish from '../components/publish/Publish';
 import * as PublishSettingsActions from '../actions/publishSettingsActions';
 
 import CompositorUserMedia from '../components/media/CompositorUserMedia';
 import Devices from '../components/media/Devices';
+import CreateEvent from '../components/event/CreateEvent';
+import ListEvents from '../components/event/ListEvents';
 
 import styles from '../styles/profile.module.scss'
 
@@ -46,12 +47,24 @@ const Profile = (props) => {
     });
 
   return (
-    <div className="container-fluid mt-3">
-      <CompositorUserMedia />
-      <Devices />
-      <h1 className={styles["myTitle"]}>Hi, {currentUser.displayName}</h1>
-      <Publish />
-    </div>
+    <Fragment>
+      <div className="container-fluid mt-3">
+        <CompositorUserMedia />
+        <Devices />
+        <h1 className={styles["myTitle"]}>Hi, {currentUser.displayName}</h1>
+        <Publish />
+      </div>
+      <div className="container-fluid mt-3">        
+        <div className="row">
+          <div className="col-md-6">
+            <ListEvents/>
+          </div>      
+          <div className="col-md-6 ">   
+            <CreateEvent/>
+          </div>
+        </div>
+      </div>
+    </Fragment>
     )
 }
 

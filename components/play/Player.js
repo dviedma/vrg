@@ -109,7 +109,7 @@ const Player = (props) => {
     return null;
 
   return (
-    <video id="player-video" ref={videoElement} autoPlay playsInline controls></video>
+    <video id="player-video" ref={videoElement} autoPlay playsInline controls muted></video>
   );
 }
 

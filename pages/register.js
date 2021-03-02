@@ -107,7 +107,7 @@ const Register = () => {
             <label className="form-label mt-3">Password Confirmation</label>
             <input className="form-control" type="password" value={passConf} onChange={({target}) => setPassConf(target.value)} /> 
             <button className="btn mt-3" type="submit">Register</button>
-            {isLoading && <img src="/loader.gif" width="100px" style={{display:"block"}}/>}
+            {isLoading && <img src="/images/loader.gif" width="100px" style={{display:"block"}}/>}
           </form>
           <p className="login-message mt-3">{notify}</p>
         </div>

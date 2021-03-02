@@ -5,7 +5,6 @@ import Link from 'next/link';
 import Head from 'next/head';
 
 import fire from '../config/fire-config';
-import CreatePost from '../components/CreatePost';
 
 
 const Home = () => {

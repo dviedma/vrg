@@ -57,7 +57,7 @@ const Chat = (props) => {
 
   const formatTime = (timestamp) => {
     const d = new Date(timestamp);
-    const time = `${d.getDate()}/${(d.getMonth()+1)}/${d.getFullYear()} ${d.getHours()}:${d.getMinutes()}`;
+    const time = ` ${d.getDate()}/${(d.getMonth()+1)}/${d.getFullYear()} ${d.getHours()}:${d.getMinutes()}`;
     return time;
   }
 
@@ -68,6 +68,7 @@ const Chat = (props) => {
         {chats.map((chat, i) => {
           return <p key={i} className={"chat-bubble " + (user.currentUser.displayName === chat.userName ? "current-user" : "")}>
             <strong>{chat.userName}:</strong> {chat.content}
+             {formatTime(chat.timestamp)}
           </p>
         })}
       </div>
