@@ -103,13 +103,13 @@ const CreateEvent = () => {
               <label class="form-label mt-3">Event Date</label>
             </div>
             <div className="col-sm-4 pr-0">
-              <label class="form-label mt-3">Event Duration</label>
+              <label className="form-label mt-3">Event Duration</label>
             </div>          
           <div className="col-sm-4 pl-0 pr-0">
             <input placeholder="mm/dd/yyyy" className="form-control" type="text" value={date} onChange={({target}) => setDate(target.value)} />
           </div>
           <div className="col-sm-4 pr-0">
-            <select class="form-control" aria-label="Default select example" onChange={({target}) => setTime(target.value)}>
+            <select className="form-control" aria-label="Default select example" onChange={({target}) => setTime(target.value)}>
               <option selected={time=="12:00am" && "selected"} value="12:00am">12:00am</option>
               <option selected={time=="12:30am" && "selected"} value="12:30am">12:30am</option>
               <option selected={time=="1:00am" && "selected"} value="1:00am">1:00am</option>

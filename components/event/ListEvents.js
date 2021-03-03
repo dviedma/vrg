@@ -30,7 +30,7 @@ const ListEvents = (props) => {
       <ul>
         {events.map(event =>
           <li key={event.uid} className={(isPastEvent(event)? "past-event" : "")}>
-            <Link href="/event/[userName]/[eventId]" as={'/event/'+ props.userName + '/' +event.id}>
+            <Link href="/user/[userName]/[eventId]" as={'/user/'+ props.userName + '/' +event.id}>
               <a>{event.title} on {event.startDate}</a>
             </Link>
             {isLiveEvent(event) && " LIVE"}
