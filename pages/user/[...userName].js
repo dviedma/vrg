@@ -22,8 +22,8 @@ const User = (props) => {
   dispatch({type:PlaySettingsActions.SET_PLAY_STREAM_NAME,streamName: props.wowza.streamName});
 
   useEffect(() => {
-    isChannelLive(props.userName, ()=> {
-      setChannelLive(true);
+    isChannelLive(props.userName, (event)=> {
+      setChannelLive(event);
     })
 
     // Get Live Stream State
@@ -57,7 +57,7 @@ const User = (props) => {
             <Player channelId={props.wowza.channelId}/>                  
           </div>
           <div className="user-info ">
-            <h1>{props.userName} {channelLive && "LIVE"}</h1>
+            <h1>{props.userName} {channelLive && ("LIVE " + channelLive.title)}</h1>
             <p>Lorem ipsum dolor amet | NBA | NFL In for the fun 🏈 🏀 🏏</p>
           </div>     
         </div>
