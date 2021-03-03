@@ -1,7 +1,8 @@
-import fire from '../../config/fire-config';
+//import fire from '../../config/fire-config';
 
 export default function handler(req, res) {
-  console.log("Hi Hook");
+  console.log(">>> Hi Hook");
+  /*
   if (req.method === 'POST') {
     fire.firestore()
       .collection('wowzaevents')
@@ -10,5 +11,6 @@ export default function handler(req, res) {
         action: req.body.action
       });
   }
+  */
   res.status(200).json(req)
 }
