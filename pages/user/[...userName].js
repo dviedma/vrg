@@ -4,6 +4,7 @@ import Iframe from 'react-iframe'
 
 import fire from '../../config/fire-config';
 import {getLiveStreamState} from '../../utils/LiveStreamUtils';
+import {isChannelLive} from '../../utils/EventUtils';
 
 import Player from '../../components/play/Player';
 import Chat from '../../components/chat/Chat';
@@ -14,12 +15,17 @@ const User = (props) => {
 
   const [isChatActive, setChatActive] = useState(false);
   const [isPaypalActive, setPaypalActive] = useState(false);
+  const [channelLive, setChannelLive] = useState(false);
 
   dispatch({type:PlaySettingsActions.SET_PLAY_SIGNALING_URL,signalingURL: props.wowza.sdpUrl});
   dispatch({type:PlaySettingsActions.SET_PLAY_APPLICATION_NAME,applicationName: props.wowza.applicationName});
   dispatch({type:PlaySettingsActions.SET_PLAY_STREAM_NAME,streamName: props.wowza.streamName});
 
   useEffect(() => {
+    isChannelLive(props.userName, ()=> {
+      setChannelLive(true);
+    })
+
     // Get Live Stream State
     getLiveStreamState(props.wowza.channelId, (data)=> {
       if(data.live_stream.state == "started") {
@@ -51,7 +57,7 @@ const User = (props) => {
             <Player channelId={props.wowza.channelId}/>                  
           </div>
           <div className="user-info ">
-            <h1>{props.userName}</h1>
+            <h1>{props.userName} {channelLive && "LIVE"}</h1>
             <p>Lorem ipsum dolor amet | NBA | NFL In for the fun 🏈 🏀 🏏</p>
           </div>     
         </div>

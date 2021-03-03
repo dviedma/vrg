@@ -1,7 +1,6 @@
 import wowza from '../config/wowza-config';
 
 export const getLiveStreamState = (channelId, callback) => {
-  console.log(">>> fetch getLiveStreamState")
   fetch('https://api.cloud.wowza.com/api/beta/live_streams/' + channelId + '/state', {
     method: 'GET',
     headers: {
