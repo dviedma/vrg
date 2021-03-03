@@ -9,7 +9,7 @@ import Player from '../../components/play/Player';
 import Chat from '../../components/chat/Chat';
 import * as PlaySettingsActions from '../../actions/playSettingsActions';
 
-const User = (props) => {
+const Event = (props) => {
   const dispatch = useDispatch();
 
   const [isChatActive, setChatActive] = useState(false);

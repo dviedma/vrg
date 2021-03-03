@@ -22,6 +22,8 @@ const User = (props) => {
   dispatch({type:PlaySettingsActions.SET_PLAY_STREAM_NAME,streamName: props.wowza.streamName});
 
   useEffect(() => {
+    console.log("useEffect");
+
     isChannelLive(props.userName, (event)=> {
       setChannelLive(event);
     })
@@ -46,7 +48,7 @@ const User = (props) => {
         }, 2000);
       }
     });
-  });
+  },[isChatActive]);
   
 
   return (

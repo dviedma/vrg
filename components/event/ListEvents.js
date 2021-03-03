@@ -33,7 +33,7 @@ const ListEvents = (props) => {
             <Link href="/user/[userName]/[eventId]" as={'/user/'+ props.userName + '/' +event.id}>
               <a>{event.title} on {event.startDate}</a>
             </Link>
-            {isLiveEvent(event) && " LIVE"}
+            {isLiveEvent(event) && " LIVE"} 
           </li>
         )}
       </ul>
