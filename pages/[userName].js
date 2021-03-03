@@ -2,47 +2,38 @@ import { Fragment, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import Iframe from 'react-iframe'
 
-import fire from '../../config/fire-config';
-import wowza from '../../config/wowza-config';
+import fire from '../config/fire-config';
+import {getLiveStreamState} from '../utils/LiveStreamUtils';
+import {isChannelLive} from '../utils/EventUtils';
 
-import Player from '../../components/play/Player';
-import Chat from '../../components/chat/Chat';
-import * as PlaySettingsActions from '../../actions/playSettingsActions';
+import Player from '../components/play/Player';
+import Chat from '../components/chat/Chat';
+import * as PlaySettingsActions from '../actions/playSettingsActions';
 
-const Event = (props) => {
+const User = (props) => {
   const dispatch = useDispatch();
 
   const [isChatActive, setChatActive] = useState(false);
   const [isPaypalActive, setPaypalActive] = useState(false);
+  const [channelLive, setChannelLive] = useState(false);
 
   dispatch({type:PlaySettingsActions.SET_PLAY_SIGNALING_URL,signalingURL: props.wowza.sdpUrl});
   dispatch({type:PlaySettingsActions.SET_PLAY_APPLICATION_NAME,applicationName: props.wowza.applicationName});
   dispatch({type:PlaySettingsActions.SET_PLAY_STREAM_NAME,streamName: props.wowza.streamName});
 
-  const getLiveStreamState = (channelId, callback) => {
-    console.log(">>> fetch getLiveStreamState")
-    fetch('https://api.cloud.wowza.com/api/beta/live_streams/' + channelId + '/state', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'wsc-api-key': wowza.apiKey,
-        'wsc-access-key': wowza.accessKey
-      }
-    })
-    .then(response => response.json())
-    .then(data => {
-      console.log(">>>>",data);
-      if(data.live_stream.state == "started") {
-        console.log(">>> STARTED!!");
-        dispatch(PlaySettingsActions.startPlay());
-      }   
-    })
-  }
-
-
   useEffect(() => {
+    console.log("useEffect");
+
+    isChannelLive(props.userName, (event)=> {
+      setChannelLive(event);
+    })
+
     // Get Live Stream State
-    getLiveStreamState(props.wowza.channelId);
+    getLiveStreamState(props.wowza.channelId, (data)=> {
+      if(data.live_stream.state == "started") {
+        dispatch(PlaySettingsActions.startPlay());
+      }        
+    });
 
     // Listen for Payment Event
     window.addEventListener('message', function(e) {
@@ -57,7 +48,7 @@ const Event = (props) => {
         }, 2000);
       }
     });
-  });
+  },[isChatActive]);
   
 
   return (
@@ -68,12 +59,12 @@ const Event = (props) => {
             <Player channelId={props.wowza.channelId}/>                  
           </div>
           <div className="user-info ">
-            <h1>{props.userName}</h1>
+            <h1>{props.userName} {channelLive && ("LIVE " + channelLive.title)}</h1>
             <p>Lorem ipsum dolor amet | NBA | NFL In for the fun 🏈 🏀 🏏</p>
           </div>     
         </div>
         <div className={`col-md-3 col-8 pl-0 ${isChatActive ? "chat-active" : ""}`} id="chat-container" onClick={() => setChatActive(!isChatActive)}>
-          {props.eventId? <Chat userName={props.userName} chatId={props.eventId}/> : ""}          
+          <Chat userName={props.userName} chatId={props.eventId}/>        
         </div> 
         <div className={`col-md-2 col-4 pl-0 ${isPaypalActive ? "paypal-active" : ""}`} id="paypal-container" onClick={() => setPaypalActive(!isPaypalActive)}>
           <div className="user-payment">
@@ -113,7 +104,7 @@ export const getServerSideProps = async ({ params }) => {
   const content = {}
   
   await fire.firestore()
-    .collection('users').where("userName", "==", params.userName[0])
+    .collection('users').where("userName", "==", params.userName)
     .get()
     .then(querySnapshot => {
       querySnapshot.forEach((doc) => {
@@ -130,7 +121,7 @@ export const getServerSideProps = async ({ params }) => {
       userId: content.userId,
       wowza: content.wowza,
       paypalMerchantId: content.paypalMerchantId,
-      eventId: params.userName[1]? params.userName[1] : 0       
+      eventId: params.userName[1]? params.userName[1] : 0     //DV: not in use  
     }
   }
 }
