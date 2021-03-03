@@ -1,6 +1,7 @@
 import fire from '../../config/fire-config';
 
 export default function handler(req, res) {
+  console.log("Hi Hook");
   if (req.method === 'POST') {
     fire.firestore()
       .collection('wowzaevents')
