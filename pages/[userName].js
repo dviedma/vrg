@@ -103,9 +103,8 @@ export async function getStaticPaths() {
 export const getServerSideProps = async ({ params }) => {
   const content = {}
   
-  console.log(">>>");
   await fire.firestore()
-    .collection('users').where("userName", "==", params.userName[0])
+    .collection('users').where("userName", "==", params.userName)
     .get()
     .then(querySnapshot => {
       querySnapshot.forEach((doc) => {
