@@ -6,7 +6,6 @@ export const isPastEvent = (event) => {
 
 export const isLiveEvent = (event) => {
   let i = Interval.fromDateTimes(DateTime.fromMillis(event.startTs), DateTime.fromMillis(event.endTs));
-  console.log(">>>i", i);
   return i.contains(DateTime.now());
 }
 

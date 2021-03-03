@@ -14,11 +14,12 @@ const ListEvents = (props) => {
     fire.firestore()
       .collection('events').where("userName", "==", props.userName)
       .onSnapshot(snap => {
-        const events = snap.docs.map(doc => ({
+        let events = snap.docs.map(doc => ({
           id: doc.id,
           ...doc.data()
         }));
-        events.sort((a, b) => { return a.date - b.date })
+        events = events.filter(event => !isPastEvent(event));
+        events.sort((a, b) => { return a.startTs - b.startTs })
         setEvents(events);
       });
   }, []);
