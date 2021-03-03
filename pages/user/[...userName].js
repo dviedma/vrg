@@ -3,11 +3,10 @@ import { useDispatch } from 'react-redux';
 import Iframe from 'react-iframe'
 
 import fire from '../../config/fire-config';
-import wowza from '../../config/wowza-config';
+import {getLiveStreamState} from '../../utils/LiveStreamUtils';
 
 import Player from '../../components/play/Player';
 import Chat from '../../components/chat/Chat';
-import PlaySettingsForm from '../../components/play/PlaySettingsForm';
 import * as PlaySettingsActions from '../../actions/playSettingsActions';
 
 const User = (props) => {
@@ -20,30 +19,13 @@ const User = (props) => {
   dispatch({type:PlaySettingsActions.SET_PLAY_APPLICATION_NAME,applicationName: props.wowza.applicationName});
   dispatch({type:PlaySettingsActions.SET_PLAY_STREAM_NAME,streamName: props.wowza.streamName});
 
-  const getLiveStreamState = (channelId, callback) => {
-    console.log(">>> fetch getLiveStreamState")
-    fetch('https://api.cloud.wowza.com/api/beta/live_streams/' + channelId + '/state', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'wsc-api-key': wowza.apiKey,
-        'wsc-access-key': wowza.accessKey
-      }
-    })
-    .then(response => response.json())
-    .then(data => {
-      console.log(">>>>",data);
-      if(data.live_stream.state == "started") {
-        console.log(">>> STARTED!!");
-        dispatch(PlaySettingsActions.startPlay());
-      }   
-    })
-  }
-
-
   useEffect(() => {
     // Get Live Stream State
-    getLiveStreamState(props.wowza.channelId);
+    getLiveStreamState(props.wowza.channelId, (data)=> {
+      if(data.live_stream.state == "started") {
+        dispatch(PlaySettingsActions.startPlay());
+      }        
+    });
 
     // Listen for Payment Event
     window.addEventListener('message', function(e) {
@@ -74,7 +56,7 @@ const User = (props) => {
           </div>     
         </div>
         <div className={`col-md-3 col-8 pl-0 ${isChatActive ? "chat-active" : ""}`} id="chat-container" onClick={() => setChatActive(!isChatActive)}>
-          {props.eventId? <Chat userName={props.userName} chatId={props.eventId}/> : ""}          
+          <Chat userName={props.userName} chatId={props.eventId}/>        
         </div> 
         <div className={`col-md-2 col-4 pl-0 ${isPaypalActive ? "paypal-active" : ""}`} id="paypal-container" onClick={() => setPaypalActive(!isPaypalActive)}>
           <div className="user-payment">
@@ -131,7 +113,7 @@ export const getServerSideProps = async ({ params }) => {
       userId: content.userId,
       wowza: content.wowza,
       paypalMerchantId: content.paypalMerchantId,
-      eventId: params.userName[1]? params.userName[1] : 0       
+      eventId: params.userName[1]? params.userName[1] : 0     //DV: not in use  
     }
   }
 }

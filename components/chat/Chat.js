@@ -19,7 +19,7 @@ const Chat = (props) => {
     }
 
     fire.firestore()
-      .collection('chats').doc(props.userName).collection(props.chatId)
+      .collection('chats'+props.userName)
       .onSnapshot(querySnapshot => {
         _chats = [];
         querySnapshot.forEach((doc) => {
@@ -32,14 +32,13 @@ const Chat = (props) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    //const chatArea = this.myRef.current;
 
     console.log(content, user.currentUser.displayName);
 
     try {
 
       fire.firestore()
-      .collection('chats').doc(props.userName).collection(props.chatId)
+      .collection('chats'+props.userName)
       .add({
         content: content,
         timestamp: Date.now(),

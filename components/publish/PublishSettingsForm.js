@@ -6,6 +6,8 @@ import * as PublishOptions from '../../constants/PublishOptions';
 import PublishAudioDropdown from './PublishAudioDropdown';
 import PublishVideoDropdown from './PublishVideoDropdown';
 
+import {getLiveStreamState} from '../../utils/LiveStreamUtils';
+
 import wowza from '../../config/wowza-config';
 
 const PublishSettingsForm = () => {
@@ -16,28 +18,6 @@ const PublishSettingsForm = () => {
   const webrtcPublish = useSelector ((state) => state.webrtcPublish);
   let timer;
 
-  //TODO: refactor in unified function
-  const getLiveStreamState = (channelId, callback) => {
-    console.log(">>> fetch getLiveStreamState")
-    fetch('https://api.cloud.wowza.com/api/beta/live_streams/' + channelId + '/state', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'wsc-api-key': wowza.apiKey,
-        'wsc-access-key': wowza.accessKey
-      }
-    })
-    .then(response => response.json())
-    .then(data => {
-      console.log(">>> DATA getLiveStreamState", data)
-      if(data.live_stream.state == "started") {
-        console.log(">>> STARTED!!");
-        clearInterval(timer);
-        setStartingLiveStream(false);
-        dispatch(PublishSettingsActions.startPublish())
-      }    
-    })
-  }
 
   return (
     <div className="col-md-4 col-sm-12" id="publish-settings">
@@ -71,12 +51,16 @@ const PublishSettingsForm = () => {
                   })
                   .then(response => response.json())
                   .then(data => {
-                    console.log("DATA", data)
-
                     timer = setInterval(()=> {
-                      getLiveStreamState(publishSettings.channelId);
+                      // Get Live Stream State
+                      getLiveStreamState(publishSettings.channelId, (data)=> {
+                        if(data.live_stream.state == "started") {
+                          clearInterval(timer);
+                          setStartingLiveStream(false);
+                          dispatch(PublishSettingsActions.startPublish())
+                        }       
+                      });                      
                     }, 1000);
-
                   })
 
                 }}

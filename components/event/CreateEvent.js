@@ -100,7 +100,7 @@ const CreateEvent = () => {
             <input className="form-control" type="text" value={title} onChange={({target}) => setTitle(target.value)} />
           </div>
           <div className="col-sm-8 pl-0 pr-0">
-              <label class="form-label mt-3">Event Date</label>
+              <label className="form-label mt-3">Event Date</label>
             </div>
             <div className="col-sm-4 pr-0">
               <label className="form-label mt-3">Event Duration</label>
@@ -161,7 +161,7 @@ const CreateEvent = () => {
             </select> 
           </div>    
           <div className="col-sm-4 pr-0">
-            <select class="form-control" aria-label="Default select example" onChange={({target}) => setDuration(target.value)}>
+            <select className="form-control" aria-label="Default select example" onChange={({target}) => setDuration(target.value)}>
               <option selected={duration==1 && "selected"} value="1">1 hour</option>
               <option selected={duration==2 && "selected"} value="2">2 hour</option>
               <option selected={duration==3 && "selected"} value="3">3 hour</option>
