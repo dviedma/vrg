@@ -40,7 +40,7 @@ const Home = () => {
         {users.map(user =>
           <li key={user.userName}>
             <Link href="/user/[userName]" as={'/user/' + user.userName }>
-              <a itemProp="hello">{user.userName}</a>
+              <a>{user.userName}</a>
             </Link>
           </li>
         )}

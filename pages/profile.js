@@ -57,7 +57,7 @@ const Profile = (props) => {
       <div className="container-fluid mt-3">        
         <div className="row">
           <div className="col-md-6">
-            <ListEvents/>
+            {currentUser.displayName && <ListEvents userName={currentUser.displayName}/>}
           </div>      
           <div className="col-md-6 ">   
             <CreateEvent/>
