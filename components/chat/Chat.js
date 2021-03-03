@@ -18,8 +18,9 @@ const Chat = (props) => {
       return;
     }
 
+    console.log(">>>");
     fire.firestore()
-      .collection('chats'+props.userName)
+      .collection('chats_'+props.userName)
       .onSnapshot(querySnapshot => {
         _chats = [];
         querySnapshot.forEach((doc) => {
@@ -38,7 +39,7 @@ const Chat = (props) => {
     try {
 
       fire.firestore()
-      .collection('chats'+props.userName)
+      .collection('chats_'+props.userName)
       .add({
         content: content,
         timestamp: Date.now(),

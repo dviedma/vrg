@@ -7,7 +7,6 @@ import wowza from '../../config/wowza-config';
 
 import Player from '../../components/play/Player';
 import Chat from '../../components/chat/Chat';
-import PlaySettingsForm from '../../components/play/PlaySettingsForm';
 import * as PlaySettingsActions from '../../actions/playSettingsActions';
 
 const User = (props) => {
