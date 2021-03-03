@@ -2,13 +2,13 @@ import { Fragment, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import Iframe from 'react-iframe'
 
-import fire from '../config/fire-config';
-import {getLiveStreamState} from '../utils/LiveStreamUtils';
-import {isChannelLive} from '../utils/EventUtils';
+import fire from '../../config/fire-config';
+import {getLiveStreamState} from '../../utils/LiveStreamUtils';
+import {isChannelLive} from '../../utils/EventUtils';
 
-import Player from '../components/play/Player';
-import Chat from '../components/chat/Chat';
-import * as PlaySettingsActions from '../actions/playSettingsActions';
+import Player from '../../components/play/Player';
+import Chat from '../../components/chat/Chat';
+import * as PlaySettingsActions from '../../actions/playSettingsActions';
 
 const User = (props) => {
   const dispatch = useDispatch();
