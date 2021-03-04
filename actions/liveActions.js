@@ -1,0 +1,2 @@
+export const SET_USER_LIVE_ON='SET_USER_LIVE_ON';
+export const SET_USER_LIVE_OFF='SET_USER_LIVE_OFF';

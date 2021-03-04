@@ -22,6 +22,18 @@ export default function Layout({ Component, pageProps }) {
           dispatch ({type:UserActions.SET_USER_LOGGED_OUT});
         }
       })
+
+    // Get live updates from Wowza
+    fire.firestore()
+      .collection('wowzaevents')
+      .orderBy("timestamp", "desc")
+      .limit(1)      
+      .onSnapshot(snap => {
+        console.log(">>>> wowzaevents changed");
+        snap.forEach(function(doc) {
+          console.log(">>>", doc.id, doc.data());
+        });
+      });      
   });
 
   return (
