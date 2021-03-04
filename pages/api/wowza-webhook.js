@@ -3,7 +3,7 @@ import fire from '../../config/fire-config';
 export default function handler(req, res) {
   console.log("req.method", req.method, req.body.event);
   if (req.method == "POST") {
-    console.log("adding to DB");
+    console.log("adding to DB", req.body);
     fire.firestore()
       .collection('wowzaevents')
       .add({
