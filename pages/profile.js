@@ -1,6 +1,6 @@
 import fire from '../config/fire-config';
 import { useState, useEffect, Fragment } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router'
 
 import Publish from '../components/publish/Publish';
@@ -13,14 +13,31 @@ import ListEvents from '../components/event/ListEvents';
 
 import styles from '../styles/profile.module.scss'
 
+import wowza from '../config/wowza-config';
+
 const Profile = (props) => {
 
   const [currentUser, setCurrentUser] = useState({});
   const router = useRouter();
   const dispatch = useDispatch();
+  const publishSettings = useSelector ((state) => state.publishSettings);
 
   useEffect(() => {
-    console.log(styles)
+    console.log("useEffect");
+    window.onbeforeunload = function(){
+      return 'Leave the page will stop the live stream';
+    };
+    window.onunload = function() {
+      dispatch(PublishSettingsActions.stopPublish());
+      fetch('https://api.cloud.wowza.com/api/beta/live_streams/' + publishSettings.channelId + '/stop', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'wsc-api-key': wowza.apiKey,
+          'wsc-access-key': wowza.accessKey
+        }
+      })
+    }
     
     // Get logged in state
     fire.auth()
@@ -44,7 +61,7 @@ const Profile = (props) => {
           router.push("/login")
         }
       })
-    });
+    }, []);
 
   return (
     <Fragment>

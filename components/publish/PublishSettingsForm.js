@@ -2,7 +2,6 @@ import { useState, useEffect, Fragment } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import * as PublishSettingsActions from '../../actions/publishSettingsActions';
-import * as PublishOptions from '../../constants/PublishOptions';
 import PublishAudioDropdown from './PublishAudioDropdown';
 import PublishVideoDropdown from './PublishVideoDropdown';
 

@@ -18,6 +18,7 @@ const User = (props) => {
   const [isChatActive, setChatActive] = useState(false);
   const [isPaypalActive, setPaypalActive] = useState(false);
   const [channelLive, setChannelLive] = useState(false);
+  const [isWowzaLive, setWowzaLive] = useState(false);
 
   dispatch({type:PlaySettingsActions.SET_PLAY_SIGNALING_URL,signalingURL: props.wowza.sdpUrl});
   dispatch({type:PlaySettingsActions.SET_PLAY_APPLICATION_NAME,applicationName: props.wowza.applicationName});
@@ -29,6 +30,12 @@ const User = (props) => {
     })
 
     console.log("LIVE", live);
+    for (const channel in live) {
+      if(channel == props.wowza.channelId && live[channel].live) {
+        console.log("SET WOWZA LIVEE");
+        setWowzaLive(true);
+      }
+    }
 
     // Get Live Stream State
     getLiveStreamState(props.wowza.channelId, (data)=> {
@@ -51,7 +58,7 @@ const User = (props) => {
         }, 2000);
       }
     });
-  },[live]);
+  });
   
 
   return (
