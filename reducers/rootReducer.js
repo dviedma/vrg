@@ -9,6 +9,7 @@ import webrtcPublish from './webrtcPublishReducer';
 import webrtcPlay from './webrtcPlayReducer';
 import webrtcMeeting from './webrtcMeetingReducer';
 import user from './userReducer';
+import live from './liveReducer';
 
 const rootReducer = combineReducers({
   errors,
@@ -19,7 +20,8 @@ const rootReducer = combineReducers({
   webrtcPublish,
   webrtcPlay,
   webrtcMeeting,
-  user
+  user,
+  live
 })
 
 export default rootReducer;

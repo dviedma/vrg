@@ -1,8 +1,6 @@
 import * as LiveActions from '../actions/liveActions';
 
-const initialState = {
-  liveUsers: []
-}
+const initialState = {}
 
 const liveReducer = (state = initialState, action) => {
   let liveState = { ...state };
@@ -14,6 +12,9 @@ const liveReducer = (state = initialState, action) => {
       liveState[action.channelId].live = true; 
       return liveState;  
     case LiveActions.SET_USER_LIVE_OFF:
+      if(!liveState[action.channelId]) {
+        liveState[action.channelId] = {};
+      }       
       liveState[action.channelId].live = false;   
       return liveState;
     default:

@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Iframe from 'react-iframe'
 
 import fire from '../config/fire-config';
@@ -12,6 +12,8 @@ import * as PlaySettingsActions from '../actions/playSettingsActions';
 
 const User = (props) => {
   const dispatch = useDispatch();
+  const live = useSelector ((state) => state.live);
+
 
   const [isChatActive, setChatActive] = useState(false);
   const [isPaypalActive, setPaypalActive] = useState(false);
@@ -22,8 +24,6 @@ const User = (props) => {
   dispatch({type:PlaySettingsActions.SET_PLAY_STREAM_NAME,streamName: props.wowza.streamName});
 
   useEffect(() => {
-    console.log("useEffect");
-
     isChannelLive(props.userName, (event)=> {
       setChannelLive(event);
     })
@@ -31,6 +31,7 @@ const User = (props) => {
     // Get Live Stream State
     getLiveStreamState(props.wowza.channelId, (data)=> {
       if(data.live_stream.state == "started") {
+        console.log("START PLAY!");
         dispatch(PlaySettingsActions.startPlay());
       }        
     });
@@ -48,7 +49,7 @@ const User = (props) => {
         }, 2000);
       }
     });
-  },[isChatActive]);
+  },[live]);
   
 
   return (

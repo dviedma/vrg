@@ -7,6 +7,7 @@ import Errors from '../components/shell/Errors';
 import fire from '../config/fire-config';
 
 import * as UserActions from '../actions/userActions';
+import * as LiveActions from '../actions/liveActions';
 
 export default function Layout({ Component, pageProps }) {
 
@@ -31,7 +32,11 @@ export default function Layout({ Component, pageProps }) {
       .onSnapshot(snap => {
         console.log(">>>> wowzaevents changed");
         snap.forEach(function(doc) {
-          console.log(">>>", doc.id, doc.data());
+          if(doc.data().event == "video.started") {
+            dispatch ({type:LiveActions.SET_USER_LIVE_ON, channelId:doc.data().channelId});
+          }else {
+            dispatch ({type:LiveActions.SET_USER_LIVE_OFF, channelId:doc.data().channelId});
+          }
         });
       });      
   });
