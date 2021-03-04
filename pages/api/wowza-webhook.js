@@ -12,9 +12,15 @@ export default function handler(req, res) {
         fire.firestore()
         .collection('wowzaevents')
         .add({
-          channelId: req.body.object_id,
-          event: req.body.event
-        });
+          channelId: "test",
+          event: "test"
+        })
+        .then((result) => {
+          console.log("Success adding", result);
+        })
+        .catch((err) => {
+          console.log(err.code, err.message)
+        })    
       })
       .catch((err) => {
         console.log(err.code, err.message)
