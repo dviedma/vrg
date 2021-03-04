@@ -157,6 +157,7 @@ const websocketSendPlayGetOffer = (playSettings, websocket) => {
 
 const startPlay = (playSettings, websocket, callbacks) => 
 {
+  console.log("startPlay")
   try {
     if (websocket == null)
     {

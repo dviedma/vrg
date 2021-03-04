@@ -85,6 +85,7 @@ const Player = (props) => {
 
   useEffect(() => {
 
+
     if (connected)
     {
       let newStream = new MediaStream();

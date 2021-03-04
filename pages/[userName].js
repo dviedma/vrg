@@ -29,19 +29,21 @@ const User = (props) => {
       setChannelLive(event);
     })
 
-    console.log("LIVE", live);
+    console.log(">>> LIVE", live);
     for (const channel in live) {
       if(channel == props.wowza.channelId && live[channel].live) {
-        console.log("SET WOWZA LIVEE");
-        setWowzaLive(true);
+        //console.log("SET WOWZA LIVEE");
+        //setWowzaLive(true);
       }
     }
 
     // Get Live Stream State
     getLiveStreamState(props.wowza.channelId, (data)=> {
-      if(data.live_stream.state == "started") {
-        console.log("START PLAY!");
-        dispatch(PlaySettingsActions.startPlay());
+      if(data.live_stream.state == "started") {        
+        setTimeout(()=> {
+          console.log("START PLAY!");
+          dispatch(PlaySettingsActions.startPlay());
+        }, 5000)        
       }        
     });
 
