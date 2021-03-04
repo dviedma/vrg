@@ -1,9 +1,10 @@
 import fire from '../../config/fire-config';
 
 export default function handler(req, res) {
-  console.log(">>> Hi Hook");
+  console.log(">>> Hi Hook req:", req.body);
   
-  if (req.method === 'POST') {
+  /*
+  if (req.method === 'POST' && (req.body.action == "video.started" || req.body.action == "video.stopped")) {
     console.log(">>> Adding object to DB");
     fire.firestore()
       .collection('wowzaevents')
@@ -12,6 +13,7 @@ export default function handler(req, res) {
         action: req.body.action
       });
   }
+  */
   
   res.status(200).json(req)
 }
