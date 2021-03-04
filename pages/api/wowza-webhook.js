@@ -6,10 +6,8 @@ export default function handler(req, res) {
   //if (req.method === 'POST' && (req.body.event == "video.started" || req.body.event == "video.stopped")) {
     console.log(">>> Adding object to DB", req.body.object_id, req.body.event);
 
-    fire.auth()
-      .signInWithEmailAndPassword("wowza@wowza.com", "Wowza123!")
-      .then((result) => {
-        fire.firestore()
+
+      fire.firestore()
         .collection('wowzaevents')
         .add({
           channelId: req.body.object_id,
@@ -21,10 +19,6 @@ export default function handler(req, res) {
         .catch((err) => {
           console.log(err.code, err.message)
         })    
-      })
-      .catch((err) => {
-        console.log(err.code, err.message)
-      })    
 
   //}
   
