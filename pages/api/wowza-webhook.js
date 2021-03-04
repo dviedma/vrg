@@ -4,7 +4,7 @@ export default function handler(req, res) {
   console.log(">>> Hi Hook req:", req.body);
   
   //if (req.method === 'POST' && (req.body.event == "video.started" || req.body.event == "video.stopped")) {
-    console.log(">>> Adding object to DB");
+    console.log(">>> Adding object to DB", req.body.object_id, req.body.event);
 
     fire.auth()
       .signInWithEmailAndPassword("wowza@wowza.com", "Wowza123!")
