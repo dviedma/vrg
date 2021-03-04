@@ -3,13 +3,13 @@ import fire from '../../config/fire-config';
 export default function handler(req, res) {
   console.log("req.method", req.method, req.body.event);
   if (req.method == "POST") {
-    console.log("adding to DB", req.body);
+    console.log("adding to DB with req.body.event_time", req.body.event_time);
     fire.firestore()
       .collection('wowzaevents')
       .add({
         channelId: req.body.object_id,
         event: req.body.event,
-        timestamp: req.body.event_time
+        timestamp: fire.firestore.FieldValue.serverTimestamp()
       })
       .then((result) => {
         console.log("Success adding", result);
