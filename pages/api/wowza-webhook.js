@@ -12,8 +12,8 @@ export default function handler(req, res) {
         fire.firestore()
         .collection('wowzaevents')
         .add({
-          channelId: "test",
-          event: "test"
+          channelId: req.body.object_id,
+          event: req.body.event
         })
         .then((result) => {
           console.log("Success adding", result);
