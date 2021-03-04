@@ -33,8 +33,10 @@ export default function Layout({ Component, pageProps }) {
         console.log(">>>> wowzaevents changed");
         snap.forEach(function(doc) {
           if(doc.data().event == "video.started") {
+            console.log("START!")
             dispatch ({type:LiveActions.SET_USER_LIVE_ON, channelId:doc.data().channelId});
           }else {
+            console.log("END!")
             dispatch ({type:LiveActions.SET_USER_LIVE_OFF, channelId:doc.data().channelId});
           }
         });

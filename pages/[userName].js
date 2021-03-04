@@ -28,6 +28,8 @@ const User = (props) => {
       setChannelLive(event);
     })
 
+    console.log("LIVE", live);
+
     // Get Live Stream State
     getLiveStreamState(props.wowza.channelId, (data)=> {
       if(data.live_stream.state == "started") {
