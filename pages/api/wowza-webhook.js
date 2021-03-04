@@ -9,7 +9,7 @@ export default function handler(req, res) {
       .add({
         channelId: req.body.object_id,
         event: req.body.event,
-        timestamp: req.body.message.timestamp
+        timestamp: req.body.event_time
       })
       .then((result) => {
         console.log("Success adding", result);
