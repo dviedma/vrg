@@ -1,7 +1,9 @@
 import fire from '../../config/fire-config';
 
 export default function handler(req, res) {
-  if (req.method === 'POST' && (req.body.event == "video.started" || req.body.event == "video.stopped")) {
+  console.log("req.method", req.method);
+  if (req.method == "POST" && (req.body.event == "video.started" || req.body.event == "video.stopped")) {
+    console.log("adding to DB");
     fire.firestore()
       .collection('wowzaevents')
       .add({
