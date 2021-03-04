@@ -2,15 +2,17 @@ import fire from '../../config/fire-config';
 
 export default function handler(req, res) {
 
-    console.log("adding to DB with", req.body.event);
+    console.log("Event", req.body.event);
 
-    //if (req.method == "POST" && (req.body.event == "video.started" || req.body.event == "video.stopped")) {
+    if (req.method == "POST" && (req.body.event == "video.started" || req.body.event == "video.stopped")) {
+
+      console.log("adding to DB");
       fire.firestore()
       .collection('wowzaevents')
       .add({
-        channelId: "test",
-        event: "test",
-        timestamp: "test"
+        channelId: req.body.object_id,
+        event: req.body.event,
+        timestamp: fire.firestore.FieldValue.serverTimestamp()
       })
       .then((result) => {
         console.log("Success adding");
@@ -18,7 +20,7 @@ export default function handler(req, res) {
       .catch((err) => {
         console.log(err.code, err.message)
       })   
-    //}
+    }
  
   res.status(200).json(req)
 }
