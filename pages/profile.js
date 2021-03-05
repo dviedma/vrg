@@ -24,39 +24,7 @@ const Profile = (props) => {
   const dispatch = useDispatch();
   const webrtcPublish = useSelector ((state) => state.webrtcPublish);
 
-  /*
-  const message = 'Do you want to leave?',
-  unsavedChanges = true;
-
   useEffect(() => {
-    const routeChangeStart = url => {
-      if (Router.asPath !== url && unsavedChanges && !confirm(message)) {
-        Router.events.emit('routeChangeError');
-        Router.replace(Router, Router.asPath);
-        throw 'Abort route change. Please ignore this error.';
-      }
-    };
-
-    const beforeunload = e => {
-      if (unsavedChanges) {
-        e.preventDefault();
-        e.returnValue = message;
-        return message;
-      }
-    };
-
-    window.addEventListener('beforeunload', beforeunload);
-    Router.events.on('routeChangeStart', routeChangeStart);
-
-    return () => {
-      window.removeEventListener('beforeunload', beforeunload);
-      Router.events.off('routeChangeStart', routeChangeStart);
-    };
-  });
-  */
-
-  useEffect(() => {
-    console.log("webrtcPublish.connected", webrtcPublish.connected);
     useWarnIfUnsavedChanges(webrtcPublish.connected);
     
     // Get logged in state
@@ -85,7 +53,7 @@ const Profile = (props) => {
 
   return (
     <Fragment>
-      <div className="container-fluid mt-3" id="myElement">
+      <div className="container-fluid mt-3">
         <CompositorUserMedia />
         <Devices />
         <h1 className={styles["myTitle"]}>Hi, {currentUser.displayName}</h1>
@@ -96,7 +64,7 @@ const Profile = (props) => {
           <div className="col-md-6">
             {currentUser.displayName && <ListEvents userName={currentUser.displayName}/>}
           </div>      
-          <div className="col-md-6 ">   
+          <div className="col-md-6 mt-3">   
             <CreateEvent/>
           </div>
         </div>

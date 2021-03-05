@@ -25,8 +25,8 @@ const ListEvents = (props) => {
   }, []);
 
   return (
-    <Fragment>
-    <h2>Upcoming Events</h2>
+    <div className="list-events">
+      <h2>Upcoming Events</h2>
       <ul>
         {events.map(event =>
           <li key={event.uid} className={(isPastEvent(event)? "past-event" : "")}>
@@ -37,7 +37,7 @@ const ListEvents = (props) => {
           </li>
         )}
       </ul>
-      </Fragment>
+    </div>
   )
 }
 
