@@ -10,15 +10,16 @@ const Chat = (props) => {
   const user = useSelector ((state) => state.user);
   const [content, setContent] = useState('');
   const [chats, setChats] = useState([]);
+  const myRef = React.createRef();
 
   useEffect(() => {
     let _chats;
+    const chatArea = myRef.current;
 
     if(!props.userName) {
       return;
     }
 
-    console.log(">>>");
     fire.firestore()
       .collection('chats_'+props.userName)
       .onSnapshot(querySnapshot => {
@@ -27,6 +28,7 @@ const Chat = (props) => {
           _chats.push(doc.data());
         });
         _chats.sort((a, b) => { return a.timestamp - b.timestamp })
+        chatArea.scrollBy(0, chatArea.scrollHeight);
         setChats(_chats);
       });
   },[]);
@@ -34,10 +36,9 @@ const Chat = (props) => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    console.log(content, user.currentUser.displayName);
+    const chatArea = myRef.current;
 
     try {
-
       fire.firestore()
       .collection('chats_'+props.userName)
       .add({
@@ -47,8 +48,7 @@ const Chat = (props) => {
       });
 
       setContent('');
-
-      //chatArea.scrollBy(0, chatArea.scrollHeight);
+      chatArea.scrollBy(0, chatArea.scrollHeight);
       
     } catch (error) {
       console.log(error);
@@ -63,7 +63,7 @@ const Chat = (props) => {
 
   return (
     <Fragment>
-    <div id="chat-content">
+    <div id="chat-content" ref={myRef}>
       <div id="chat-area">
         {chats.map((chat, i) => {
           return <p key={i} className={"chat-bubble " + (user.currentUser.displayName === chat.userName ? "current-user" : "")}>
@@ -71,28 +71,26 @@ const Chat = (props) => {
           </p>
         })}
       </div>
-      <div id="chat-input">
+
+    </div>
+    <div id="chat-input">
         {!user.loggedIn?
-          <Fragment>
-            <li className="nav-item ml-3">
+          <div>
+            Please 
+            <Link href="/login">
+              <a> Login</a>
+            </Link> or 
             <Link href="/register">
-                <a>Register</a>
-              </Link>
-            </li>
-            <li className="nav-item ml-3"> 
-              <Link href="/login">
-                <a> Login</a>
-              </Link>
-            </li>
-          </Fragment>
+              <a> Register</a>
+            </Link> to chat
+          </div>
         :
           <form onSubmit={handleSubmit}>
-            <textarea className="form-control" value={content} onChange={({target}) => setContent(target.value)} />
+            <input type="text" className="form-control" value={content} onChange={({target}) => setContent(target.value)} />
             <button type="submit" className="btn btn-submit px-5 mt-4">Send</button>
           </form>
         }
-      </div>        
-    </div>
+      </div> 
      
     </Fragment>
      
