@@ -2,7 +2,7 @@ import fire from '../../config/fire-config';
 
 export default function handler(req, res) {
 
-    console.log("Event", req.body.event);
+    console.log("Event", req.body);
 
     if (req.method == "POST" && (req.body.event == "video.started" || req.body.event == "video.stopped")) {
 
