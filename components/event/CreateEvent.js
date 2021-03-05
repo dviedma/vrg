@@ -55,6 +55,13 @@ const CreateEvent = () => {
 
     endDt = startDt.plus({hours: duration});
 
+    if(DateTime.now().ts > endDt.ts) {
+      setNotification("Start date can't be a past date");
+      setTimeout(() => {
+        setNotification('')
+      }, 5000);      
+    }
+
     return [startDt, endDt];
   }
 
