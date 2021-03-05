@@ -2,6 +2,9 @@ import fire from '../config/fire-config';
 import { useState, useEffect, Fragment } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router'
+import Router from 'next/router';
+
+import {useWarnIfUnsavedChanges} from '../utils/exitPageWarning';
 
 import Publish from '../components/publish/Publish';
 import * as PublishSettingsActions from '../actions/publishSettingsActions';
@@ -13,31 +16,48 @@ import ListEvents from '../components/event/ListEvents';
 
 import styles from '../styles/profile.module.scss'
 
-import wowza from '../config/wowza-config';
 
 const Profile = (props) => {
 
   const [currentUser, setCurrentUser] = useState({});
   const router = useRouter();
   const dispatch = useDispatch();
-  const publishSettings = useSelector ((state) => state.publishSettings);
+  const webrtcPublish = useSelector ((state) => state.webrtcPublish);
+
+  /*
+  const message = 'Do you want to leave?',
+  unsavedChanges = true;
 
   useEffect(() => {
-    console.log("useEffect");
-    window.onbeforeunload = function(){
-      return 'Leave the page will stop the live stream';
+    const routeChangeStart = url => {
+      if (Router.asPath !== url && unsavedChanges && !confirm(message)) {
+        Router.events.emit('routeChangeError');
+        Router.replace(Router, Router.asPath);
+        throw 'Abort route change. Please ignore this error.';
+      }
     };
-    window.onunload = function() {
-      dispatch(PublishSettingsActions.stopPublish());
-      fetch('https://api.cloud.wowza.com/api/beta/live_streams/' + publishSettings.channelId + '/stop', {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'wsc-api-key': wowza.apiKey,
-          'wsc-access-key': wowza.accessKey
-        }
-      })
-    }
+
+    const beforeunload = e => {
+      if (unsavedChanges) {
+        e.preventDefault();
+        e.returnValue = message;
+        return message;
+      }
+    };
+
+    window.addEventListener('beforeunload', beforeunload);
+    Router.events.on('routeChangeStart', routeChangeStart);
+
+    return () => {
+      window.removeEventListener('beforeunload', beforeunload);
+      Router.events.off('routeChangeStart', routeChangeStart);
+    };
+  });
+  */
+
+  useEffect(() => {
+    console.log("webrtcPublish.connected", webrtcPublish.connected);
+    useWarnIfUnsavedChanges(webrtcPublish.connected);
     
     // Get logged in state
     fire.auth()
@@ -61,11 +81,11 @@ const Profile = (props) => {
           router.push("/login")
         }
       })
-    }, []);
+    }, [webrtcPublish.connected]);
 
   return (
     <Fragment>
-      <div className="container-fluid mt-3">
+      <div className="container-fluid mt-3" id="myElement">
         <CompositorUserMedia />
         <Devices />
         <h1 className={styles["myTitle"]}>Hi, {currentUser.displayName}</h1>
