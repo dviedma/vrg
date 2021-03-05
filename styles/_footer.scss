@@ -1,8 +1,8 @@
 footer {
-  border-top: 2px solid;
+  border-top: 2px solid white;
   border-image-slice: 1;
   border-width: 2px;
-  border-image-source: linear-gradient(to left, $base2, $accent3);
+  //border-image-source: linear-gradient(to left, $base2, $accent3);
   margin-top: 100px;
 
   li {

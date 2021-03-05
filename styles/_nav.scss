@@ -1,9 +1,9 @@
 nav {
   background-color: $accent2;
-  border-bottom: 2px solid;
+  border-bottom: 2px solid white;
   border-image-slice: 1;
   border-width: 2px;
-  border-image-source: linear-gradient(to left, $base2, $accent3);
+  //border-image-source: linear-gradient(to left, $base2, $accent3);
 
   a {
     color: $base2;

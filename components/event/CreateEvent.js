@@ -94,7 +94,7 @@ const CreateEvent = () => {
      <Fragment>
        <h2>Schedule Event</h2>
      
-        <form onSubmit={handleSubmit} className="input-group">
+        <form onSubmit={handleSubmit} className="input-group" style={{padding:'1rem', border: '2px solid white'}}>
           <div className="col-sm-12 pl-0 pr-0">
             <label className="form-label">Event Title</label>
             <input className="form-control" type="text" value={title} onChange={({target}) => setTitle(target.value)} />
