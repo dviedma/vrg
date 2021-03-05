@@ -12,7 +12,7 @@ export default function handler(req, res) {
       .add({
         channelId: req.body.object_id,
         event: req.body.event,
-        timestamp: fire.firestore.FieldValue.serverTimestamp()
+        timestamp: event_time
       })
       .then((result) => {
         console.log("Success adding");
