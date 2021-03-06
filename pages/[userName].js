@@ -61,6 +61,15 @@ const User = (props) => {
       }
     });
   });
+
+  const handleChatClick = (e) => {
+    const target = e.target;
+    console.log(target.getAttribute("id"));
+
+    if(target.getAttribute("id") && target.getAttribute("id") != "chat-input") {
+      setChatActive(!isChatActive);
+    }    
+  }
   
 
   return (
@@ -75,10 +84,10 @@ const User = (props) => {
             <p>Lorem ipsum dolor amet | NBA | NFL In for the fun 🏈 🏀 🏏</p>
           </div>     
         </div>
-        <div className={`col-md-3 col-8 pl-0 ${isChatActive ? "chat-active" : ""}`} id="chat-container" onClick={() => setChatActive(!isChatActive)}>
+        <div className={`col-md-3 col-11 pl-0 ${isChatActive ? "chat-active" : ""}`} id="chat-container" onClick={(e) => handleChatClick(e)}>
           <Chat userName={props.userName} chatId={props.eventId}/>        
         </div> 
-        <div className={`col-md-2 col-4 pl-0 ${isPaypalActive ? "paypal-active" : ""}`} id="paypal-container" onClick={() => setPaypalActive(!isPaypalActive)}>
+        <div className={`col-md-2 col-11 pl-0 ${isPaypalActive ? "paypal-active" : ""}`} id="paypal-container" onClick={() => setPaypalActive(!isPaypalActive)}>
           <div className="user-payment">
             {props.paypalMerchantId? 
               <Fragment>

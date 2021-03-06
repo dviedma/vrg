@@ -10,6 +10,10 @@
   height: calc(100% - 130px);
   overflow: auto;
 
+  @media (max-width: 767px) {
+    background-color: rgba(255,255,255,0.5);
+  }
+
   #chat-area {
     padding: 1rem;
   }
@@ -27,4 +31,39 @@
       text-align: right;
     }
   } 
+}
+
+#chat-container {
+  transition: right 0.5s;
+
+  &:before {
+    display: none;
+
+    @media (max-width: 767px) {
+      background: url(/images/chat2.svg) no-repeat;
+      background-size: 30px 40px;
+      display: block;
+      content: "Chat";
+      color: transparent;
+      position: absolute;
+      left: -28px;
+      top: 57px;
+      padding: 10px 0px 4px;
+      background-color: rgba(255, 255, 255, 0.5);
+      border-top-left-radius: 10px;
+      cursor: pointer;
+      border-bottom-left-radius: 10px;
+    }
+  }
+
+  @media (max-width: 767px) {
+    position: absolute;
+    right: -91.6666%;
+  }
+
+  &.chat-active {
+    @media (max-width: 767px) {
+      right: -15px;
+    }
+  }
 }

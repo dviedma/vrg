@@ -87,7 +87,7 @@ const Chat = (props) => {
           </div>
         :
           <form onSubmit={handleSubmit}>
-            <input type="text" className="form-control" value={content} onChange={({target}) => setContent(target.value)} />
+            <input type="text" id="chat-input" className="form-control" value={content} onChange={({target}) => setContent(target.value)} />
             <button type="submit" className="btn btn-submit px-5 mt-4">Send</button>
           </form>
         }
