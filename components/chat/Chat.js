@@ -28,7 +28,9 @@ const Chat = (props) => {
           _chats.push(doc.data());
         });
         _chats.sort((a, b) => { return a.timestamp - b.timestamp })
-        chatArea.scrollBy(0, chatArea.scrollHeight);
+        setTimeout(()=>{
+          chatArea.scrollBy(0, chatArea.scrollHeight);
+        },500)      
         setChats(_chats);
       });
   },[]);
@@ -48,7 +50,6 @@ const Chat = (props) => {
       });
 
       setContent('');
-      chatArea.scrollBy(0, chatArea.scrollHeight);
       
     } catch (error) {
       console.log(error);
