@@ -11,7 +11,7 @@ const ListEvents = (props) => {
   const slugify = require('@sindresorhus/slugify');
 
   useEffect(() => {
-    // Get list of events
+    // Get list of events 
     fire.firestore()
       .collection('events').where("userName", "==", props.userName)
       .onSnapshot(snap => {
@@ -27,7 +27,7 @@ const ListEvents = (props) => {
 
   return (
     <div className="list-events">
-      <h2>Upcoming Events</h2>
+      <h2 className="test">Upcoming Events</h2>
       <ul>
         {events.map(event =>
           <li key={event.uid} className={(isPastEvent(event)? "past-event" : "")}>
