@@ -8,6 +8,7 @@ var { DateTime } = require('luxon');
 
 const ListEvents = (props) => {
   const [events, setEvents] = useState([]);
+  const slugify = require('@sindresorhus/slugify');
 
   useEffect(() => {
     // Get list of events
@@ -30,7 +31,7 @@ const ListEvents = (props) => {
       <ul>
         {events.map(event =>
           <li key={event.uid} className={(isPastEvent(event)? "past-event" : "")}>
-            <Link href="/user/[userName]/[eventId]" as={'/user/'+ props.userName + '/' +event.id}>
+            <Link href="/event/[eventId]/[eventSlu]" as={'/event/' + event.id + '/' + slugify(event.title)}>
               <a>{event.title} on {event.startDate}</a>
             </Link>
             {isLiveEvent(event) && " LIVE"} 
