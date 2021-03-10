@@ -36,3 +36,37 @@
 iframe {
   border: none;
 }
+.paypal {
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.paypal-amount-minus,
+.paypal-amount-plus {
+  font-size: 30px;
+  padding: 0 10px;
+  cursor: pointer;
+}
+
+@media (max-width: 1000px) {
+  .paypal-amount-minus,
+  .paypal-amount-plus {
+    display: none;
+  }
+}
+
+#paypal-amount {
+  font-size: 30px;
+  transform: translateY(1px);
+  width: 50px;
+}
+
+.paypal > div {
+  display: inline-block;
+}
+
+.paypal .paypal-dollar-sign {
+  font-size: 20px;
+}

@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Iframe from 'react-iframe'
+import { PayPalButton } from "react-paypal-button-v2";
 
 import fire from '../config/fire-config';
 import {getLiveStreamState} from '../utils/LiveStreamUtils';
@@ -20,10 +20,16 @@ const User = (props) => {
   const [channelLive, setChannelLive] = useState(false);
   const [isWowzaLive, setWowzaLive] = useState(false);
 
+  const [amount, setAmount] = useState(10);
+
   dispatch({type:PlaySettingsActions.SET_PLAY_SIGNALING_URL,signalingURL: props.wowza.sdpUrl});
   dispatch({type:PlaySettingsActions.SET_PLAY_APPLICATION_NAME,applicationName: props.wowza.applicationName});
   dispatch({type:PlaySettingsActions.SET_PLAY_STREAM_NAME,streamName: props.wowza.streamName});
 
+  /**
+   * 
+   * useEffect()
+   */
   useEffect(() => {
     isChannelLive(props.userName, (event)=> {
       setChannelLive(event);
@@ -46,22 +52,12 @@ const User = (props) => {
         }, 5000)        
       }        
     });
-
-    // Listen for Payment Event
-    window.addEventListener('message', function(e) {
-      const data = (typeof e.data === 'object')? e.data: JSON.parse(e.data);
-      if(data.message == "PAYMENT SENT") {
-        console.log("Payment Sent");
-        confetti.start();
-        var audio = new Audio('/sounds/applause.wav');
-        audio.play();
-        setTimeout(()=> {
-          confetti.stop();
-        }, 2000);
-      }
-    });
   });
 
+  /** 
+   * 
+   * Chat
+  */
   const handleChatClick = (e) => {
     const target = e.target;
     console.log(target.getAttribute("id"));
@@ -70,6 +66,11 @@ const User = (props) => {
       setChatActive(!isChatActive);
     }    
   }
+
+  /** 
+   * 
+   * Paypal
+   */
   
 
   return (
@@ -92,14 +93,27 @@ const User = (props) => {
             {props.paypalMerchantId? 
               <Fragment>
                 <p style={{fontWeight:'bold'}} className="mt-2 mb-0">Pay {props.userName}</p>
-                <Iframe url={'/paypal-button.html?paypalMerchantId=' + props.paypalMerchantId}
-                  width="100%"
-                  height="400px"
-                  id="myId"
-                  className="myClassname"
-                  display="initial"
-                  style={{border:'none'}}
-                  position="relative"/></Fragment>
+                <div className="paypal">
+                  <div className="paypal-amount-wrapper"><div className="paypal-amount-minus">-</div></div>
+                  <div className="paypal-dollar-sign">$</div><input onChange={({target}) => setAmount(target.value)} type="text" value={amount} id="paypal-amount"/>
+                  <div className="paypal-amount-wrapper"><div className="paypal-amount-plus">+</div></div>
+                </div>                
+                <PayPalButton
+                  amount={amount}
+                  onSuccess={(details, data) => {
+                    confetti.start();
+                    var audio = new Audio('/sounds/applause.wav');
+                    audio.play();
+                    setTimeout(()=> {
+                      confetti.stop();
+                    }, 2000);
+                  }}
+                  options={{
+                    clientId: "AXS3AfceAxeZzmSDiOS_NfLcG5ioqXDZUtSyJtl7ctXqLfBxyRr_jPuiNzpIaIIyZHqHbXjjp1T7qxSw",
+                    merchantId: props.paypalMerchantId
+                  }}
+                  style={{ color: "blue", shape: "pill", label: "pay", height: 25 }}
+                /></Fragment>
             : ""
             }   
           </div>                  
