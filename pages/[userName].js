@@ -71,7 +71,6 @@ const User = (props) => {
    * 
    * Paypal
    */
-  
 
   return (
     <div className="container-fluid mt-3" id="play-content">
@@ -94,9 +93,9 @@ const User = (props) => {
               <Fragment>
                 <p style={{fontWeight:'bold'}} className="mt-2 mb-0">Pay {props.userName}</p>
                 <div className="paypal">
-                  <div className="paypal-amount-wrapper"><div className="paypal-amount-minus">-</div></div>
+                  {/*<div className="paypal-amount-wrapper"><div className="paypal-amount-minus">-</div></div>*/}
                   <div className="paypal-dollar-sign">$</div><input onChange={({target}) => setAmount(target.value)} type="text" value={amount} id="paypal-amount"/>
-                  <div className="paypal-amount-wrapper"><div className="paypal-amount-plus">+</div></div>
+                  {/*<div className="paypal-amount-wrapper"><div className="paypal-amount-plus">+</div></div>*/}
                 </div>                
                 <PayPalButton
                   amount={amount}

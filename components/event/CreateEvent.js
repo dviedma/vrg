@@ -10,6 +10,8 @@ const CreateEvent = () => {
   const [date, setDate] = useState('');
   const [time, setTime] = useState('12:00pm');
   const [duration, setDuration] = useState('2');
+  const [spots, setSpots] = useState('');
+  const [price, setPrice] = useState('');
   const [notification, setNotification] = useState('');
 
   const user = useSelector ((state) => state.user);
@@ -60,6 +62,7 @@ const CreateEvent = () => {
       setTimeout(() => {
         setNotification('')
       }, 5000);      
+      return null;
     }
 
     return [startDt, endDt];
@@ -85,7 +88,9 @@ const CreateEvent = () => {
         endTs: startEndDateTime[1].ts,
         endDate: startEndDateTime[1].toLocaleString(DateTime.DATETIME_FULL),        
         userName: user.currentUser.displayName,
-        userId: user.currentUser.uid
+        userId: user.currentUser.uid,
+        spots: Number(spots),
+        price: Number(price)
       });
 
     setNotification('Event scheduled');
@@ -93,7 +98,9 @@ const CreateEvent = () => {
       setTitle('');
       setDate('');
       setTime('12:00pm');
-      setDuration('2');      
+      setDuration('2'); 
+      setSpots('');     
+      setPrice('');
       setNotification('')
     }, 5000)
   }
@@ -107,11 +114,11 @@ const CreateEvent = () => {
             <input className="form-control" type="text" value={title} onChange={({target}) => setTitle(target.value)} />
           </div>
           <div className="col-sm-8 pl-0 pr-0">
-              <label className="form-label mt-3">Event Date</label>
-            </div>
-            <div className="col-sm-4 pr-0">
-              <label className="form-label mt-3">Event Duration</label>
-            </div>          
+            <label className="form-label mt-3">Event Date</label>
+          </div>
+          <div className="col-sm-4 pr-0">
+            <label className="form-label mt-3">Event Duration</label>
+          </div>          
           <div className="col-sm-4 pl-0 pr-0">
             <input placeholder="mm/dd/yyyy" className="form-control" type="text" value={date} onChange={({target}) => setDate(target.value)} />
           </div>
@@ -175,7 +182,15 @@ const CreateEvent = () => {
               <option selected={duration==4 && "selected"} value="4">4 hour</option>
               <option selected={duration==5 && "selected"} value="5">5 hour</option>
             </select>                   
-          </div>                
+          </div>    
+          <div className="col-sm-4 pl-0 pr-0">
+            <label className="form-label mt-3">Spots</label>
+            <input className="form-control" type="number" value={spots} onChange={({target}) => setSpots(target.value)} />
+          </div>    
+          <div className="col-sm-4 pr-0">
+            <label className="form-label mt-3">Price per ticket ($)</label>
+            <input className="form-control" type="number" value={price} onChange={({target}) => setPrice(target.value)} />
+          </div>              
           <div className="col-sm-12 pl-0 pr-0 mb-3">
             <button type="submit" className="btn mt-3">Save</button>
           </div>                
