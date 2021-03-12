@@ -2,6 +2,7 @@ import { useState, Fragment } from 'react';
 import { useSelector } from 'react-redux';
 
 import fire from '../../config/fire-config';
+import 'firebase/storage';
 
 var { DateTime } = require('luxon');
 
@@ -12,9 +13,13 @@ const CreateEvent = () => {
   const [duration, setDuration] = useState('2');
   const [spots, setSpots] = useState('');
   const [price, setPrice] = useState('');
+  const [image, setImage] = useState(null);
   const [notification, setNotification] = useState('');
 
   const user = useSelector ((state) => state.user);
+
+  const storageService = fire.storage();
+  const storageRef = storageService.ref();
 
   // return millisecons
   const handleDate = () => {
@@ -68,17 +73,30 @@ const CreateEvent = () => {
     return [startDt, endDt];
   }
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
+    //1. run validations
     let startEndDateTime = [];
-
     startEndDateTime = handleDate();
-
     if(!startEndDateTime) {
       return;
     }
 
+    //2. upload image (async await)
+    console.log("uploading...", image)
+    let snapshot,
+        imagePath;
+    await storageRef.child(`images/events/${image.name}`).put(image).then((snap) => {
+      console.log('Uploaded a blob or file!', snap);
+      snapshot = snap;
+    });
+    await snapshot.ref.getDownloadURL().then((downloadURL) => {
+      console.log('File available at', downloadURL);
+      imagePath = downloadURL;
+    });
+
+    //3. create event
     fire.firestore()
       .collection('events')
       .add({
@@ -90,9 +108,11 @@ const CreateEvent = () => {
         userName: user.currentUser.displayName,
         userId: user.currentUser.uid,
         spots: Number(spots),
-        price: Number(price)
+        price: Number(price),
+        image: imagePath
       });
 
+    //4. reset form
     setNotification('Event scheduled');
     setTimeout(() => {
       setTitle('');
@@ -101,9 +121,11 @@ const CreateEvent = () => {
       setDuration('2'); 
       setSpots('');     
       setPrice('');
+      setImage(null);
       setNotification('')
     }, 5000)
   }
+
   return (
      <Fragment>
        <h2>Schedule Event</h2>
@@ -188,9 +210,16 @@ const CreateEvent = () => {
             <input className="form-control" type="number" value={spots} onChange={({target}) => setSpots(target.value)} />
           </div>    
           <div className="col-sm-4 pr-0">
-            <label className="form-label mt-3">Price per ticket ($)</label>
+            <label className="form-label mt-3">Price/ticket ($)</label>
             <input className="form-control" type="number" value={price} onChange={({target}) => setPrice(target.value)} />
-          </div>              
+          </div>     
+          <div className="col-sm-12 pl-0 pr-0">
+          <label className="form-label mt-3">Event Image</label>
+            <div className="input-group mb-3">
+              <input type="file" className="form-control" id="inputGroupFile02" onChange={({target}) => setImage(target.files[0])}/>
+              <button className="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04">Upload</button>   
+            </div>         
+          </div>         
           <div className="col-sm-12 pl-0 pr-0 mb-3">
             <button type="submit" className="btn mt-3">Save</button>
           </div>                
