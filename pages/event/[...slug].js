@@ -53,8 +53,8 @@ const Event = (props) => {
             }}      
 
             onSuccess={(details, data) => {
-              let newSpots = spots - 1;
-
+              let newSpots = spots - (details.purchase_units[0].amount.value / props.price);
+              
               // Celebrate
               confetti.start();
               setTimeout(()=> {
