@@ -6,7 +6,14 @@ import fire from '../../config/fire-config';
 
 const Event = (props) => {
   let [spots, setSpots] = useState(props.spots);
+  let [quantity, setQuantity] = useState(1);
   let image = (props.image)? props.image : "/images/box-placeholder.jpg";
+
+  const handleQuantityChange = (value) => {
+    if(value <= spots) {
+      setQuantity(value);
+    }
+  }
 
   return (
     <div className="container mt-5">
@@ -17,7 +24,12 @@ const Event = (props) => {
         <div className="col-sm-5">
           <h1 className="d-block">{props.title}</h1>
           <h2 className="mt-3 d-block">${props.price}</h2>
-          <p className="mt-3 d-block">{spots} spots available</p>  
+          <p className="mt-3 pb-3 mb-3 d-block" style={{borderBottom:'1px solid rgba(255,255,255,0.5)'}}>{spots} spots available</p>  
+          <p>
+            <span>Buy</span>
+            <input className="form-control d-inline mr-3 ml-3" style={{width:'60px'}} type="number" value={quantity} onChange={({target}) => handleQuantityChange(target.value)} />
+            <span>spot(s)</span>
+          </p>          
           {
             spots > 0 &&
             <PayPalButton
@@ -25,20 +37,21 @@ const Event = (props) => {
               return actions.order.create({
                 purchase_units: [{
                   amount: {
-                      value: props.price,
+                      value: (props.price * quantity),
                       currency_code: 'USD',
                       breakdown: {
-                          item_total: {value: props.price, currency_code: 'USD'}
+                          item_total: {value: (props.price * quantity), currency_code: 'USD'}
                       }
                   },
                   items: [{
                       name: `${props.title} by ${props.userName} on ${props.startDate}`,
-                      unit_amount: {value: props.price, currency_code: 'USD'},
-                      quantity: '1'
+                      unit_amount: {value: 20, currency_code: 'USD'},
+                      quantity: quantity
                   }]
               }]
               });
-            }}                
+            }}      
+
             onSuccess={(details, data) => {
               let newSpots = spots - 1;
 
@@ -60,6 +73,7 @@ const Event = (props) => {
               merchantId: "6VQF5USW5N7BA"
             }}
             style={{ color: "blue", shape: "pill", label: "pay", height: 25 }}
+            forceReRender={quantity}
           />   
           }   
         </div>      
