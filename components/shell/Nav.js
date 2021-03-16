@@ -3,14 +3,14 @@ import { useSelector } from 'react-redux';
 
 import Link from 'next/link';
 
-import fire from '../../config/fire-config';
+import {firebase} from '../../config/fire-config';
 
 const Nav = () => {
 
   const user = useSelector ((state) => state.user);
 
   const handleLogout = () => {
-    fire.auth()
+    firebase.auth()
       .signOut()
       .then(() => {
         // logged out

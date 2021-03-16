@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 
 import Link from 'next/link';
 
-import fire from '../../config/fire-config';
+import {firebase} from '../../config/fire-config';
 
 const Chat = (props) => {
 
@@ -20,7 +20,7 @@ const Chat = (props) => {
       return;
     }
 
-    fire.firestore()
+    firebase.firestore()
       .collection('chats_'+props.userName)
       .onSnapshot(querySnapshot => {
         _chats = [];
@@ -41,7 +41,7 @@ const Chat = (props) => {
     const chatArea = myRef.current;
 
     try {
-      fire.firestore()
+      firebase.firestore()
       .collection('chats_'+props.userName)
       .add({
         content: content,

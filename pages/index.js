@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import Link from 'next/link';
 import Head from 'next/head';
 
-import fire from '../config/fire-config';
+import {firebase} from '../config/fire-config';
 
 
 const Home = () => {
@@ -12,7 +12,7 @@ const Home = () => {
 
   useEffect(() => {
     // Get list of users
-    fire.firestore()
+    firebase.firestore()
       .collection('users')
       .onSnapshot(snap => {
         const users = snap.docs.map(doc => ({

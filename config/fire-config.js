@@ -1,4 +1,7 @@
-import firebase from 'firebase';
+import firebase from "firebase/app";
+import 'firebase/analytics';
+import 'firebase/firebase-firestore';
+import 'firebase/auth';
 
 var firebaseConfig = {
   apiKey: "AIzaSyAAiDdYGqOGNeNtI1CAE7hxPITfWwBfFog",
@@ -10,12 +13,9 @@ var firebaseConfig = {
   measurementId: "G-BSYFN3QLCC"
 };
 
-try {
+if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
-} catch(err){
-  if (!/already exists/.test(err.message)) {
-    console.error('Firebase initialization error', err.stack)}
 }
+const analytics = firebase.analytics;
 
-const fire = firebase;
-export default fire;
+export { firebase, analytics };

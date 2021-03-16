@@ -1,5 +1,5 @@
 import { useState, useEffect, Fragment } from 'react';
-import fire from '../../config/fire-config';
+import {firebase} from '../../config/fire-config';
 import {isPastEvent, isLiveEvent} from '../../utils/EventUtils';
 
 import Link from 'next/link';
@@ -12,7 +12,7 @@ const ListEvents = (props) => {
 
   useEffect(() => {
     // Get list of events 
-    fire.firestore()
+    firebase.firestore()
       .collection('events').where("userName", "==", props.userName)
       .onSnapshot(snap => {
         let events = snap.docs.map(doc => ({

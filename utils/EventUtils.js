@@ -1,5 +1,5 @@
 var { DateTime, Interval } = require('luxon');
-import fire from '../config/fire-config';
+import {firebase} from '../config/fire-config';
 
 export const isPastEvent = (event) => {
   return DateTime.now().ts > event.endTs;
@@ -11,7 +11,7 @@ export const isLiveEvent = (event) => {
 }
 
 export const isChannelLive = (userName, callback) => {
-  fire.firestore()
+  firebase.firestore()
     .collection('events').where("userName", "==", userName)
     .get()
     .then((querySnapshot) => {

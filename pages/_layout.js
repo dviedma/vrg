@@ -4,7 +4,7 @@ import Head from 'next/head'
 import Nav from '../components/shell/Nav';
 import Footer from '../components/shell/Footer';
 import Errors from '../components/shell/Errors';
-import fire from '../config/fire-config';
+import {firebase, analytics} from '../config/fire-config';
 
 import * as UserActions from '../actions/userActions';
 import * as LiveActions from '../actions/liveActions';
@@ -12,13 +12,12 @@ import * as LiveActions from '../actions/liveActions';
 export default function Layout({ Component, pageProps }) {
 
   const dispatch = useDispatch();
-  const analytics = firebase.analytics();
 
   useEffect(() => {
-    firebase.analytics().logEvent('>>> Initializing analytics');
+    analytics().logEvent('>>> Initializing analytics');
     
     // Get logged in state
-    fire.auth()
+    firebase.auth()
       .onAuthStateChanged((user) => {
         if (user) {
           dispatch ({type:UserActions.SET_USER_LOGGED_IN, currentUser:user});
@@ -28,7 +27,7 @@ export default function Layout({ Component, pageProps }) {
       })
 
     // Get live updates from Wowza
-    fire.firestore()
+    firebase.firestore()
       .collection('wowzaevents')
       .orderBy("timestamp", "desc")
       .limit(1)      

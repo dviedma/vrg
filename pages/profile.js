@@ -1,4 +1,4 @@
-import fire from '../config/fire-config';
+import {firebase} from '../config/fire-config';
 import { useState, useEffect, Fragment } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router'
@@ -28,12 +28,12 @@ const Profile = (props) => {
     useWarnIfUnsavedChanges(webrtcPublish.connected);
     
     // Get logged in state
-    fire.auth()
+    firebase.auth()
       .onAuthStateChanged((user) => {
         if (user) {
           setCurrentUser(user);
 
-          fire.firestore()
+          firebase.firestore()
             .collection('users').where("userName", "==", user.displayName)
             .get()
             .then(querySnapshot => {

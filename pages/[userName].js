@@ -2,7 +2,7 @@ import { Fragment, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { PayPalButton } from "react-paypal-button-v2";
 
-import fire from '../config/fire-config';
+import {firebase} from '../config/fire-config';
 import {getLiveStreamState} from '../utils/LiveStreamUtils';
 import {isChannelLive} from '../utils/EventUtils';
 
@@ -137,7 +137,7 @@ export async function getStaticPaths() {
 export const getServerSideProps = async ({ params }) => {
   const content = {}
   
-  await fire.firestore()
+  await firebase.firestore()
     .collection('users').where("userName", "==", params.userName)
     .get()
     .then(querySnapshot => {

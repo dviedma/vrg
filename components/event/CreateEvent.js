@@ -1,7 +1,7 @@
 import { useState, Fragment } from 'react';
 import { useSelector } from 'react-redux';
 
-import fire from '../../config/fire-config';
+import {firebase} from '../../config/fire-config';
 import 'firebase/storage';
 
 var { DateTime } = require('luxon');
@@ -18,7 +18,7 @@ const CreateEvent = () => {
 
   const user = useSelector ((state) => state.user);
 
-  const storageService = fire.storage();
+  const storageService = firebase.storage();
   const storageRef = storageService.ref();
 
   // return millisecons
@@ -97,7 +97,7 @@ const CreateEvent = () => {
     });
 
     //3. create event
-    fire.firestore()
+    firebase.firestore()
       .collection('events')
       .add({
         title: title,
