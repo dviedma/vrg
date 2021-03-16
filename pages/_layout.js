@@ -12,8 +12,11 @@ import * as LiveActions from '../actions/liveActions';
 export default function Layout({ Component, pageProps }) {
 
   const dispatch = useDispatch();
+  const analytics = firebase.analytics();
 
   useEffect(() => {
+    firebase.analytics().logEvent('>>> Initializing analytics');
+    
     // Get logged in state
     fire.auth()
       .onAuthStateChanged((user) => {
