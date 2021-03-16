@@ -14,7 +14,7 @@ export default function Layout({ Component, pageProps }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    analytics().logEvent('>>> Initializing analytics');
+    //analytics().logEvent('>>> Initializing analytics');
     
     // Get logged in state
     firebase.auth()
