@@ -2,7 +2,7 @@ import { Fragment, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { PayPalButton } from "react-paypal-button-v2";
 
-import fire from '../../config/fire-config';
+import {firebase} from '../../config/fire-config';
 
 const Event = (props) => {
   let [spots, setSpots] = useState(props.spots);
@@ -63,7 +63,7 @@ const Event = (props) => {
 
               // Update spots
               setSpots(newSpots);
-              fire.firestore()
+              firebase.firestore()
               .collection('events').doc(props.id).update({
                 spots: newSpots
               });     
@@ -85,7 +85,7 @@ const Event = (props) => {
 export const getServerSideProps = async ({ params }) => {
   const content = {}
   
-  await fire.firestore()
+  await firebase.firestore()
     .collection('events').doc(params.slug[0])
     .get()
     .then(docRef => {

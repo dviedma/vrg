@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import fire from '../config/fire-config';
+import {firebase} from '../config/fire-config';
 import { useRouter } from 'next/router'
 
 const Login = () => {
@@ -11,7 +11,7 @@ const Login = () => {
   const handleLogin = (e) => {
     e.preventDefault();
 
-    fire.auth()
+    firebase.auth()
       .signInWithEmailAndPassword(username, password)
       .then((result) => {
         setUsername('')

@@ -1,4 +1,4 @@
-import fire from '../../config/fire-config';
+import {firebase} from '../../config/fire-config';
 
 export default function handler(req, res) {
 
@@ -7,7 +7,7 @@ export default function handler(req, res) {
     if (req.method == "POST" && (req.body.event == "video.started" || req.body.event == "video.stopped")) {
 
       console.log("adding to DB");
-      fire.firestore()
+      firebase.firestore()
       .collection('wowzaevents')
       .add({
         channelId: req.body.object_id,

@@ -1,5 +1,5 @@
 import { useState } from 'react'; 
-import fire from '../config/fire-config';
+import {firebase} from '../config/fire-config';
 import wowza from '../config/wowza-config';
 import { useRouter } from 'next/router'
 
@@ -32,7 +32,7 @@ const Register = () => {
 
     setIsLoading(true);
 
-    fire.auth()
+    firebase.auth()
       .createUserWithEmailAndPassword(email, password)
       .then((userCredential) => {
         // Signed in
@@ -58,7 +58,7 @@ const Register = () => {
           console.log('Success Creating Wowza Channel:', data);
 
           // Add user to Users collection 
-          fire.firestore()
+          firebase.firestore()
             .collection('users')
             .add({
               userName: userName,
