@@ -33,8 +33,6 @@ const Profile = (props) => {
         if (user) {
           setCurrentUser(user);
 
-          console.log(">>> user", user);
-
           firebase.firestore()
             .collection('users').where("userName", "==", user.displayName)
             .get()
