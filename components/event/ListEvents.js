@@ -29,8 +29,8 @@ const ListEvents = (props) => {
     <div className="list-events">
       <h2 className="test">Upcoming Events</h2>
       <ul>
-        {events.map(event =>
-          <li key={event.uid} className={(isPastEvent(event)? "past-event" : "")}>
+        {events.map((event,i) =>
+          <li key={i} className={(isPastEvent(event)? "past-event" : "")}>
             <Link href="/event/[eventId]/[eventSlu]" as={'/event/' + event.id + '/' + slugify(event.title)}>
               <a>{event.title} on {event.startDate}</a>
             </Link>

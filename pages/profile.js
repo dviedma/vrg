@@ -38,10 +38,26 @@ const Profile = (props) => {
             .get()
             .then(querySnapshot => {
               querySnapshot.forEach((doc) => {
+                // shared
+                dispatch({type:PublishSettingsActions.SET_PUBLISH_STREAM_NAME,
+                  streamName: doc.data().rtmp? 
+                    doc.data().rtmp.streamName :
+                    doc.data().wowza.streamName});
+                dispatch({type:PublishSettingsActions.SET_PUBLISH_CHANNEL_ID,
+                  channelId: doc.data().rtmp? 
+                    doc.data().rtmp.channelId :
+                    doc.data().wowza.channelId});
+
+                // webRTC
                 dispatch({type:PublishSettingsActions.SET_PUBLISH_SIGNALING_URL,signalingURL: doc.data().wowza.sdpUrl});
                 dispatch({type:PublishSettingsActions.SET_PUBLISH_APPLICATION_NAME,applicationName: doc.data().wowza.applicationName});
-                dispatch({type:PublishSettingsActions.SET_PUBLISH_STREAM_NAME,streamName: doc.data().wowza.streamName});
-                dispatch({type:PublishSettingsActions.SET_PUBLISH_CHANNEL_ID,channelId: doc.data().wowza.channelId});
+
+                // rtmp
+                if(doc.data().rtmp) {
+                  dispatch({type:PublishSettingsActions.SET_PUBLISH_PRIMARY_SERVER,primaryServer: doc.data().rtmp.primaryServer});
+                  dispatch({type:PublishSettingsActions.SET_PUBLISH_USERNAME,userName: doc.data().rtmp.userName});
+                  dispatch({type:PublishSettingsActions.SET_PUBLISH_PASSWORD,password: doc.data().rtmp.password});
+                }
               });
             });          
           
