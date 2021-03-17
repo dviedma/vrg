@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { Fragment, useEffect } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import Head from 'next/head'
 import Nav from '../components/shell/Nav';
 import Footer from '../components/shell/Footer';
@@ -12,6 +12,7 @@ import * as LiveActions from '../actions/liveActions';
 export default function Layout({ Component, pageProps }) {
 
   const dispatch = useDispatch();
+  const [hostedPlayerId, setHostedPlayerId] = useState("");
 
   useEffect(() => {
     //analytics().logEvent('>>> Initializing analytics');
@@ -21,6 +22,15 @@ export default function Layout({ Component, pageProps }) {
       .onAuthStateChanged((user) => {
         if (user) {
           dispatch ({type:UserActions.SET_USER_LOGGED_IN, currentUser:user});
+
+          firebase.firestore()
+          .collection('users').where("userName", "==", user.displayName)
+          .get()
+          .then(querySnapshot => {
+            querySnapshot.forEach((doc) => {
+              setHostedPlayerId(doc.data().rtmp? doc.data().rtmp.hostedPlayerId : "");
+            });
+          });    
         } else {
           dispatch ({type:UserActions.SET_USER_LOGGED_OUT});
         }
@@ -32,13 +42,13 @@ export default function Layout({ Component, pageProps }) {
       .orderBy("timestamp", "desc")
       .limit(1)      
       .onSnapshot(snap => {
-        console.log(">>>> wowzaevents changed");
+        //console.log(">>>> wowzaevents changed");
         snap.forEach(function(doc) {
           if(doc.data().event == "video.started") {
-            console.log("START!")
+            //console.log("START!")
             dispatch ({type:LiveActions.SET_USER_LIVE_ON, channelId:doc.data().channelId});
           }else {
-            console.log("END!")
+            //console.log("END!")
             dispatch ({type:LiveActions.SET_USER_LIVE_OFF, channelId:doc.data().channelId});
           }
         });
@@ -46,12 +56,11 @@ export default function Layout({ Component, pageProps }) {
   });
 
   return (
-    
     <Fragment>
       <Head>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossOrigin="anonymous"/>
         <script src="https://cdn.jsdelivr.net/gh/mathusummut/confetti.js/confetti.min.js"></script>
-        
+        {/*hostedPlayerId != "" && <script id='player_embed' src='//player.cloud.wowza.com/hosted/xjfnpbww/wowza.js' type='text/javascript'></script>*/}
       </Head>
       <Nav />
       <Errors />

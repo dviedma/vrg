@@ -21,16 +21,45 @@ const PublishSettingsForm = () => {
   return (
     <div className="col-md-4 col-sm-12" id="publish-settings">
       <form id="publish-settings-form">
-        <div className="row">
-          <div className="col-10">
-            <PublishVideoDropdown />
+        {publishSettings.primaryServer? 
+        <Fragment>
+          <div className="row">
+            <div className="col-10">
+              <label className="form-label">Server</label>
+              <input className="form-control" value={publishSettings.primaryServer}/>
+            </div>
           </div>
-        </div>
-        <div className="row">
-          <div className="col-10">
-            <PublishAudioDropdown />
+          <div className="row mt-3">
+            <div className="col-10">
+              <label className="form-label">Stream Key</label>
+              <input className="form-control" value={publishSettings.streamName}/>
+            </div>
+          </div>   
+          <div className="row mt-3">
+            <div className="col-10">
+              <label className="form-label">Username</label>
+              <input className="form-control" value={publishSettings.userName}/>
+            </div>
+          </div>   
+          <div className="row mt-3 mb-4">
+            <div className="col-10">
+              <label className="form-label">Password</label>
+              <input className="form-control" value={publishSettings.password}/>
+            </div>
+          </div>                              
+        </Fragment> :        
+        <Fragment>
+          <div className="row">
+            <div className="col-10">
+              <PublishVideoDropdown />
+            </div>
           </div>
-        </div>
+          <div className="row">
+            <div className="col-10">
+              <PublishAudioDropdown />
+            </div>
+          </div>
+        </Fragment>}
         <div className="row">
           <div className="col-10">
             { !webrtcPublish.connected &&
@@ -56,7 +85,12 @@ const PublishSettingsForm = () => {
                         if(data.live_stream.state == "started") {
                           clearInterval(timer);
                           setStartingLiveStream(false);
-                          dispatch(PublishSettingsActions.startPublish())
+
+                          if(!publishSettings.primaryServer) {
+                            dispatch(PublishSettingsActions.startPublish())
+                          }else {
+                            alert("You can now start streaming on OBS");
+                          }
                         }       
                       });                      
                     }, 1000);
@@ -64,7 +98,7 @@ const PublishSettingsForm = () => {
 
                 }}
               >{!startingLiveStream? 
-                "Start Streaming" : 
+                "Start Streaming "+publishSettings.channelId : 
                 <Fragment><span>Starting...</span><img src="/images/loader.gif" width="100px" /></Fragment>}
                 </button>
             }

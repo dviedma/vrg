@@ -28,8 +28,10 @@
   }
 }
 
-#player-video {
-  width: 100%;
+#player-video,
+#fcplayer_wrapper {
+  width: 100%!important;
+  height: auto!important;
 }
 
 // PayPal

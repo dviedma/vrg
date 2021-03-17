@@ -1,5 +1,6 @@
 import { Fragment, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import Head from 'next/head';
 import { PayPalButton } from "react-paypal-button-v2";
 
 import {firebase} from '../config/fire-config';
@@ -35,7 +36,7 @@ const User = (props) => {
       setChannelLive(event);
     })
 
-    console.log(">>> LIVE", live);
+    //console.log(">>> LIVE", live);
     for (const channel in live) {
       if(channel == props.wowza.channelId && live[channel].live) {
         //console.log("SET WOWZA LIVEE");
@@ -47,7 +48,7 @@ const User = (props) => {
     getLiveStreamState(props.wowza.channelId, (data)=> {
       if(data.live_stream.state == "started") {        
         setTimeout(()=> {
-          console.log("START PLAY!");
+          //console.log("START PLAY!");
           dispatch(PlaySettingsActions.startPlay());
         }, 5000)        
       }        
@@ -73,14 +74,19 @@ const User = (props) => {
    */
 
   return (
+    <Fragment>
+    <Head>
+      <title>{'VRG | ' + props.userName}</title>
+      <script id='player_embed' src='https://player.cloud.wowza.com/hosted/xjfnpbww/wowza.js' type='text/javascript'></script>
+    </Head>    
     <div className="container-fluid mt-3" id="play-content">
       <div className="row" style={{height:'calc(100vh - 70px)'}}>         
         <div className="col-md-7 play-video-container-wrapper">
           <div id="play-video-container" style={{height: 0,width: "100%",paddingBottom: "56%",backgroundColor: "rgba(102, 102, 102, 1)"}}>
             <Player channelId={props.wowza.channelId}/>
-               
+            <div id='wowza_player' style={{display: props.rtmp? 'block':'none'}}></div>
           </div>
-          <div className="user-info ">
+          <div className="user-info mt-3">
             <h1>{props.userName} {channelLive && ("LIVE " + channelLive.title)}</h1>
             <p>Lorem ipsum dolor amet | NBA | NFL In for the fun 🏈 🏀 🏏</p>
           </div>     
@@ -121,6 +127,7 @@ const User = (props) => {
        
       </div>
     </div>
+    </Fragment>
   )
 }
 
@@ -146,6 +153,7 @@ export const getServerSideProps = async ({ params }) => {
         content['userName'] = doc.data().userName;  //TODO use user's displayName
         content['userId'] = doc.id;  //TODO use user's displayName
         content['wowza'] = doc.data().wowza;
+        content['rtmp'] = doc.data().rtmp? doc.data().rtmp : "";
         content['paypalMerchantId'] = doc.data().paypalMerchantId? doc.data().paypalMerchantId : "";
       });
     });
@@ -156,6 +164,7 @@ export const getServerSideProps = async ({ params }) => {
       userId: content.userId,
       wowza: content.wowza,
       paypalMerchantId: content.paypalMerchantId,
+      rtmp: content.rtmp,
       eventId: params.userName[1]? params.userName[1] : 0     //DV: not in use  
     }
   }

@@ -76,6 +76,12 @@ const publishSettingsReducer = (state = initialState, action) => {
       let audioTrackState = { ...state }
       audioTrackState.audioTrack.enabled = !audioTrackState.audioTrack.enabled
       return audioTrackState
+    case PublishSettingsActions.SET_PUBLISH_PRIMARY_SERVER:
+      return { ...state, primaryServer:action.primaryServer };    
+    case PublishSettingsActions.SET_PUBLISH_USERNAME:
+      return { ...state, userName:action.userName };
+    case PublishSettingsActions.SET_PUBLISH_PASSWORD:
+      return { ...state, password:action.password };      
     default:
       return state
   }

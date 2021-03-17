@@ -26,7 +26,7 @@ const Home = () => {
   return (
     <div className="index container-fluid mt-3">
       <Head>
-        <title>VRG 2</title>
+        <title>VRG</title>
       </Head>
       
       <h2>Channels</h2>
