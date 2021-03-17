@@ -98,7 +98,7 @@ const PublishSettingsForm = () => {
 
                 }}
               >{!startingLiveStream? 
-                "Start Streaming "+publishSettings.channelId : 
+                "Start Streaming" : 
                 <Fragment><span>Starting...</span><img src="/images/loader.gif" width="100px" /></Fragment>}
                 </button>
             }
