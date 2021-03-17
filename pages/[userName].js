@@ -77,7 +77,8 @@ const User = (props) => {
       <div className="row" style={{height:'calc(100vh - 70px)'}}>         
         <div className="col-md-7 play-video-container-wrapper">
           <div id="play-video-container" style={{height: 0,width: "100%",paddingBottom: "56%",backgroundColor: "rgba(102, 102, 102, 1)"}}>
-            <Player channelId={props.wowza.channelId}/>                  
+            <Player channelId={props.wowza.channelId}/>
+               
           </div>
           <div className="user-info ">
             <h1>{props.userName} {channelLive && ("LIVE " + channelLive.title)}</h1>
