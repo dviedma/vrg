@@ -1,20 +1,20 @@
-import {firebase} from '../config/fire-config';
+import {firebase} from '../../config/fire-config';
 import { useState, useEffect, Fragment } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router'
 import Router from 'next/router';
 
-import {useWarnIfUnsavedChanges} from '../utils/exitPageWarning';
+import {useWarnIfUnsavedChanges} from '../../utils/exitPageWarning';
 
-import Publish from '../components/publish/Publish';
-import * as PublishSettingsActions from '../actions/publishSettingsActions';
+import Publish from '../../components/publish/Publish';
+import * as PublishSettingsActions from '../../actions/publishSettingsActions';
 
-import CompositorUserMedia from '../components/media/CompositorUserMedia';
-import Devices from '../components/media/Devices';
-import CreateEvent from '../components/event/CreateEvent';
-import ListEvents from '../components/event/ListEvents';
+import CompositorUserMedia from '../../components/media/CompositorUserMedia';
+import Devices from '../../components/media/Devices';
+import CreateEvent from '../../components/event/CreateEvent';
+import ListEvents from '../../components/event/ListEvents';
 
-import styles from '../styles/profile.module.scss'
+import styles from '../../styles/profile.module.scss'
 
 
 const Profile = (props) => {
@@ -72,7 +72,9 @@ const Profile = (props) => {
       <div className="container-fluid mt-3">
         <CompositorUserMedia />
         <Devices />
-        <h1 className={styles["myTitle"]}>Hi, {currentUser.displayName}</h1>
+        <h1 style={{display:'inline', lineHeight:'60px'}} className={styles["myTitle"]}>Hi, {currentUser.displayName}</h1>
+        <span className="ml-3"><a href={currentUser.displayName}>View Public Profile</a></span>
+        {/*<span className="ml-3"><a href="/profile/edit">Edit My Info</a> ✏️</span>*/}
         <Publish />
       </div>
       <div className="container-fluid mt-3">        

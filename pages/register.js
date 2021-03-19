@@ -64,6 +64,11 @@ const Register = () => {
               userName: userName,
               email: email,
               password: password,
+              youtube: "",
+              about: "",
+              instagram: "",
+              twitter: "",
+              website: "",              
               wowza: {
                 channelId: data.live_stream.id,
                 applicationName: data.live_stream.source_connection_information.application_name,
@@ -98,13 +103,13 @@ const Register = () => {
         <div className="col col-sm-5 input-group">
           <h1>Join the family!</h1>
           <form onSubmit={handleLogin}>
-            <label className="form-label">Username</label>
+            <label className="form-label">Username*</label>
             <input className="form-control" type="text" value={userName} onChange={({target}) => setUsername(target.value)} />
-            <label className="form-label mt-3">Email</label>
+            <label className="form-label mt-3">Email*</label>
             <input className="form-control" type="text" value={email} onChange={({target}) => setEmail(target.value)} /> 
-            <label className="form-label mt-3">Password</label>
+            <label className="form-label mt-3">Password*</label>
             <input className="form-control" type="password" value={password} onChange={({target}) => setPassword(target.value)} /> 
-            <label className="form-label mt-3">Password Confirmation</label>
+            <label className="form-label mt-3">Password Confirmation*</label>
             <input className="form-control" type="password" value={passConf} onChange={({target}) => setPassConf(target.value)} /> 
             <button className="btn mt-3" type="submit">Register</button>
             {isLoading && <img src="/images/loader.gif" width="100px" style={{display:"block"}}/>}
