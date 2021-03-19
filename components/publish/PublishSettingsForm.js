@@ -2,6 +2,7 @@ import { useState, useEffect, Fragment } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import * as PublishSettingsActions from '../../actions/publishSettingsActions';
+import * as WebRTCPublishActions from '../../actions/webrtcPublishActions';
 import PublishAudioDropdown from './PublishAudioDropdown';
 import PublishVideoDropdown from './PublishVideoDropdown';
 
@@ -89,6 +90,7 @@ const PublishSettingsForm = () => {
                           if(!publishSettings.primaryServer) {
                             dispatch(PublishSettingsActions.startPublish())
                           }else {
+                            dispatch({type:WebRTCPublishActions.SET_WEBRTC_PUBLISH_CONNECTED,connected:true});
                             alert("You can now start streaming on OBS");
                           }
                         }       
@@ -106,7 +108,6 @@ const PublishSettingsForm = () => {
             { webrtcPublish.connected &&
               <button id="publish-toggle" type="button" className="btn"
                 onClick={(e)=>{
-                  dispatch(PublishSettingsActions.stopPublish());
                   fetch('https://api.cloud.wowza.com/api/beta/live_streams/' + publishSettings.channelId + '/stop', {
                     method: 'PUT',
                     headers: {
@@ -115,6 +116,14 @@ const PublishSettingsForm = () => {
                       'wsc-access-key': wowza.accessKey
                     }
                   })
+                  .then(response => response.json())
+                  .then(data => {
+                    if(!publishSettings.primaryServer) {
+                      dispatch(PublishSettingsActions.stopPublish());
+                    }else {
+                      dispatch({type:WebRTCPublishActions.SET_WEBRTC_PUBLISH_CONNECTED,connected:false});
+                    }
+                  });
                 }}
               >Stop Streaming</button>
             }
