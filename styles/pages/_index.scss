@@ -1,5 +1,36 @@
 .index {
 
+  .player-home {
+    video,
+    img {
+      max-width: 850px;
+      width: 100%;
+    }
+  }
+
+  .home-slider {
+    background: hsla(0,0%,100%,.075);
+    padding-left: 100px;
+    padding-right: 100px;
+    h4 {
+      font-size: 1rem;
+      text-align: center;
+    }
+    
+    .slick-next:before {
+      content: "▶︎";
+      font-size: 80px;
+      display: block;
+      transform: translateY(-55px);
+    }
+    .slick-prev:before {
+      content: "◀︎";
+      font-size: 80px;      
+      display: block;
+      transform: translateX(-55px) translateY(-55px);
+    }
+  }
+
   ul {
     margin: 0;
     padding: 0;

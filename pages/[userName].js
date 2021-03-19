@@ -109,7 +109,14 @@ const User = (props) => {
           </div>
           <div className="user-info mt-3">
             <h1>{props.userName} {channelLive && ("LIVE " + channelLive.title)}</h1>
-            <p>Lorem ipsum dolor amet | NBA | NFL In for the fun 🏈 🏀 🏏</p>
+            <p>{props.about}</p>
+            <ul>
+              {props.website != "" && <li>Website: <a href={props.website}>{props.website}</a></li>}
+              {props.youtube != "" && <li>Youtube: <a href={props.youtube}>{props.youtube}</a></li>}
+              {props.instagram != "" && <li>Instagram: <a href={props.instagram}>{props.instagram}</a></li>}
+              {props.twitter != "" && <li>Twitter: <a href={props.twitter}>{props.twitter}</a></li>}
+              
+            </ul>
           </div>     
         </div>
         <div className={`col-md-3 col-11 pl-0 ${isChatActive ? "chat-active" : ""}`} id="chat-container" onClick={(e) => handleChatClick(e)}>
@@ -199,22 +206,27 @@ export async function getStaticPaths() {
 */
 
 export const getServerSideProps = async ({ params }) => {
-  const content = {}
+  let content = {}
   
   await firebase.firestore()
     .collection('users').where("userName", "==", params.userName)
     .get()
     .then(querySnapshot => {
       querySnapshot.forEach((doc) => {
+        /*
         content['userName'] = doc.data().userName;  //TODO use user's displayName
         content['userId'] = doc.id;  //TODO use user's displayName
         content['wowza'] = doc.data().wowza;
         content['rtmp'] = doc.data().rtmp? doc.data().rtmp : "";
         content['paypalMerchantId'] = doc.data().paypalMerchantId? doc.data().paypalMerchantId : "";
+        */
+        content = doc.data();
+        content['userId'] = doc.id;
       });
     });
 
   return {
+    /*
     props: {
       userName: content.userName,
       userId: content.userId,
@@ -223,6 +235,8 @@ export const getServerSideProps = async ({ params }) => {
       rtmp: content.rtmp,
       eventId: params.userName[1]? params.userName[1] : 0     //DV: not in use  
     }
+    */
+   props: content
   }
 }
 
