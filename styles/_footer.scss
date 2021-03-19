@@ -1,9 +1,11 @@
 footer {
-  border-top: 2px solid white;
+  background: #171717;
   border-image-slice: 1;
-  border-width: 2px;
-  //border-image-source: linear-gradient(to left, $base2, $accent3);
   margin-top: 100px;
+
+  ul {
+    padding: 0
+  }
 
   li {
     list-style: none;
@@ -11,7 +13,7 @@ footer {
   }
 
   a {
-    color: $base2;
+    color: white!important;
 
     &:hover {
       color: $accent3;

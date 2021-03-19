@@ -10,16 +10,21 @@ import {isChannelLive} from '../utils/EventUtils';
 import Player from '../components/play/Player';
 import Chat from '../components/chat/Chat';
 import * as PlaySettingsActions from '../actions/playSettingsActions';
+import * as ErrorsActions from '../actions/errorsActions';
+
+var { DateTime } = require('luxon');
 
 const User = (props) => {
   const dispatch = useDispatch();
   const live = useSelector ((state) => state.live);
 
+  const todayDate = DateTime.now().toLocaleString(DateTime.DATE_SHORT).replace(/\//g, "");
 
   const [isChatActive, setChatActive] = useState(false);
   const [isPaypalActive, setPaypalActive] = useState(false);
   const [channelLive, setChannelLive] = useState(false);
   const [isWowzaLive, setWowzaLive] = useState(false);
+  const [payments, setPayments] = useState([]);
 
   const [amount, setAmount] = useState(10);
 
@@ -53,7 +58,23 @@ const User = (props) => {
         }, 5000)        
       }        
     });
-  });
+  }, []);
+
+  useEffect(() => {
+    let _payments;
+
+    //Payments log
+    firebase.firestore()
+      .collection('payments_'+props.userName+'_'+todayDate)
+      .onSnapshot(querySnapshot => {
+        _payments = [];
+        querySnapshot.forEach((doc) => {
+          _payments.push(doc.data());
+        });
+        _payments.sort((a, b) => { return b.timestamp - a.timestamp })
+        setPayments(_payments);
+      });
+  }, []);
 
   /** 
    * 
@@ -107,22 +128,57 @@ const User = (props) => {
                 <PayPalButton
                   amount={amount}
                   onSuccess={(details, data) => {
+                    console.log(">>> details", details);
+
+
                     confetti.start();
+                    //dispatch({type:ErrorsActions.SET_ERROR_MESSAGE,message:`${details.payer.name.given_name} ${details.payer.name.surname} paid $${details.purchase_units[0].amount.value}`});
                     var audio = new Audio('/sounds/applause.wav');
                     audio.play();
+
+                    try {
+                      firebase.firestore()
+                      .collection('payments_'+props.userName+'_'+todayDate)
+                      .add({
+                        payerEmail: details.payer.email_address,
+                        payerFullName: `${details.payer.name.given_name} ${details.payer.name.surname}`,
+                        amount: details.purchase_units[0].amount.value,
+                        timestamp: Date.now(),
+                        time: DateTime.now().toLocaleString(DateTime.TIME_WITH_SHORT_OFFSET)
+                      });
+                    } catch (error) {
+                      console.log(error);
+                    }
+
+                    
                     setTimeout(()=> {
                       confetti.stop();
                     }, 2000);
+                    setTimeout(()=> {
+                      dispatch({type:ErrorsActions.HIDE_ERROR_PANEL});
+                    }, 10000);
                   }}
                   options={{
                     clientId: "AXS3AfceAxeZzmSDiOS_NfLcG5ioqXDZUtSyJtl7ctXqLfBxyRr_jPuiNzpIaIIyZHqHbXjjp1T7qxSw",
                     merchantId: props.paypalMerchantId
                   }}
                   style={{ color: "blue", shape: "pill", label: "pay", height: 25 }}
-                /></Fragment>
+                />
+                
+                </Fragment>
             : ""
             }   
-          </div>                  
+          </div>  
+          <div className="user-payment payment-log mt-3">
+            <p style={{fontWeight:'bold'}} className="mt-2 mb-0">Payments Log</p>
+            <ul>
+            {payments.map((payment, i) => {
+                return <li key={i}>
+                  <p>{payment.time}: <span style={{fontWeight:'bold'}}>{payment.payerFullName}</span> paid <span style={{fontWeight:'bold'}}>${payment.amount}</span></p>
+                </li>
+              })}
+            </ul>
+          </div>                
         </div>           
        
       </div>
