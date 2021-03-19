@@ -5,12 +5,15 @@ import Link from 'next/link';
 
 import {firebase} from '../../config/fire-config';
 
+var { DateTime } = require('luxon');
+
 const Chat = (props) => {
 
   const user = useSelector ((state) => state.user);
   const [content, setContent] = useState('');
   const [chats, setChats] = useState([]);
   const myRef = React.createRef();
+  const todayDate = DateTime.now().toLocaleString(DateTime.DATE_SHORT).replace(/\//g, "");
 
   useEffect(() => {
     let _chats;
@@ -21,7 +24,7 @@ const Chat = (props) => {
     }
 
     firebase.firestore()
-      .collection('chats_'+props.userName)
+      .collection('chats_'+props.userName+'_'+todayDate)
       .onSnapshot(querySnapshot => {
         _chats = [];
         querySnapshot.forEach((doc) => {
@@ -39,10 +42,10 @@ const Chat = (props) => {
     event.preventDefault();
 
     const chatArea = myRef.current;
-
+    
     try {
       firebase.firestore()
-      .collection('chats_'+props.userName)
+      .collection('chats_'+props.userName+'_'+todayDate)
       .add({
         content: content,
         timestamp: Date.now(),

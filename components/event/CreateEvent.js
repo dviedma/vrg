@@ -84,17 +84,19 @@ const CreateEvent = () => {
     }
 
     //2. upload image (async await)
-    console.log("uploading...", image)
+    console.log("Uploading...", image)
     let snapshot,
-        imagePath;
-    await storageRef.child(`images/events/${image.name}`).put(image).then((snap) => {
-      console.log('Uploaded a blob or file!', snap);
-      snapshot = snap;
-    });
-    await snapshot.ref.getDownloadURL().then((downloadURL) => {
-      console.log('File available at', downloadURL);
-      imagePath = downloadURL;
-    });
+        imagePath="";
+    if(image) {
+      await storageRef.child(`images/events/${image.name}`).put(image).then((snap) => {
+        console.log('Uploaded a blob or file!', snap);
+        snapshot = snap;
+      });
+      await snapshot.ref.getDownloadURL().then((downloadURL) => {
+        console.log('File available at', downloadURL);
+        imagePath = downloadURL;
+      });
+    }
 
     //3. create event
     firebase.firestore()
