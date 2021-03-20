@@ -109,13 +109,17 @@ const User = (props) => {
           </div>
           <div className="user-info mt-3">
             <h1>{props.userName} {channelLive && ("LIVE " + channelLive.title)}</h1>
-            <p>{props.about}</p>
+            <p style={{marginBottom:'0.5rem'}}>{props.about}</p>
             <ul>
-              {props.website != "" && <li>Website: <a href={props.website}>{props.website}</a></li>}
-              {props.youtube != "" && <li>Youtube: <a href={props.youtube}>{props.youtube}</a></li>}
-              {props.instagram != "" && <li>Instagram: <a href={props.instagram}>{props.instagram}</a></li>}
-              {props.twitter != "" && <li>Twitter: <a href={props.twitter}>{props.twitter}</a></li>}
-              
+              {
+                ["website", "youtube", "instagram", "twitter"].map((item, i) => {
+                  if(props[item] != ""){
+                    let link = item;
+                    link = props[item].substring(0, 4) == "http"? link : "http://" + props[item];
+                    return(<li><span style={{textTransform:'capitalize'}}>{item}:</span> <a target="_blank" href={link}>{props[item]}</a></li>)
+                  }
+                })
+              }
             </ul>
           </div>     
         </div>
