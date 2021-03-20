@@ -74,7 +74,7 @@ const Profile = (props) => {
         <Devices />
         <h1 style={{display:'inline', lineHeight:'60px'}} className={styles["myTitle"]}>Hi, {currentUser.displayName}</h1>
         <span className="ml-3"><a href={currentUser.displayName}>View Public Profile</a></span>
-        {/*<span className="ml-3"><a href="/profile/edit">Edit My Info</a> ✏️</span>*/}
+        <span className="ml-3"><a href="/profile/edit">Edit My Info</a> ✏️</span>
         <Publish />
       </div>
       <div className="container-fluid mt-3">        
