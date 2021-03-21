@@ -46,7 +46,7 @@ const Event = (props) => {
                       },
                       items: [{
                           name: `${props.title} by ${props.userName} on ${props.startDate}`,
-                          unit_amount: {value: 20, currency_code: 'USD'},
+                          unit_amount: {value: props.price, currency_code: 'USD'},
                           quantity: quantity
                       }]
                   }]
@@ -69,8 +69,7 @@ const Event = (props) => {
                   });     
                 }}             
                 options={{
-                  clientId: "AXS3AfceAxeZzmSDiOS_NfLcG5ioqXDZUtSyJtl7ctXqLfBxyRr_jPuiNzpIaIIyZHqHbXjjp1T7qxSw",
-                  merchantId: "6VQF5USW5N7BA"
+                  clientId: "AbqZIB7XWLrIR7hRUdRORAh6bs74gEIyqthvXGvW92cO0alm69MKQiUz8GxEkLcndaLCKtmoEYtAWnFr"
                 }}
                 style={{ color: "blue", shape: "pill", label: "pay", height: 25 }}
                 forceReRender={quantity}
@@ -97,7 +96,7 @@ export const getServerSideProps = async ({ params }) => {
       content['startDate'] = docRef.data().startDate; 
       content['spots'] = docRef.data().spots; 
       content['price'] = docRef.data().price; 
-      content['image'] = docRef.data().image? doc.data().image : "";
+      content['image'] = docRef.data().image? docRef.data().image : "";
     });
 
   return {

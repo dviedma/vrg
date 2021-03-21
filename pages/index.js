@@ -64,7 +64,7 @@ const Home = () => {
       </div>
       <div className="justify-content-sm-center mt-5 player-home" >
         <img src="/images/chigah.jpg" />
-        <h3 className="mt-3"><a href="/dviedma">dviedma</a></h3>
+        <h3 className="mt-3"><a href="/chigah">chigah</a></h3>
       </div>
       </div>
       
