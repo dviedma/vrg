@@ -170,8 +170,8 @@ const User = (props) => {
                     }, 10000);
                   }}
                   options={{
-                    clientId: "AXS3AfceAxeZzmSDiOS_NfLcG5ioqXDZUtSyJtl7ctXqLfBxyRr_jPuiNzpIaIIyZHqHbXjjp1T7qxSw",
-                    merchantId: props.paypalMerchantId
+                    clientId: props.paypalMerchantId
+                    //merchantId: props.paypalMerchantId
                   }}
                   style={{ color: "blue", shape: "pill", label: "pay", height: 25 }}
                 />
