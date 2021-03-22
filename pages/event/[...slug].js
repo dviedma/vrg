@@ -24,6 +24,7 @@ const Event = (props) => {
         <div className="col-sm-5">
           <h1 className="d-block">{props.title}</h1>
           <h2 className="mt-3 d-block">${props.price}</h2>
+          <p className="mt-3 pb-3 mb-3 d-block">{props.startDate}</p>
           <p className="mt-3 pb-3 mb-3 d-block" style={{borderBottom:'1px solid rgba(255,255,255,0.5)'}}>{spots} spots available</p>         
           {
             spots > 0 &&
