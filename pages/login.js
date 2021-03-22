@@ -27,8 +27,30 @@ const Login = () => {
           setNotification('')
         }, 3000) 
       })
+  }
 
+  const handleOnClick = () => {
+    if(!username) {
+      setNotification('Please fill up your email');
+      setTimeout(() => {
+        setNotification('');
+      }, 3000);
+      return;    
+    }
 
+    firebase
+      .auth()
+      .sendPasswordResetEmail(username)
+      .then((link) => {
+        setNotification('Success sending reset password email. Look in your inbox!')
+
+        setTimeout(() => {
+          setNotification('')
+        }, 3000)        
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   return (
@@ -42,6 +64,7 @@ const Login = () => {
             <label className="form-label mt-3">Password</label>
             <input className="form-control" type="password" value={password} onChange={({target}) => setPassword(target.value)} />
             <button type="submit" className="btn mt-3">Login</button>
+            <a className="ml-3 " href="#" onClick={handleOnClick}>Forgot Password?</a>
           </form>
           <p className="login-message mt-3">{notify}</p>
         </div>
