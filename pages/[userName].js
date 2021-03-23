@@ -98,7 +98,7 @@ const User = (props) => {
     <Fragment>
     <Head>
       <title>{'VRG | ' + props.userName}</title>
-      <script id='player_embed' src='https://player.cloud.wowza.com/hosted/xjfnpbww/wowza.js' type='text/javascript'></script>
+      <script id='player_embed' src='https://player.cloud.wowza.com/hosted/bp9vlp36/wowza.js' type='text/javascript'></script>
     </Head>    
     <div className="container-fluid mt-3" id="play-content">
       <div className="row" style={{height:'calc(100vh - 70px)'}}>         

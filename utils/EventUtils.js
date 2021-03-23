@@ -10,6 +10,13 @@ export const isLiveEvent = (event) => {
   return i.contains(DateTime.now());
 }
 
+/**
+ * 
+ * If event scheduled time is happening "now", return the event. Otherwise return false.
+ * 
+ * @param {*} userName 
+ * @param {*} callback 
+ */
 export const isChannelLive = (userName, callback) => {
   firebase.firestore()
     .collection('events').where("userName", "==", userName)
@@ -17,7 +24,10 @@ export const isChannelLive = (userName, callback) => {
     .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
             if(isLiveEvent(doc.data())) {
-              callback(doc.data());
+              callback({
+                id: doc.id,
+                ...doc.data()
+              });
             }
         });
         return false;

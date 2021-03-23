@@ -27,14 +27,14 @@ const Nav = () => {
       <ul className="navbar-nav ml-auto d-sm-flex">
         {!user.loggedIn?
           <Fragment>
-            <li className="nav-item ml-3">
-            <Link href="/register">
-                <a>Register</a>
-              </Link>
-            </li>
             <li className="nav-item ml-3"> 
               <Link href="/login">
                 <a> Login</a>
+              </Link>
+            </li>            
+            <li className="nav-item ml-3">
+            <Link href="/register">
+                <a>Register</a>
               </Link>
             </li>
           </Fragment>

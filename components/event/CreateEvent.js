@@ -138,7 +138,7 @@ const CreateEvent = () => {
             <input className="form-control" type="text" value={title} onChange={({target}) => setTitle(target.value)} />
           </div>
           <div className="col-sm-8 pl-0 pr-0">
-            <label className="form-label mt-3">Event Date</label>
+            <label className="form-label mt-3">Event Date (All times are Eastern Time)</label>
           </div>
           <div className="col-sm-4 pr-0">
             <label className="form-label mt-3">Event Duration</label>
