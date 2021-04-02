@@ -20,7 +20,6 @@ const PublishSettingsForm = () => {
 
 
   return (
-    <div className="col-md-4 col-sm-12" id="publish-settings">
       <form id="publish-settings-form">
         {publishSettings.primaryServer? 
         <Fragment>
@@ -129,8 +128,7 @@ const PublishSettingsForm = () => {
             }
           </div>
         </div>
-      </form>
-    </div>
+      </form>   
   );
 }
 

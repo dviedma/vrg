@@ -63,8 +63,10 @@ const Home = () => {
         <h2>Live Breaks</h2>
       </div>
       <div className="justify-content-sm-center mt-5 player-home" >
+      <a href="/chigah">
         <img src="/images/chigah.jpg" />
-        <h3 className="mt-3"><a href="/chigah">chigah</a></h3>
+        <h3 className="mt-3">chigah</h3>
+        </a>
       </div>
       </div>
       

@@ -19,15 +19,15 @@
     
     .slick-next:before {
       content: "▶︎";
-      font-size: 80px;
+      font-size: 50px;
       display: block;
-      transform: translateY(-55px);
+      transform: translateY(-40px);
     }
     .slick-prev:before {
       content: "◀︎";
-      font-size: 80px;      
+      font-size: 50px;      
       display: block;
-      transform: translateX(-55px) translateY(-55px);
+      transform: translateX(-55px) translateY(-40px);
     }
   }
 

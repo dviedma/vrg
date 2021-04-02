@@ -36,7 +36,7 @@ const Chat = (props) => {
         },500)      
         setChats(_chats);
       });
-  },[]);
+  },[props.userName]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -90,7 +90,7 @@ const Chat = (props) => {
           </div>
         :
           <form onSubmit={handleSubmit}>
-            <input type="text" id="chat-input" className="form-control" value={content} onChange={({target}) => setContent(target.value)} />
+            <input autoComplete="off" type="text" id="chat-input" className="form-control" value={content} onChange={({target}) => setContent(target.value)} />
             <button type="submit" className="btn btn-submit px-5 mt-4">Send</button>
           </form>
         }

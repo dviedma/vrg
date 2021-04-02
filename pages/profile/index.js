@@ -6,13 +6,18 @@ import Router from 'next/router';
 
 import {useWarnIfUnsavedChanges} from '../../utils/exitPageWarning';
 
-import Publish from '../../components/publish/Publish';
 import * as PublishSettingsActions from '../../actions/publishSettingsActions';
 
 import CompositorUserMedia from '../../components/media/CompositorUserMedia';
 import Devices from '../../components/media/Devices';
 import CreateEvent from '../../components/event/CreateEvent';
 import ListEvents from '../../components/event/ListEvents';
+
+import PublishVideoElement from '../../components/publish/PublishVideoElement';
+import PublishLiveIndicator from '../../components/publish/PublishLiveIndicator';
+import PublishSettingsForm from '../../components/publish/PublishSettingsForm';
+import Publisher from '../../components/publish/Publisher';
+import Chat from '../../components/chat/Chat';
 
 import styles from '../../styles/profile.module.scss'
 
@@ -69,13 +74,29 @@ const Profile = (props) => {
 
   return (
     <Fragment>
-      <div className="container-fluid mt-3">
+      <div className="container-fluid mt-3 profile mb-3">
         <CompositorUserMedia />
         <Devices />
         <h1 style={{display:'inline', lineHeight:'60px'}} className={styles["myTitle"]}>Hi, {currentUser.displayName}</h1>
         <span className="ml-3"><a href={currentUser.displayName}>View Public Profile</a></span>
         <span className="ml-3"><a href="/profile/edit">Edit My Info</a> ✏️</span>
-        <Publish />
+        <div id="publish-content">
+          <div className="row justify-content-center">
+            <div className="col-md-6 col-sm-12">
+              <div id="publish-video-container">
+                <PublishVideoElement />
+                <PublishLiveIndicator />
+              </div>
+            </div>
+            <div className="col-md-3 col-sm-12 mb-3">
+              <Chat userName={currentUser.displayName}/>
+            </div>
+            <div className="col-md-3 col-sm-12" id="publish-settings">
+              <PublishSettingsForm userName={currentUser.displayName}/>
+            </div>        
+          </div>
+          <Publisher />
+        </div>
       </div>
       <div className="container-fluid mt-3">        
         <div className="row">
