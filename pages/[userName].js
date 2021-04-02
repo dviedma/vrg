@@ -65,7 +65,8 @@ const User = (props) => {
 
     //Payments log
     firebase.firestore()
-      .collection('payments_'+props.userName+'_'+todayDate)
+      .collection('payments')
+      .where("eventId", "==", channelLive? channelLive.id : "")
       .onSnapshot(querySnapshot => {
         _payments = [];
         querySnapshot.forEach((doc) => {
@@ -149,13 +150,14 @@ const User = (props) => {
 
                     try {
                       firebase.firestore()
-                      .collection('payments_'+props.userName+'_'+todayDate)
+                      .collection('payments')
                       .add({
                         payerEmail: details.payer.email_address,
                         payerFullName: `${details.payer.name.given_name} ${details.payer.name.surname}`,
                         amount: details.purchase_units[0].amount.value,
                         timestamp: Date.now(),
-                        time: DateTime.now().toLocaleString(DateTime.TIME_WITH_SHORT_OFFSET)
+                        time: DateTime.now().toLocaleString(DateTime.DATETIME_FULL_WITH_SECONDS),
+                        eventId: channelLive.id 
                       });
                     } catch (error) {
                       console.log(error);
@@ -170,8 +172,8 @@ const User = (props) => {
                     }, 10000);
                   }}
                   options={{
-                    clientId: props.paypalMerchantId
-                    //merchantId: props.paypalMerchantId
+                    clientId: "AXS3AfceAxeZzmSDiOS_NfLcG5ioqXDZUtSyJtl7ctXqLfBxyRr_jPuiNzpIaIIyZHqHbXjjp1T7qxSw",
+                    merchantId: "6VQF5USW5N7BA"
                   }}
                   style={{ color: "blue", shape: "pill", label: "pay", height: 25 }}
                 />

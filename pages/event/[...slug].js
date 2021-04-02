@@ -4,6 +4,8 @@ import { PayPalButton } from "react-paypal-button-v2";
 
 import {firebase} from '../../config/fire-config';
 
+var { DateTime } = require('luxon');
+
 const Event = (props) => {
   let [spots, setSpots] = useState(props.spots);
   let [quantity, setQuantity] = useState(1);
@@ -62,6 +64,22 @@ const Event = (props) => {
                     confetti.stop();
                   }, 2000);
 
+                  // Create Payment
+                  try {
+                    firebase.firestore()
+                    .collection('payments')
+                    .add({
+                      payerEmail: details.payer.email_address,
+                      payerFullName: `${details.payer.name.given_name} ${details.payer.name.surname}`,
+                      amount: details.purchase_units[0].amount.value,
+                      timestamp: Date.now(),
+                      time: DateTime.now().toLocaleString(DateTime.DATETIME_FULL_WITH_SECONDS),
+                      eventId: props.id
+                    });
+                  } catch (error) {
+                    console.log(error);
+                  }
+
                   // Update spots
                   setSpots(newSpots);
                   firebase.firestore()
@@ -70,7 +88,8 @@ const Event = (props) => {
                   });     
                 }}             
                 options={{
-                  clientId: "AbqZIB7XWLrIR7hRUdRORAh6bs74gEIyqthvXGvW92cO0alm69MKQiUz8GxEkLcndaLCKtmoEYtAWnFr"
+                  clientId: "AXS3AfceAxeZzmSDiOS_NfLcG5ioqXDZUtSyJtl7ctXqLfBxyRr_jPuiNzpIaIIyZHqHbXjjp1T7qxSw",
+                  merchantId: "6VQF5USW5N7BA"
                 }}
                 style={{ color: "blue", shape: "pill", label: "pay", height: 25 }}
                 forceReRender={quantity}
