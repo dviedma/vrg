@@ -27,6 +27,7 @@ const User = (props) => {
   const [payments, setPayments] = useState([]);
 
   const [amount, setAmount] = useState(10);
+  const user = useSelector ((state) => state.user);
 
   dispatch({type:PlaySettingsActions.SET_PLAY_SIGNALING_URL,signalingURL: props.wowza.sdpUrl});
   dispatch({type:PlaySettingsActions.SET_PLAY_APPLICATION_NAME,applicationName: props.wowza.applicationName});
@@ -182,16 +183,22 @@ const User = (props) => {
             : ""
             }   
           </div>  
-          <div className="user-payment payment-log mt-3">
-            <p style={{fontWeight:'bold'}} className="mt-2 mb-0">Payments Log</p>
-            <ul>
-            {payments.map((payment, i) => {
-                return <li key={i}>
-                  <p>{payment.time}: <span style={{fontWeight:'bold'}}>{payment.payerFullName}</span> paid <span style={{fontWeight:'bold'}}>${payment.amount}</span></p>
-                </li>
-              })}
-            </ul>
-          </div>                
+
+          {
+            (
+              props.userName == user.currentUser.displayName &&           
+              <div className="user-payment payment-log mt-3">
+                <p style={{fontWeight:'bold'}} className="mt-2 mb-0">Payments Log</p>
+                <ul>
+                {payments.map((payment, i) => {
+                    return <li key={i}>
+                      <p>{payment.time}: <span style={{fontWeight:'bold'}}>{payment.payerFullName}</span> paid <span style={{fontWeight:'bold'}}>${payment.amount}</span></p>
+                    </li>
+                  })}
+                </ul>
+              </div> 
+            )
+          }               
         </div>           
        
       </div>
