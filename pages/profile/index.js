@@ -6,7 +6,6 @@ import Router from 'next/router';
 
 import {useWarnIfUnsavedChanges} from '../../utils/exitPageWarning';
 
-import Publish from '../../components/publish/Publish';
 import * as PublishSettingsActions from '../../actions/publishSettingsActions';
 
 import CompositorUserMedia from '../../components/media/CompositorUserMedia';
