@@ -28,7 +28,6 @@ const Chat = (props) => {
       .onSnapshot(querySnapshot => {
         _chats = [];
         querySnapshot.forEach((doc) => {
-          console.log("si2");
           _chats.push(doc.data());
         });
         _chats.sort((a, b) => { return a.timestamp - b.timestamp })
