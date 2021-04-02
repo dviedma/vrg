@@ -110,6 +110,7 @@ const CreateEvent = () => {
         userName: user.currentUser.displayName,
         userId: user.currentUser.uid,
         spots: Number(spots),
+        reservedSpots: 0,
         price: Number(price),
         image: imagePath
       });

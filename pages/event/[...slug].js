@@ -8,13 +8,32 @@ var { DateTime } = require('luxon');
 
 const Event = (props) => {
   let [spots, setSpots] = useState(props.spots);
+  let [reservedSpots, setReservedSpots] = useState(0);
   let [quantity, setQuantity] = useState(1);
   let image = (props.image)? props.image : "/images/box-placeholder.jpg";
 
+  useEffect(() => {
+    firebase.firestore()
+      .collection('events')
+      .doc(props.id)
+      .onSnapshot((doc) => {
+        setReservedSpots(doc.data().reservedSpots);
+      });    
+  });
+
   const handleQuantityChange = (value) => {
-    if(value <= spots) {
+    if(value <= spots - reservedSpots) {
       setQuantity(value);
     }
+  }
+
+  const updateReservedSpots = (delta) => {
+    const increment = firebase.firestore.FieldValue.increment(delta);
+
+    firebase.firestore()
+      .collection('events')
+      .doc(props.id)
+      .update({ reservedSpots: increment }); 
   }
 
   return (
@@ -27,7 +46,10 @@ const Event = (props) => {
           <h1 className="d-block">{props.title}</h1>
           <h2 className="mt-3 d-block">${props.price}</h2>
           <p className="mt-3 pb-3 mb-3 d-block">{props.startDate}</p>
-          <p className="mt-3 pb-3 mb-3 d-block" style={{borderBottom:'1px solid rgba(255,255,255,0.5)'}}>{spots} spots available</p>         
+          <p className="mt-3 pb-3 mb-3 d-block" style={{borderBottom:'1px solid rgba(255,255,255,0.5)'}}>
+            {spots} spots available 
+            {reservedSpots > 0 && ` (${reservedSpots} currently in process)`}
+          </p>         
           {
             spots > 0 &&
             <Fragment>
@@ -80,13 +102,24 @@ const Event = (props) => {
                     console.log(error);
                   }
 
+                  // Free up spots
+                  updateReservedSpots(-quantity)
+
                   // Update spots
                   setSpots(newSpots);
                   firebase.firestore()
-                  .collection('events').doc(props.id).update({
-                    spots: newSpots
-                  });     
-                }}             
+                    .collection('events').doc(props.id).update({
+                      spots: newSpots
+                    });     
+                }}       
+                onClick={(data, actions) => {
+                  // Reserve spots
+                  updateReservedSpots(quantity)
+                }}      
+                onCancel={(data, actions) => {
+                  // Free up spots
+                  updateReservedSpots(-quantity)
+              }}                      
                 options={{
                   clientId: "AXS3AfceAxeZzmSDiOS_NfLcG5ioqXDZUtSyJtl7ctXqLfBxyRr_jPuiNzpIaIIyZHqHbXjjp1T7qxSw",
                   merchantId: "6VQF5USW5N7BA"

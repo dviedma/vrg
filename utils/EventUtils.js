@@ -24,10 +24,7 @@ export const isChannelLive = (userName, callback) => {
     .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
             if(isLiveEvent(doc.data())) {
-              callback({
-                id: doc.id,
-                ...doc.data()
-              });
+              callback(doc.data());
             }
         });
         return false;
