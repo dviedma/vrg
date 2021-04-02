@@ -9,7 +9,7 @@ var { DateTime } = require('luxon');
 const Event = (props) => {
   let [spots, setSpots] = useState(props.spots);
   let [reservedSpots, setReservedSpots] = useState(0);
-  let [quantity, setQuantity] = useState(1);
+  let [quantity, setQuantity] = useState(0);
   let image = (props.image)? props.image : "/images/box-placeholder.jpg";
 
   useEffect(() => {
@@ -17,11 +17,15 @@ const Event = (props) => {
       .collection('events')
       .doc(props.id)
       .onSnapshot((doc) => {
+        console.log("hi");
+        setQuantity(0);
         setReservedSpots(doc.data().reservedSpots);
+        setSpots(doc.data().spots);
       });    
-  });
+  },[reservedSpots, spots]);
 
   const handleQuantityChange = (value) => {
+    console.log(value, spots, reservedSpots);
     if(value <= spots - reservedSpots) {
       setQuantity(value);
     }
@@ -101,6 +105,9 @@ const Event = (props) => {
                   } catch (error) {
                     console.log(error);
                   }
+
+                  // Reset quantity selector
+                  setQuantity(1);
 
                   // Free up spots
                   updateReservedSpots(-quantity)
