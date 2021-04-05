@@ -46,7 +46,7 @@ const Event = (props) => {
           <img src={image} width="100%"/>
         </div>
         <div className="col-sm-5">
-          <h1 className="d-block">{props.title}</h1>
+          <h1 className="d-block">{props.title} by {props.userName}</h1>
           <h2 className="mt-3 d-block">${props.price}</h2>
           <p className="mt-3 pb-3 mb-3 d-block">{props.startDate}</p>
           <p className="mt-3 pb-3 mb-3 d-block" style={{borderBottom:'1px solid rgba(255,255,255,0.5)'}}>
@@ -131,7 +131,7 @@ const Event = (props) => {
               }}                      
                 options={{
                   clientId: "AXVZRyzf_0rFCSBmHoDWt7JL0KyWqPRigGlJVegtG03sbZlQKEbuSyx5v_K5Bz9hcBpkw7jVtKZM6Bij",
-                  merchantId: "DHD5RS4DY4PEA"
+                  merchantId: props.paypalMerchantId
                 }}
                 style={{ color: "blue", shape: "pill", label: "pay", height: 25 }}
                 forceReRender={quantity}
