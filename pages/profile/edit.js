@@ -11,6 +11,7 @@ const EditProfile = () => {
   const [twitter, setTwitter] = useState("");
   const [instagram, setInstagram] = useState("");
   const [youtube, setYoutube] = useState("");
+  const [paypalMerchantId, setPaypalMerchantId] = useState("");
 
   const router = useRouter();
 
@@ -32,6 +33,7 @@ const EditProfile = () => {
                 setTwitter(doc.data().twitter);
                 setInstagram(doc.data().instagram);
                 setYoutube(doc.data().youtube);
+                setPaypalMerchantId(doc.data().paypalMerchantId);
 
                 setCurrentUser({
                   id: doc.id,
@@ -103,6 +105,8 @@ const EditProfile = () => {
             <input className="form-control" type="text" value={instagram} onChange={({target}) => setInstagram(target.value)}/>                              
             <label className="form-label mt-3">Twitter URL</label>
             <input className="form-control" type="text" value={twitter} onChange={({target}) => setTwitter(target.value)}/>      
+            <label className="form-label mt-3">PayPal Merchant ID <a target="_blank" href="https://chargebackhelp.com/what-is-a-paypal-merchant-identification-number/">What is the PayPal Merchant ID and how can I get it?</a></label>
+            <input className="form-control" type="text" value={paypalMerchantId} onChange={({target}) => setPaypalMerchantId(target.value)}/>      
             <button className="btn mt-3" type="submit">Save</button>
           </form>
           <p className="login-message mt-3">{notify}</p>

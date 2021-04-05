@@ -17,7 +17,6 @@ const Event = (props) => {
       .collection('events')
       .doc(props.id)
       .onSnapshot((doc) => {
-        console.log("hi");
         setQuantity(0);
         setReservedSpots(doc.data().reservedSpots);
         setSpots(doc.data().spots);
@@ -120,6 +119,9 @@ const Event = (props) => {
                     });     
                 }}       
                 onClick={(data, actions) => {
+                  if(reservedSpots == 0) {
+                    alert("Please enter the number of spots that you want to buy");
+                  }
                   // Reserve spots
                   updateReservedSpots(quantity)
                 }}      
@@ -128,8 +130,8 @@ const Event = (props) => {
                   updateReservedSpots(-quantity)
               }}                      
                 options={{
-                  clientId: "AXS3AfceAxeZzmSDiOS_NfLcG5ioqXDZUtSyJtl7ctXqLfBxyRr_jPuiNzpIaIIyZHqHbXjjp1T7qxSw",
-                  merchantId: "6VQF5USW5N7BA"
+                  clientId: "AXVZRyzf_0rFCSBmHoDWt7JL0KyWqPRigGlJVegtG03sbZlQKEbuSyx5v_K5Bz9hcBpkw7jVtKZM6Bij",
+                  merchantId: "DHD5RS4DY4PEA"
                 }}
                 style={{ color: "blue", shape: "pill", label: "pay", height: 25 }}
                 forceReRender={quantity}
@@ -159,6 +161,15 @@ export const getServerSideProps = async ({ params }) => {
       content['image'] = docRef.data().image? docRef.data().image : "";
     });
 
+  await firebase.firestore()
+    .collection('users').where("userName", "==", content.userName)
+    .get()
+    .then(querySnapshot => {
+      querySnapshot.forEach((doc) => {
+        content['paypalMerchantId'] = doc.data().paypalMerchantId? doc.data().paypalMerchantId : "";
+      });
+    });    
+
   return {
     props: {
       id: content.id, 
@@ -167,7 +178,8 @@ export const getServerSideProps = async ({ params }) => {
       userName: content.userName,
       price: content.price,
       spots: content.spots,
-      image: content.image 
+      image: content.image,
+      paypalMerchantId: content.paypalMerchantId 
     }
   }
 }
