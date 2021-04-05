@@ -68,7 +68,8 @@ const Register = () => {
               about: "",
               instagram: "",
               twitter: "",
-              website: "",              
+              website: "",
+              paypalMerchantId: "",              
               wowza: {
                 channelId: data.live_stream.id,
                 applicationName: data.live_stream.source_connection_information.application_name,
