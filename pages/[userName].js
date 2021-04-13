@@ -26,7 +26,7 @@ const User = (props) => {
   const [isWowzaLive, setWowzaLive] = useState(false);
   const [payments, setPayments] = useState([]);
 
-  const [amount, setAmount] = useState(10);
+  const [amount, setAmount] = useState(0);
   const user = useSelector ((state) => state.user);
 
   dispatch({type:PlaySettingsActions.SET_PLAY_SIGNALING_URL,signalingURL: props.wowza.sdpUrl});
